@@ -1,24 +1,32 @@
 # Open Port Scanner (open-port-tools/port-scanner)
 
-> Fast, cross-platform open port checker and asynchronous IP network scanner for Windows, macOS, and Linux with GUI and CLI.
+> Fast, cross-platform open port checker and asynchronous IP network scanner for Windows, macOS, and Linux in native Rust (tokio + egui GPU GUI + CLI). Zero dependencies.
 
 ## Summary
-Open Port Scanner is a zero-dependency open-source utility for discovering open TCP ports, scanning whole local subnets (`--lan` / CIDR `/24`), inspecting TLS certificates, and grabbing service/HTTP banners on Windows, macOS, and Linux. It serves as a lightweight, standalone alternative to Angry IP Scanner, Nmap (Zenmap), and Advanced Port Scanner.
+Open Port Scanner is a modern, ultra-lightweight open-source utility for discovering open TCP ports, scanning entire local subnets in 1 click (`--lan` / `/24` CIDR), inspecting service banners (SSH, HTTP status, Server headers, and titles), and measuring latency in milliseconds. It compiles to standalone ~2–4 MB binaries without Java, Python, or Npcap/WinPcap kernel drivers. It serves as a modern alternative to Angry IP Scanner, Nmap (Zenmap), and Advanced Port Scanner.
 
 ## Key Capabilities
-- 1-click local network (`LAN /24`) detection and multi-host scanning.
-- Bounded asynchronous worker pool supporting full `1-65535` port sweeps without external drivers or Java.
-- Service identification for 120+ well-known ports plus HTTP (`Server`, `<title>`) and TLS certificate inspection.
-- Dual mode: desktop GUI (`--gui` / `--web`) and scriptable CLI (`--json`, `-o report.csv|json|md|txt`).
-- Pre-built standalone executables for Windows (`.exe`), macOS (`.app`), and Linux via GitHub Releases.
+- 1-click local network (`LAN /24`) discovery: auto-detects active subnet while filtering loopback (`127.*`), link-local (`169.254.*`), and VPN virtual ranges (`198.18.0.0/15`).
+- High-performance asynchronous Rust engine (`tokio`): sweeps hundreds of hosts and thousands of ports in parallel without socket exhaustion.
+- Native GPU desktop GUI (`egui` / `eframe`): dark-mode minimal interface with instant table sorting, real-time search filter, and 1-click CSV/JSON export.
+- Full scriptable CLI (`clap`): supports `--json`, `--lan`, `-p`, `--profile`, `-t`, `-c`, and `-o report.json|csv|md`.
+- Service identification for 120+ standard ports with banner and HTTP title grabbing.
+- Pre-built standalone binaries for Windows x64 (`.exe`), macOS Universal (Apple Silicon M1-M4 & Intel), and Linux x64.
 
 ## Quick Commands
-- Scan detected local network: `port-scanner --lan --profile quick`
-- Check specific ports: `port-scanner <target> -p 22,80,443,8080`
+- Launch GUI: `port-scanner` or `port-scanner --gui`
+- 1-Click LAN scan: `port-scanner --lan --profile quick`
+- Check specific ports on host: `port-scanner <target> -p 22,80,443,8080`
 - Full 1-65535 scan: `port-scanner <target> --profile full`
-- Launch GUI: `port-scanner --gui`
+- Machine-readable JSON output: `port-scanner 192.168.0.1 --profile web --json -q`
 
-## Links
-- Repository: https://github.com/open-port-tools/port-scanner
-- Website: https://open-port-tools.github.io/port-scanner/
-- Releases: https://github.com/open-port-tools/port-scanner/releases
+## Comparisons & Guides
+- Angry IP Scanner Alternative: https://open-port-tools.github.io/port-scanner/angry-ip-scanner-alternative.html
+- Advanced Port Scanner for Mac/Linux: https://open-port-tools.github.io/port-scanner/advanced-port-scanner-mac-linux.html
+- Local Network Scan Tutorial: https://open-port-tools.github.io/port-scanner/how-to-scan-local-network-ports.html
+
+## Official Distribution Links
+- GitHub Repository: https://github.com/open-port-tools/port-scanner
+- GitHub Releases: https://github.com/open-port-tools/port-scanner/releases/latest
+- Documentation & Web: https://open-port-tools.github.io/port-scanner/
+- SourceForge Mirror: https://sourceforge.net/projects/port-scanner/

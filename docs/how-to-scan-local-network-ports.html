@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>How to Scan Local Network for Open Ports (GUI &amp; CLI Tutorial)</title>
+  <meta name="description" content="Step-by-step guide to scanning your local Wi-Fi or Ethernet network (LAN /24) for open TCP ports and connected IP devices on Windows, macOS, and Linux." />
+  <link rel="canonical" href="https://open-port-tools.github.io/port-scanner/how-to-scan-local-network-ports.html" />
+  <meta property="og:title" content="How to Scan Local Network for Open Ports (GUI &amp; CLI Tutorial)" />
+  <meta property="og:description" content="Learn how to scan local subnets (192.168.0.0/24) for active services, routers, IoT, and open ports with zero dependencies." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://open-port-tools.github.io/port-scanner/how-to-scan-local-network-ports.html" />
+  <meta property="og:image" content="https://open-port-tools.github.io/port-scanner/assets/og-image.svg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://open-port-tools.github.io/port-scanner/assets/og-image.svg" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to Scan Local Network for Open Ports",
+    "description": "Step-by-step instructions to map your entire local network and audit open TCP ports using Open Port Scanner.",
+    "step": [
+      {
+        "@type": "HowToStep",
+        "name": "Download the standalone binary",
+        "text": "Download the pre-compiled executable for Windows (.exe), macOS, or Linux from GitHub Releases."
+      },
+      {
+        "@type": "HowToStep",
+        "name": "Trigger 1-Click LAN Scan",
+        "text": "Click the 'Вся сеть' button or run 'port-scanner --lan' to scan all 254 subnet hosts automatically."
+      },
+      {
+        "@type": "HowToStep",
+        "name": "Review Open Ports and Export Findings",
+        "text": "Filter results by port, latency, or service name, and export to CSV or JSON for reporting."
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    :root {
+      --bg: #111214; --surface: #181a1f; --surface-alt: #1e2127; --border: #272a31;
+      --text: #eceef2; --muted: #9aa1ad; --accent: #3b82f6; --accent-hover: #2563eb;
+      --green: #34d399; --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; padding: 0; background: var(--bg); color: var(--text);
+      font-family: var(--font-sans); line-height: 1.65;
+    }
+    .container { max-width: 860px; margin: 0 auto; padding: 32px 20px 80px; }
+    nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-bottom: 20px; border-bottom: 1px solid var(--border); margin-bottom: 36px;
+    }
+    .brand { font-weight: 600; color: var(--text); text-decoration: none; }
+    .nav-links a { color: var(--muted); text-decoration: none; margin-left: 18px; font-size: 14px; }
+    .nav-links a:hover { color: var(--text); }
+    h1 { font-size: clamp(28px, 4.5vw, 38px); line-height: 1.25; margin: 0 0 16px; letter-spacing: -0.02em; }
+    .lead { font-size: 18px; color: var(--muted); margin-bottom: 28px; }
+    .cta-box {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+      padding: 24px; margin: 32px 0; display: flex; flex-wrap: wrap; gap: 14px; align-items: center;
+      justify-content: space-between;
+    }
+    .btn { display: inline-block; padding: 10px 18px; border-radius: 6px; font-weight: 600; font-size: 14px; text-decoration: none; }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: var(--accent-hover); }
+    .btn-secondary { background: var(--surface-alt); color: var(--text); border: 1px solid var(--border); }
+    h2 { font-size: 24px; margin: 40px 0 16px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+    h3 { font-size: 18px; margin: 24px 0 8px; }
+    pre {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+      padding: 16px; overflow-x: auto; font-family: var(--font-mono); font-size: 13.5px;
+    }
+    code { font-family: var(--font-mono); font-size: 13px; color: #60a5fa; }
+    ol { padding-left: 22px; color: var(--text); }
+    li { margin-bottom: 12px; }
+    footer { margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--border); color: var(--muted); font-size: 13px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav>
+      <a class="brand" href="./">← Open Port Scanner</a>
+      <div class="nav-links">
+        <a href="./#downloads">Downloads</a>
+        <a href="https://github.com/open-port-tools/port-scanner">GitHub</a>
+        <a href="https://sourceforge.net/projects/port-scanner/">SourceForge</a>
+      </div>
+    </nav>
+
+    <article>
+      <h1>How to Scan Local Network for Open Ports (Step-by-Step Guide)</h1>
+      <p class="lead">
+        Scanning your home or office local area network (LAN) helps identify connected devices, unauthenticated admin dashboards, misconfigured database ports, and rogue services. Here is how to map all active network hosts in seconds.
+      </p>
+
+      <div class="cta-box">
+        <div>
+          <div style="font-weight: 600; font-size: 16px;">Download Open Port Scanner v2.0</div>
+          <div style="font-size: 13px; color: var(--muted);">Zero dependencies • Portable standalone binary • Windows, macOS &amp; Linux</div>
+        </div>
+        <div>
+          <a class="btn btn-primary" href="https://github.com/open-port-tools/port-scanner/releases/latest">Download Tool</a>
+        </div>
+      </div>
+
+      <h2>Step 1: Download &amp; Launch</h2>
+      <p>
+        Unlike tools that require Python or Java installation, Open Port Scanner ships as a single portable machine-code binary (~2–4 MB).
+      </p>
+      <ul>
+        <li><strong>Windows:</strong> Download <code>port-scanner-windows-x64.zip</code>, extract, and double-click <code>port-scanner.exe</code>.</li>
+        <li><strong>macOS:</strong> Download <code>port-scanner-macos.tar.gz</code> and launch the universal binary.</li>
+        <li><strong>Linux:</strong> Download <code>port-scanner-linux-x64.tar.gz</code> and execute in terminal or desktop window.</li>
+      </ul>
+
+      <h2>Step 2: 1-Click Subnet Scan (GUI Method)</h2>
+      <p>
+        Upon launching the desktop window, the scanner inspects your active Wi-Fi or Ethernet adapter and calculates your <code>/24</code> subnet (e.g. <code>192.168.0.0/24</code> or <code>10.0.0.0/24</code>).
+      </p>
+      <ol>
+        <li>Click the segmented button <strong>«Вся сеть · 192.168.x.x/24»</strong>.</li>
+        <li>Select your desired port profile:
+          <ul>
+            <li><strong>Быстрый (25):</strong> Essential web, SSH, RDP, VNC, and database ports.</li>
+            <li><strong>Стандартный (96):</strong> Top 96 common TCP services.</li>
+            <li><strong>Веб (19):</strong> Dev servers and web management interfaces (80, 443, 3000, 5173, 8080, 8443).</li>
+            <li><strong>Базы данных (17):</strong> PostgreSQL, MySQL, Redis, MongoDB, MSSQL.</li>
+          </ul>
+        </li>
+        <li>Click <strong>«Сканировать»</strong>. In 2–5 seconds, all active devices and open ports appear with millisecond response latency and service banners.</li>
+      </ol>
+
+      <h2>Step 3: CLI Method (Terminal &amp; Automation)</h2>
+      <p>
+        If you are working over SSH or automating daily security audits, run the scanner with command-line flags:
+      </p>
+      <pre><code># Scan entire detected subnet with the quick profile:
+port-scanner --lan --profile quick
+
+# Scan a specific subnet with custom ports and export to JSON:
+port-scanner 192.168.1.0/24 -p 22,80,443,3389 -o lan-report.json
+
+# Scan only your local machine:
+port-scanner 127.0.0.1 --profile full</code></pre>
+
+      <h2>Common Open Ports to Watch For</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Port</th>
+            <th>Service</th>
+            <th>Security Risk on Local Network</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>22</strong></td>
+            <td>SSH</td>
+            <td>Ensure password authentication is disabled; use public keys.</td>
+          </tr>
+          <tr>
+            <td><strong>80 / 443 / 8080</strong></td>
+            <td>HTTP / Web</td>
+            <td>Router admin portals, IP cameras, printers, and NAS panels.</td>
+          </tr>
+          <tr>
+            <td><strong>445</strong></td>
+            <td>SMB</td>
+            <td>Windows file sharing; should never be exposed externally.</td>
+          </tr>
+          <tr>
+            <td><strong>3389</strong></td>
+            <td>RDP</td>
+            <td>Remote Desktop Protocol; vulnerable to brute-force attacks if unprotected.</td>
+          </tr>
+          <tr>
+            <td><strong>5432 / 3306 / 6379</strong></td>
+            <td>PostgreSQL / MySQL / Redis</td>
+            <td>Databases should strictly require strong authentication and bind to localhost unless clustering.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Exporting and Reporting</h2>
+      <p>
+        After the scan completes, click <strong>CSV</strong> or <strong>JSON</strong> in the top-right toolbar. The report automatically saves to your <code>Downloads</code> or <code>Desktop</code> folder and copies the text to your system clipboard for instant pasting into documentation.
+      </p>
+    </article>
+
+    <footer>
+      <p>
+        <a href="./">Home</a> · 
+        <a href="https://github.com/open-port-tools/port-scanner/releases/latest">Download Tool</a> · 
+        <a href="https://github.com/open-port-tools/port-scanner">GitHub Repository</a>
+      </p>
+      <p>Open Port Tools — MIT Licensed Open Source Software.</p>
+    </footer>
+  </div>
+</body>
+</html>

@@ -4,27 +4,38 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Open Port Checker &amp; Fast IP Network Port Scanner — Open Port Tools</title>
-  <meta name="description" content="Free cross-platform open port checker and asynchronous IP network scanner for Windows, macOS, and Linux. Lightweight open-source alternative to Angry IP Scanner and Nmap." />
+  <meta name="description" content="Free, zero-dependency async TCP port scanner and 1-click LAN mapper for Windows, macOS, and Linux in native Rust. Fast alternative to Angry IP Scanner and Nmap." />
   <link rel="canonical" href="https://open-port-tools.github.io/port-scanner/" />
   <meta property="og:title" content="Open Port Checker &amp; Fast IP Network Port Scanner" />
-  <meta property="og:description" content="Scan open TCP ports, inspect TLS certificates, and discover devices across your local network with GUI and CLI. Zero dependencies." />
+  <meta property="og:description" content="Fast 1-click local LAN mapper and async port checker in native Rust (tokio + egui). Standalone ~2-4 MB binaries for Windows, macOS, and Linux." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://open-port-tools.github.io/port-scanner/" />
+  <meta property="og:image" content="https://open-port-tools.github.io/port-scanner/assets/og-image.svg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Open Port Checker &amp; Fast IP Network Port Scanner" />
+  <meta name="twitter:description" content="Fast 1-click local LAN mapper and async port checker in native Rust. No Java, zero dependencies." />
+  <meta name="twitter:image" content="https://open-port-tools.github.io/port-scanner/assets/og-image.svg" />
+
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     "name": "Open Port Scanner",
+    "softwareVersion": "2.0.0",
     "operatingSystem": "Windows, macOS, Linux",
     "applicationCategory": "DeveloperApplication",
+    "programmingLanguage": "Rust",
+    "fileSize": "2.1MB",
     "offers": {
       "@type": "Offer",
       "price": "0.00",
       "priceCurrency": "USD"
     },
-    "description": "Fast open port checker and asynchronous IP network scanner with 1-click LAN discovery, TLS inspection, GUI, and CLI. Modern open-source alternative to Angry IP Scanner and Nmap.",
-    "url": "https://github.com/open-port-tools/port-scanner",
-    "downloadUrl": "https://github.com/open-port-tools/port-scanner/releases"
+    "description": "Fast open port checker and asynchronous IP network scanner with 1-click LAN discovery, service banner grabbing, GPU GUI, and CLI in native Rust. Modern open-source alternative to Angry IP Scanner and Nmap.",
+    "url": "https://open-port-tools.github.io/port-scanner/",
+    "downloadUrl": "https://github.com/open-port-tools/port-scanner/releases/latest"
   }
   </script>
   <script type="application/ld+json">
@@ -37,15 +48,23 @@
         "name": "How do I check if a port is open on my IP or local network?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Download the standalone executable from GitHub Releases or run python3 scanner.py --gui, then click LAN or enter your target IP/CIDR to inspect open ports, banners, and latency."
+          "text": "Download the standalone executable from GitHub Releases or SourceForge, click 'Вся сеть' (or enter an IP/CIDR), and click 'Сканировать'. Open ports, service banners, and millisecond latency appear in seconds."
         }
       },
       {
         "@type": "Question",
-        "name": "Does Open Port Scanner require Java or Npcap drivers?",
+        "name": "Does Open Port Scanner require Java, Python, or Npcap drivers?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "No. Open Port Scanner uses standard asynchronous TCP sockets and ships as standalone binaries for Windows (.exe), macOS, and Linux without Java or Npcap."
+          "text": "No. Open Port Scanner v2.0 is written in native Rust and compiles to a standalone machine-code binary (~2-4 MB) for Windows (.exe), macOS, and Linux without Java, Python, or kernel drivers."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is there a version of Advanced Port Scanner for Mac or Linux?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Famatech Advanced Port Scanner is Windows only. Open Port Scanner is the recommended cross-platform alternative featuring 1-click subnet discovery and a native GUI on macOS and Linux."
         }
       }
     ]
@@ -55,11 +74,13 @@
     :root {
       --bg: #111214;
       --surface: #181a1f;
+      --surface-alt: #1e2127;
       --border: #272a31;
       --text: #eceef2;
       --muted: #9aa1ad;
       --accent: #3b82f6;
       --accent-hover: #2563eb;
+      --green: #34d399;
       --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, sans-serif;
       --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     }
@@ -74,13 +95,13 @@
       display: flex; justify-content: space-between; align-items: center;
       padding-bottom: 24px; border-bottom: 1px solid var(--border); margin-bottom: 40px;
     }
-    .brand { font-weight: 600; color: var(--text); text-decoration: none; }
+    .brand { font-weight: 600; color: var(--text); text-decoration: none; font-size: 15px; }
     .nav-links { display: flex; gap: 18px; font-size: 14px; }
     .nav-links a { color: var(--muted); text-decoration: none; }
     .nav-links a:hover { color: var(--text); }
     h1 { font-size: clamp(28px, 4vw, 38px); line-height: 1.2; margin: 0 0 14px; letter-spacing: -0.02em; }
     .lead { font-size: 17px; color: var(--muted); max-width: 68ch; margin: 0 0 24px; }
-    .cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 32px; }
+    .cta-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 32px; }
     .btn {
       display: inline-block; padding: 10px 18px; border-radius: 6px;
       font-weight: 600; font-size: 14px; text-decoration: none;
@@ -88,19 +109,28 @@
     .btn-primary { background: var(--accent); color: #fff; }
     .btn-primary:hover { background: var(--accent-hover); }
     .btn-secondary { background: var(--surface); color: var(--text); border: 1px solid var(--border); }
+    .btn-secondary:hover { background: var(--surface-alt); }
     .preview { width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 40px; }
-    h2 { font-size: 22px; margin: 36px 0 14px; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
-    .box { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 18px; }
-    .box h3 { margin: 0 0 8px; font-size: 15px; }
-    .box p { margin: 0; font-size: 14px; color: var(--muted); }
+    h2 { font-size: 22px; margin: 38px 0 16px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin: 20px 0; }
+    .box { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 20px; }
+    .box h3 { margin: 0 0 8px; font-size: 16px; }
+    .box p { margin: 0; font-size: 14px; color: var(--muted); line-height: 1.5; }
+    .guide-card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+      padding: 18px; text-decoration: none; color: inherit; display: block; transition: border-color 0.15s;
+    }
+    .guide-card:hover { border-color: var(--accent); }
+    .guide-card h3 { margin: 0 0 6px; font-size: 16px; color: #60a5fa; }
+    .guide-card p { margin: 0; font-size: 13.5px; color: var(--muted); }
     pre {
       background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
       padding: 14px 16px; overflow-x: auto; font-family: var(--font-mono); font-size: 13px;
     }
+    code { font-family: var(--font-mono); font-size: 13px; color: #60a5fa; }
     table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 14px; }
     th, td { padding: 10px 12px; border-bottom: 1px solid var(--border); text-align: left; }
-    th { color: var(--muted); font-weight: 500; }
+    th { color: var(--muted); font-weight: 500; background: var(--surface); }
     footer { margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--border); color: var(--muted); font-size: 13px; }
   </style>
 </head>
@@ -109,87 +139,139 @@
     <nav>
       <a class="brand" href="./">open-port-tools / port-scanner</a>
       <div class="nav-links">
-        <a href="https://github.com/open-port-tools/port-scanner/releases">Downloads</a>
-        <a href="https://github.com/open-port-tools/port-scanner">GitHub</a>
-        <a href="https://github.com/open-port-tools/port-scanner/issues">Issues</a>
+        <a href="#downloads">Downloads</a>
+        <a href="#guides">Guides</a>
+        <a href="https://github.com/open-port-tools/port-scanner">GitHub ⭐</a>
+        <a href="https://sourceforge.net/projects/port-scanner/">SourceForge</a>
       </div>
     </nav>
 
     <h1>Open Port Checker &amp; Fast IP Network Port Scanner</h1>
     <p class="lead">
-      Free, zero-dependency port scanner and LAN discovery tool for Windows, macOS, and Linux.
-      Scan localhost or your entire local subnet in one click with GUI and CLI.
+      Lightning-fast, zero-dependency async TCP port scanner and 1-click local LAN subnet mapper in native <strong>Rust</strong>.
+      Scan localhost or all 254 subnet hosts in seconds with a clean GPU desktop GUI and scriptable CLI.
     </p>
 
-    <div class="cta-row" style="flex-wrap: wrap; gap: 10px;">
-      <a class="btn btn-primary" href="https://github.com/open-port-tools/port-scanner/releases/download/v2.0.0/port-scanner-windows-x64.zip">Download Windows (.exe)</a>
-      <a class="btn btn-secondary" href="https://github.com/open-port-tools/port-scanner/releases/download/v2.0.0/port-scanner-macos.tar.gz">Download macOS (Universal)</a>
-      <a class="btn btn-secondary" href="https://github.com/open-port-tools/port-scanner/releases/download/v2.0.0/port-scanner-linux-x64.tar.gz">Download Linux (x64)</a>
-      <a class="btn btn-secondary" href="https://github.com/open-port-tools/port-scanner">View on GitHub ⭐</a>
+    <div id="downloads" class="cta-row">
+      <a class="btn btn-primary" href="https://github.com/open-port-tools/port-scanner/releases/download/v2.0.0/port-scanner-windows-x64.zip">Download for Windows (.exe · 2.1 MB)</a>
+      <a class="btn btn-secondary" href="https://github.com/open-port-tools/port-scanner/releases/download/v2.0.0/port-scanner-macos.tar.gz">Download for macOS (Universal · 4.4 MB)</a>
+      <a class="btn btn-secondary" href="https://github.com/open-port-tools/port-scanner/releases/download/v2.0.0/port-scanner-linux-x64.tar.gz">Download for Linux (x64 · 2.8 MB)</a>
+      <a class="btn btn-secondary" href="https://github.com/open-port-tools/port-scanner">GitHub Source ⭐</a>
     </div>
 
-    <img class="preview" src="assets/preview.svg" alt="Open Port Scanner GUI interface preview" />
+    <img class="preview" src="assets/og-image.svg" alt="Open Port Scanner GUI interface preview" />
 
     <h2>Why Developers &amp; Sysadmins Use It</h2>
     <div class="grid">
       <div class="box">
-        <h3>1-Click Whole LAN Scan</h3>
-        <p>Automatically detects your active Wi-Fi or Ethernet /24 subnet while ignoring loopback and VPN TUN virtual ranges.</p>
+        <h3>⚡ Native Rust Async Engine</h3>
+        <p>Built with Tokio. Sweeps hundreds of hosts and thousands of ports in parallel without socket exhaustion or high CPU utilization.</p>
       </div>
       <div class="box">
-        <h3>Zero Drivers or Java</h3>
-        <p>Runs natively on Windows, macOS, and Linux without installing Npcap or JVM runtimes.</p>
+        <h3>🌐 1-Click Whole LAN Scan</h3>
+        <p>Automatically detects your active Wi-Fi or Ethernet /24 subnet while ignoring loopback and virtual VPN TUN ranges (198.18.0.0/15).</p>
       </div>
       <div class="box">
-        <h3>Banners &amp; TLS Info</h3>
-        <p>Captures SSH, HTTP titles, Server headers, and TLS certificate metadata with latency in milliseconds.</p>
+        <h3>🖥️ Zero Dependencies (No Java / Npcap)</h3>
+        <p>Runs natively on Windows (.exe), macOS, and Linux without installing JRE, Python, or kernel packet capture drivers.</p>
+      </div>
+      <div class="box">
+        <h3>🔍 Banners &amp; HTTP Titles</h3>
+        <p>Captures SSH greetings, HTTP status codes, Server headers, and HTML page titles with millisecond latency measurement.</p>
+      </div>
+      <div class="box">
+        <h3>📊 1-Click CSV &amp; JSON Export</h3>
+        <p>Save reports instantly to Downloads/Desktop or copy formatted data to your clipboard for security audit documentation.</p>
+      </div>
+      <div class="box">
+        <h3>🪶 Ultra-Compact Footprint</h3>
+        <p>Single standalone binary of only ~2–4 MB. Copy to a USB flash drive or deploy across servers without package managers.</p>
       </div>
     </div>
 
+    <h2 id="guides">Guides &amp; Comparisons</h2>
+    <div class="grid">
+      <a class="guide-card" href="angry-ip-scanner-alternative.html">
+        <h3>Angry IP Scanner Alternative Without Java →</h3>
+        <p>Why modern sysadmins replace Angry IP Scanner with Open Port Scanner: zero JRE dependency, instant startup, and native GPU rendering.</p>
+      </a>
+      <a class="guide-card" href="advanced-port-scanner-mac-linux.html">
+        <h3>Advanced Port Scanner for macOS and Linux →</h3>
+        <p>Since Famatech Advanced Port Scanner is Windows-only, here is the cross-platform alternative for Apple Silicon, Intel Macs, and Linux.</p>
+      </a>
+      <a class="guide-card" href="how-to-scan-local-network-ports.html">
+        <h3>How to Scan Local Network for Open Ports (Tutorial) →</h3>
+        <p>Step-by-step tutorial on scanning a local /24 subnet for open ports, routers, IP cameras, and database services via GUI and CLI.</p>
+      </a>
+    </div>
+
     <h2>Quick CLI Usage</h2>
-    <pre><code># Scan your detected local network
-python3 scanner.py --lan --profile quick
+    <pre><code># Scan your auto-detected local network (/24 LAN):
+port-scanner --lan --profile quick
 
-# Scan specific ports and export JSON
-python3 scanner.py 192.168.1.0/24 -p 22,80,443,3389 -o report.json
+# Scan specific ports on a host or CIDR and export to JSON:
+port-scanner 192.168.1.0/24 -p 22,80,443,3389 -o report.json
 
-# Launch the GUI
-python3 scanner.py --gui</code></pre>
+# Launch the distraction-free desktop GUI:
+port-scanner --gui</code></pre>
 
-    <h2>Comparison</h2>
+    <h2>Feature Comparison</h2>
     <table>
       <thead>
         <tr>
           <th>Tool</th>
-          <th>Drivers / Runtime</th>
+          <th>Engine / Runtime</th>
+          <th>Footprint</th>
           <th>Platforms</th>
-          <th>1-Click LAN + JSON</th>
+          <th>1-Click LAN Scan</th>
+          <th>License</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td><strong>Open Port Scanner</strong></td>
-          <td>None (Standalone / Python Stdlib)</td>
-          <td>Windows, macOS, Linux</td>
-          <td>Built-in</td>
+          <td><strong>Open Port Scanner v2.0</strong></td>
+          <td><strong>Native Rust (Tokio)</strong></td>
+          <td><strong>~2–4 MB</strong></td>
+          <td><strong>Windows, macOS, Linux</strong></td>
+          <td><strong>Yes (Auto /24)</strong></td>
+          <td><strong>MIT (Free)</strong></td>
         </tr>
         <tr>
           <td>Angry IP Scanner</td>
-          <td>Requires Java</td>
+          <td>Java (Requires JRE 8+)</td>
+          <td>~20 MB + 150 MB JRE</td>
           <td>Windows, macOS, Linux</td>
-          <td>Manual range</td>
+          <td>Manual IP range</td>
+          <td>GPL v2</td>
         </tr>
         <tr>
           <td>Nmap / Zenmap</td>
-          <td>Requires Npcap (Windows)</td>
+          <td>C++ (Requires Npcap)</td>
+          <td>~80 MB + Driver</td>
           <td>Windows, macOS, Linux</td>
-          <td>XML / CLI flags</td>
+          <td>CLI flags / XML</td>
+          <td>NPSL</td>
+        </tr>
+        <tr>
+          <td>Advanced Port Scanner</td>
+          <td>C++</td>
+          <td>~25 MB installer</td>
+          <td>Windows only</td>
+          <td>Yes</td>
+          <td>Freeware</td>
         </tr>
       </tbody>
     </table>
 
     <footer>
-      MIT License · <a href="https://github.com/open-port-tools/port-scanner" style="color: var(--muted);">github.com/open-port-tools/port-scanner</a> · <a href="https://open-port-tools.github.io/port-scanner/llms.txt" style="color: var(--muted);">llms.txt</a>
+      <p>
+        MIT License · 
+        <a href="https://github.com/open-port-tools/port-scanner" style="color: var(--muted);">GitHub</a> · 
+        <a href="https://sourceforge.net/projects/port-scanner/" style="color: var(--muted);">SourceForge</a> · 
+        <a href="https://open-port-tools.github.io/port-scanner/llms.txt" style="color: var(--muted);">llms.txt</a> · 
+        <a href="https://open-port-tools.github.io/port-scanner/sitemap.xml" style="color: var(--muted);">sitemap.xml</a>
+      </p>
+      <p>Open Port Tools — Free, open-source network security utilities.</p>
     </footer>
   </div>
 </body>
