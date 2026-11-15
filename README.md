@@ -4,6 +4,7 @@
 
 **Lightning-fast, native cross-platform tool in Rust (`tokio` + `eframe`/`egui` + `clap`) to scan open TCP ports, map your local LAN in one click, and inspect service banners with GUI & CLI in a single compact binary.**
 
+[![Crates.io](https://img.shields.io/crates/v/open-port-scanner?style=flat-square&color=orange)](https://crates.io/crates/open-port-scanner)
 [![Release](https://img.shields.io/github/v/release/open-port-tools/port-scanner?style=flat-square&color=blue)](https://github.com/open-port-tools/port-scanner/releases)
 [![Build Binaries](https://img.shields.io/github/actions/workflow/status/open-port-tools/port-scanner/build-binaries.yml?style=flat-square&label=Builds)](https://github.com/open-port-tools/port-scanner/actions/workflows/build-binaries.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
@@ -71,7 +72,19 @@ Launch GUI directly (double-click or run with no arguments in terminal):
 port-scanner.exe
 ```
 
-### Option 2: Build from Source with Cargo (Rust 1.75+)
+### Option 2: Install via Cargo (crates.io)
+
+```bash
+cargo install open-port-scanner
+
+# Launch GUI directly (desktop window)
+port-scanner
+
+# Or scan whole LAN in terminal
+port-scanner --lan --profile quick
+```
+
+### Option 3: Build from Source with Cargo (Rust 1.75+)
 
 ```bash
 git clone https://github.com/open-port-tools/port-scanner.git
