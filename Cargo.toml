@@ -1,12 +1,20 @@
 [package]
-name = "port-scanner"
+name = "open-port-scanner"
 version = "2.0.0"
 edition = "2021"
-description = "Fast cross-platform asynchronous TCP port scanner & local LAN mapper with native GPU GUI and CLI (Rust + tokio + egui)"
+description = "Fast, zero-dependency async TCP port scanner & 1-click local LAN subnet mapper in native Rust with GPU GUI (egui) and CLI (clap)."
+readme = "README.md"
 license = "MIT"
 repository = "https://github.com/open-port-tools/port-scanner"
-keywords = ["port-scanner", "network-scanner", "tokio", "egui", "lan-scanner"]
+homepage = "https://open-port-tools.github.io/port-scanner/"
+documentation = "https://docs.rs/open-port-scanner"
+keywords = ["port-scanner", "network-scanner", "lan-scanner", "egui", "tokio"]
 categories = ["command-line-utilities", "network-programming", "gui"]
+exclude = ["docs/*", "tests/*", "port_scanner/*", "*.py", "*.bat", "*.sh", ".github/*"]
+
+[[bin]]
+name = "port-scanner"
+path = "src/main.rs"
 
 [dependencies]
 tokio = { version = "1", features = ["rt-multi-thread", "net", "time", "sync", "macros", "io-util", "signal"] }
