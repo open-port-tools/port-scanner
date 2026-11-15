@@ -1,0 +1,22 @@
+[package]
+name = "port-scanner"
+version = "2.0.0"
+edition = "2021"
+description = "Fast cross-platform asynchronous TCP port scanner & local LAN mapper with native GPU GUI and CLI (Rust + tokio + egui)"
+license = "MIT"
+repository = "https://github.com/open-port-tools/port-scanner"
+keywords = ["port-scanner", "network-scanner", "tokio", "egui", "lan-scanner"]
+categories = ["command-line-utilities", "network-programming", "gui"]
+
+[dependencies]
+tokio = { version = "1", features = ["rt-multi-thread", "net", "time", "sync", "macros", "io-util", "signal"] }
+clap = { version = "4", features = ["derive"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+eframe = { version = "0.29", default-features = false, features = ["glow", "default_fonts", "x11", "wayland"] }
+
+[profile.release]
+opt-level = "s"
+lto = "thin"
+codegen-units = 1
+strip = true

@@ -33,35 +33,46 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Python 3.12
+      - name: Set up Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache Cargo dependencies
+        uses: Swatinem/rust-cache@v2
+
+      - name: Install Linux GUI system dependencies (Ubuntu)
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libxkbcommon-dev libxkbcommon-x11-dev libxcb-render0-dev libxcb-shape0-dev libxcb-xfixes0-dev libgl1-mesa-dev libwayland-dev
+
+      - name: Run Rust unit and integration tests
+        run: cargo test --verbose
+
+      - name: Build native Rust release binary
+        run: cargo build --release
+
+      - name: Set up Python 3.12 (legacy compatibility tests)
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
-      - name: Install Linux Tk runtime (Ubuntu)
-        if: matrix.os == 'ubuntu-latest'
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y python3-tk
-
-      - name: Run unit tests
+      - name: Run Python unit tests
         run: python -m unittest discover -s tests -v
 
-      - name: Install PyInstaller
-        run: python -m pip install --upgrade pip pyinstaller
-
-      - name: Build CLI and GUI executables
-        run: python build_executable.py --mode all --clean-build
-
-      - name: Package Windows binaries
+      - name: Stage and package Windows binary
         if: matrix.os == 'windows-latest'
         shell: pwsh
         run: |
+          New-Item -ItemType Directory -Force dist | Out-Null
+          Copy-Item target/release/port-scanner.exe dist/port-scanner.exe
           Compress-Archive -Path dist/* -DestinationPath "${{ matrix.artifact_name }}.zip"
 
-      - name: Package macOS / Linux binaries
+      - name: Stage and package macOS / Linux binary
         if: matrix.os != 'windows-latest'
         run: |
+          mkdir -p dist
+          cp target/release/port-scanner dist/port-scanner
+          chmod +x dist/port-scanner
           tar -czf "${{ matrix.artifact_name }}.tar.gz" -C dist .
 
       - name: Upload build artifacts

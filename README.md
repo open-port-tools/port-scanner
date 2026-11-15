@@ -1,8 +1,8 @@
 <div align="center">
 
-# Open Port Checker & Fast IP Network Port Scanner
+# Open Port Checker & Fast IP Network Port Scanner (v2.0 — Rust + egui)
 
-**Lightning-fast, cross-platform tool to scan open TCP ports, discover active local network devices, and inspect services with GUI & CLI.**
+**Lightning-fast, native cross-platform tool in Rust (`tokio` + `eframe`/`egui` + `clap`) to scan open TCP ports, map your local LAN in one click, and inspect service banners with GUI & CLI in a single compact binary.**
 
 [![Release](https://img.shields.io/github/v/release/open-port-tools/port-scanner?style=flat-square&color=blue)](https://github.com/open-port-tools/port-scanner/releases)
 [![Build Binaries](https://img.shields.io/github/actions/workflow/status/open-port-tools/port-scanner/build-binaries.yml?style=flat-square&label=Builds)](https://github.com/open-port-tools/port-scanner/actions/workflows/build-binaries.yml)
@@ -10,7 +10,7 @@
 [![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20macOS%20%7C%20Linux-informational?style=flat-square)]()
 [![GitHub Stars](https://img.shields.io/github/stars/open-port-tools/port-scanner?style=social)](https://github.com/open-port-tools/port-scanner/stargazers)
 
-[Download](#-quick-start--download) • [Features](#-key-features) • [Comparison](#-why-use-this-over-angry-ip-scanner-or-nmap) • [CLI Examples](#-how-to-check-open-ports-usage-examples) • [FAQ](#-frequently-asked-questions-faq)
+[Download](#-quick-start--download) • [Features](#-key-features) • [Comparison](#-why-use-this-over-angry-ip-scanner-or-nmap) • [CLI Examples](#-how-to-check-open-ports-usage-examples) • [Cross-Compile .exe](#-building-locally--cross-compiling-windows-exe) • [FAQ](#-frequently-asked-questions-faq)
 
 </div>
 
@@ -18,9 +18,9 @@
 
 ## What is Open Port Scanner?
 
-**Open Port Scanner** is a free, open-source **port scanner** and **open port checker** built for developers, system administrators, and network engineers on **Windows, macOS, and Linux**. It scans localhost, remote hosts, IPv4 ranges, or your entire local subnet in seconds using a bounded asynchronous TCP engine with **zero external dependencies**.
+**Open Port Scanner v2.0** is a native **Rust** port scanner and local LAN mapper built for **Windows, macOS, and Linux** using **Tokio** async I/O, an **eframe / egui** GPU-accelerated desktop interface, and a **clap** CLI — compiled into a **single standalone binary (~5–8 MB)** with zero runtime dependencies (no Python, no browser, no Java, no Npcap).
 
-Designed as a modern, lightweight alternative to **Angry IP Scanner**, **Nmap (Zenmap)**, and **Advanced Port Scanner**, it ships with both a standalone **Desktop / App GUI** (including 1-click **Whole LAN** discovery) and a scriptable **CLI** — without requiring Java or Npcap drivers.
+It scans localhost, remote hosts, IPv4 ranges, or your entire local `/24` LAN subnet in seconds using a bounded-concurrency port-major async engine. A legacy zero-dependency Python 3 implementation also remains in the repository for scriptable Python environments.
 
 ![Open Port Scanner UI Preview](docs/assets/preview.svg)
 
@@ -28,60 +28,64 @@ Designed as a modern, lightweight alternative to **Angry IP Scanner**, **Nmap (Z
 
 ## ✨ Key Features
 
-- **⚡ High-Speed Asynchronous Engine:** Bounded `asyncio.Queue` worker pool scans all `1–65535` TCP ports in constant memory without socket exhaustion.
-- **🌐 1-Click Whole Local Network (LAN) Scan:** Automatically detects your active `/24` LAN subnet (`--lan` in CLI or **«Вся сеть»** button in GUI), filtering out loopback and VPN virtual interfaces.
-- **🔍 Instant Open Port Checker & Banner Grabbing:** Detects open, closed, and filtered ports across 120+ well-known services and captures SSH/FTP/SMTP/VNC greetings and HTTP status + `<title>`.
-- **🔒 TLS / SSL Certificate Inspection:** Extracts TLS version, cipher suite, certificate CN, and expiry date (with self-signed fallback).
-- **🖥️ Clean GUI + Scriptable CLI:** Launch a distraction-free Desktop GUI (`--gui` / `--web` in standalone app-window mode) or pipe structured `--json` output in automation.
-- **📊 Ready-to-Use Exports:** Save reports directly to `JSON`, `CSV`, `Markdown`, or plain text.
+- **⚡ Native Rust + Tokio Async Engine:** Bounded worker pool (`1–2000` sockets) sweeps hosts in port-major order without file-descriptor exhaustion.
+- **🖥️ Distraction-Free Native GPU GUI (`eframe` / `egui`):** Double-click `port-scanner` (or run with no arguments) for an immediate dark-themed desktop UI — 1-click **«Этот ПК»** and **«Вся сеть»**, instant table sorting, live filter, and CSV/JSON export.
+- **🌐 1-Click Whole Local Network (LAN) Scan:** Automatically detects your active `/24` LAN subnet (`--lan` in CLI or **«Вся сеть · <cidr>»** in GUI), filtering out loopback (`127.*`), link-local (`169.254.*`), and VPN fake-IP pools (`198.18.0.0/15`).
+- **🔍 Open Port Checker & Banner Grabbing:** Maps 120+ well-known TCP services, measures handshake latency in milliseconds, and grabs SSH/FTP/SMTP/VNC greetings plus HTTP status, `Server` headers, and `<title>`.
+- **📜 Scriptable CLI + Exports:** Pipe clean `--json` output in automation or export reports directly to `.json`, `.csv`, or `.md` (`-o`).
 
 ---
 
 ## 📊 Why Use This Over Angry IP Scanner or Nmap?
 
-| Feature | Open Port Scanner | Angry IP Scanner | Nmap / Zenmap | Advanced Port Scanner |
+| Feature | Open Port Scanner v2.0 | Angry IP Scanner | Nmap / Zenmap | Advanced Port Scanner |
 | :--- | :---: | :---: | :---: | :---: |
-| **Scanning Engine** | ⚡ **Async Worker Pool** | Multi-threaded | Raw / Tunable | Multi-threaded |
-| **Requires Java / Npcap** | ✅ **No (Zero-Dep)** | ❌ Requires JVM | ❌ Requires Npcap | ✅ No |
+| **Stack & Engine** | 🦀 **Rust (`tokio` + `egui`)** | Java / threads | C++ / Raw | Multi-threaded |
+| **Binary Footprint** | ✅ **~5–8 MB Single File** | Requires JVM | Requires Npcap | Installer |
+| **Requires Java / Npcap** | ✅ **No (Zero Runtime Deps)** | ❌ Requires JVM | ❌ Requires Npcap | ✅ No |
 | **Operating Systems** | **Windows, Mac, Linux** | Windows, Mac, Linux | Windows, Mac, Linux | ❌ Windows Only |
 | **1-Click Whole LAN Scan** | ✅ **Built-in (`--lan`)** | Manual IP range | Manual CIDR | Auto subnet |
-| **GUI + CLI in One Tool** | ✅ **Both Included** | GUI Only | CLI + Legacy Zenmap | GUI Only |
-| **JSON / CSV / MD Export** | ✅ **Built-in** | Basic CSV/TXT | XML / Grepable | Basic HTML/CSV |
+| **GUI + CLI in One Binary** | ✅ **Both Included** | GUI Only | CLI + Legacy Zenmap | GUI Only |
 | **License** | **100% Free (MIT)** | GPL | NPSL | Proprietary Freeware |
 
 ---
 
 ## 🚀 Quick Start & Download
 
-### Option 1: Download Pre-built Executable (No Python Required)
+### Option 1: Download Pre-built Native Executable (~5–8 MB)
 
-Download the latest standalone package for your operating system from the **[GitHub Releases](https://github.com/open-port-tools/port-scanner/releases)** page:
+Download the latest standalone binary for your operating system from **[GitHub Releases](https://github.com/open-port-tools/port-scanner/releases)**:
 
-| OS | Package | Included Binaries |
+| OS | Package | Binary |
 | :--- | :--- | :--- |
-| **Windows (x64)** | `port-scanner-windows-x64.zip` | `PortScanner-GUI.exe` (windowed GUI), `port-scanner.exe` (CLI + GUI) |
-| **macOS** | `port-scanner-macos.tar.gz` | `PortScanner-GUI.app`, `port-scanner` (CLI + GUI) |
-| **Linux (x64)** | `port-scanner-linux-x64.tar.gz` | `PortScanner-GUI`, `port-scanner` (CLI + GUI) |
+| **Windows (x64)** | `port-scanner-windows-x64.zip` | `port-scanner.exe` (Native GUI + CLI) |
+| **macOS** | `port-scanner-macos.tar.gz` | `port-scanner` (Native Metal/GL GUI + CLI) |
+| **Linux (x64)** | `port-scanner-linux-x64.tar.gz` | `port-scanner` (Native X11/Wayland GUI + CLI) |
 
-### Option 2: Run Directly with Python 3.9+ (Zero Dependencies)
+Launch GUI directly (double-click or run with no arguments):
+```bash
+./port-scanner
+```
+
+### Option 2: Build from Source with Cargo (Rust 1.75+)
 
 ```bash
 git clone https://github.com/open-port-tools/port-scanner.git
 cd port-scanner
 
-# Launch the GUI (opens standalone window)
-python3 scanner.py --gui
+cargo build --release
 
-# Or scan your entire detected local network immediately
-python3 scanner.py --lan --profile quick
+# Launch native GPU GUI
+./target/release/port-scanner
+
+# Or run a fast CLI scan across your local LAN
+./target/release/port-scanner --lan --profile quick
 ```
 
-### Option 3: Install Locally as a Command
+### Option 3: Legacy Python 3.9+ Fallback (Zero Pip Dependencies)
 
 ```bash
-pip install -e .
-port-scanner --lan --profile quick
-port-scanner-gui
+python3 scanner.py --lan --profile quick
 ```
 
 ---
@@ -89,59 +93,70 @@ port-scanner-gui
 ## 🛠 How to Check Open Ports (Usage Examples)
 
 ### 1. Scan Your Whole Local Network (LAN /24) in 1 Click
-Automatically detect your active Wi-Fi/Ethernet subnet and list all open services:
+Automatically detect your active Wi-Fi/Ethernet subnet and list open services:
 ```bash
-python3 scanner.py --lan --profile quick
+port-scanner --lan --profile quick
 ```
 
 ### 2. Check Specific Open Ports on a Host or IP
-Verify web, SSH, RDP, or database ports with banner & TLS inspection:
 ```bash
-python3 scanner.py scanme.nmap.org -p 22,80,443,3306,8080
+port-scanner scanme.nmap.org -p 22,80,443,3306,8080
 ```
 
-### 3. Scan an IP Range or CIDR Subnet and Export JSON / CSV
+### 3. Scan a CIDR Subnet or Range and Export JSON / CSV / Markdown
 ```bash
-python3 scanner.py 192.168.1.0/24 -p 22,80,443,3389 -o scan-report.json
-python3 scanner.py 192.168.1.1-50 --profile web -o web-hosts.csv
+port-scanner 192.168.1.0/24 -p 22,80,443,3389 -o scan-report.json
+port-scanner 192.168.1.1-50 --profile web -o web-hosts.csv
+port-scanner 127.0.0.1 --profile quick --json -q
 ```
 
 ### 4. Full 1–65535 Port Sweep
 ```bash
-python3 scanner.py 127.0.0.1 --profile full -c 800 -t 0.5
+port-scanner 127.0.0.1 --profile full -c 800 -t 0.4
 ```
 
 ### Available Port Presets (`--profile`)
 - `quick` — Top 25 essential ports (`21, 22, 23, 25, 53, 80, 443, 445, 3306, 3389, 5432, 6379, 8080, 8443, 27017`, etc.)
-- `common` — Top ~96 commonly exposed TCP services *(default)*
-- `web` — HTTP/HTTPS & dev servers (`80, 443, 3000, 5173, 8000, 8080, 8443, 9000`, etc.)
-- `database` — SQL & NoSQL ports (`1433, 1521, 3306, 5432, 6379, 9200, 27017`, etc.)
+- `common` — Top 96 commonly exposed TCP services *(default in CLI)*
+- `web` — Top 19 HTTP/HTTPS & dev server ports (`80, 443, 3000, 5173, 8000, 8080, 8443, 9000`, etc.)
+- `database` — Top 17 SQL & NoSQL ports (`1433, 1521, 3306, 5432, 6379, 9200, 27017`, etc.)
 - `full` — Complete range `1–65535`
 
 ---
 
-## 📦 Building Executables Locally
+## 📦 Building Locally & Cross-Compiling Windows `.exe`
 
-- **Windows (`.exe`)**: run [`build_windows.bat`](build_windows.bat)
-- **macOS / Linux**: run [`./build_unix.sh`](build_unix.sh) or `python3 build_executable.py --mode all`
+Automated multi-platform release builds (Windows `.exe`, macOS, Linux) run on every push and tag via [`.github/workflows/build-binaries.yml`](.github/workflows/build-binaries.yml).
 
-Automated cross-platform builds run on every push via [`.github/workflows/build-binaries.yml`](.github/workflows/build-binaries.yml).
+To cross-compile a Windows `x86_64` `.exe` directly from macOS or Linux using `cargo-xwin`:
+```bash
+rustup target add x86_64-pc-windows-msvc
+cargo install cargo-xwin
+cargo xwin build --release --target x86_64-pc-windows-msvc
+# Output: target/x86_64-pc-windows-msvc/release/port-scanner.exe
+```
+
+On Linux, install X11/OpenGL development headers before compiling the GUI:
+```bash
+sudo apt-get install -y libxkbcommon-dev libxkbcommon-x11-dev libxcb-render0-dev libxcb-shape0-dev libxcb-xfixes0-dev libgl1-mesa-dev libwayland-dev
+cargo build --release
+```
 
 ---
 
 ## ❓ Frequently Asked Questions (FAQ)
 
 ### How do I check if a port is open on my IP address or local network?
-Run `python3 scanner.py --gui` and click **«Вся сеть»** (or **«Этот ПК»**), or run `python3 scanner.py --lan --profile quick` in your terminal. Open ports are displayed along with response latency in milliseconds and the detected service banner.
+Open `port-scanner` and click **«Вся сеть»** (or **«Этот ПК»**), or run `port-scanner --lan --profile quick` in your terminal. Open ports are displayed along with response latency in milliseconds and the detected service banner.
 
-### Do I need to install Nmap, Npcap, or Java?
-No. **Open Port Scanner** uses native OS TCP sockets via Python's standard `asyncio` library (or standalone compiled `.exe`/binary releases) and requires zero third-party packages or kernel drivers.
+### Do I need Python, Java, Nmap, or Npcap installed?
+No. **Open Port Scanner v2.0** compiles to a single native machine-code executable using OS TCP sockets and hardware-accelerated `egui` rendering.
 
 ### How does 1-click LAN scanning avoid VPN virtual subnets?
-The subnet detector checks active OS network interfaces (`ipconfig` on Windows, `ifconfig` on macOS, `ip` on Linux) and routing tables, ignoring loopback (`127.0.0.0/8`), link-local (`169.254.0.0/16`), and virtual TUN fake-IP blocks (`198.18.0.0/15`).
+The subnet detector parses active OS interfaces (`ipconfig` on Windows, `ifconfig` on macOS, `ip` on Linux) and routing probes, automatically filtering out loopback (`127.0.0.0/8`), link-local (`169.254.0.0/16`), and virtual TUN fake-IP blocks (`198.18.0.0/15`).
 
 ### Is it legal to use a port scanner?
-Yes. Scanning **your own devices, localhost, home Wi-Fi, or authorized corporate servers** for diagnostics and security auditing is completely legal. Never scan external third-party networks without explicit permission.
+Yes. Scanning **your own devices, localhost, home Wi-Fi, or authorized servers** for diagnostics and auditing is legal. Never scan external third-party networks without explicit permission.
 
 ---
 
@@ -149,14 +164,15 @@ Yes. Scanning **your own devices, localhost, home Wi-Fi, or authorized corporate
 
 Contributions, bug reports, and feature ideas are welcome! Check the [Issues page](https://github.com/open-port-tools/port-scanner/issues) or pick up a `good first issue`.
 
-Run the test suite locally:
+Run test suites locally:
 ```bash
+cargo test
 python3 -m unittest discover -s tests -v
 ```
 
 ## ⭐ Support the Project
 
-**Found this tool useful?** Please consider giving the repository a **Star ⭐** in the top-right corner! It helps more developers discover the project and motivates further development.
+**Found this tool useful?** Please consider giving the repository a **Star ⭐** in the top-right corner!
 
 ## 📄 License
 
