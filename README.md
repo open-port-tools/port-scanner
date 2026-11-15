@@ -52,19 +52,23 @@ It scans localhost, remote hosts, IPv4 ranges, or your entire local `/24` LAN su
 
 ## 🚀 Quick Start & Download
 
-### Option 1: Download Pre-built Native Executable (~5–8 MB)
+### Option 1: Download Pre-built Native Executable (~2–4 MB)
 
-Download the latest standalone binary for your operating system from **[GitHub Releases](https://github.com/open-port-tools/port-scanner/releases)**:
+Download the standalone binary for your operating system from **[GitHub Releases v2.0.0](https://github.com/open-port-tools/port-scanner/releases/tag/v2.0.0)**:
 
-| OS | Package | Binary |
-| :--- | :--- | :--- |
-| **Windows (x64)** | `port-scanner-windows-x64.zip` | `port-scanner.exe` (Native GUI + CLI) |
-| **macOS** | `port-scanner-macos.tar.gz` | `port-scanner` (Native Metal/GL GUI + CLI) |
-| **Linux (x64)** | `port-scanner-linux-x64.tar.gz` | `port-scanner` (Native X11/Wayland GUI + CLI) |
+| OS | Direct Download Link | Archive Size | Contents |
+| :--- | :--- | :---: | :--- |
+| **Windows (x64)** | [**Download port-scanner-windows-x64.zip**](https://github.com/open-port-tools/port-scanner/releases/download/v2.0.0/port-scanner-windows-x64.zip) | ~2.1 MB | `port-scanner.exe` (Native GPU GUI + CLI) |
+| **macOS (Universal)** | [**Download port-scanner-macos.tar.gz**](https://github.com/open-port-tools/port-scanner/releases/download/v2.0.0/port-scanner-macos.tar.gz) | ~4.4 MB | `port-scanner` (Apple Silicon M1–M4 + Intel x86_64) |
+| **Linux (x64)** | [**Download port-scanner-linux-x64.tar.gz**](https://github.com/open-port-tools/port-scanner/releases/download/v2.0.0/port-scanner-linux-x64.tar.gz) | ~2.8 MB | `port-scanner` (Native X11/Wayland GUI + CLI) |
 
-Launch GUI directly (double-click or run with no arguments):
+Launch GUI directly (double-click or run with no arguments in terminal):
 ```bash
+# macOS / Linux
 ./port-scanner
+
+# Windows
+port-scanner.exe
 ```
 
 ### Option 2: Build from Source with Cargo (Rust 1.75+)
