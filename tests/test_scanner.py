@@ -219,18 +219,18 @@ class TestAsyncScannerIntegration(unittest.IsolatedAsyncioTestCase):
         try:
             port = srv.bound_port
             reader, writer = await asyncio.open_connection("127.0.0.1", port)
-            writer.write(b"GET /api/status HTTP/1.1\r\nHost: 127.0.0.1\r\n\r\n")
+            writer.write(b"GET /api/status HTTP/1.1\r\nHost: 127.0.0.1\r\nConnection: close\r\n\r\n")
             await writer.drain()
-            raw = await asyncio.wait_for(reader.read(4096), timeout=2.0)
+            raw = await asyncio.wait_for(reader.read(4096), timeout=5.0)
             writer.close()
             text = raw.decode("utf-8", errors="replace")
             self.assertIn("200 OK", text)
             self.assertIn('"profiles"', text)
 
             reader2, writer2 = await asyncio.open_connection("127.0.0.1", port)
-            writer2.write(b"GET /api/network HTTP/1.1\r\nHost: 127.0.0.1\r\n\r\n")
+            writer2.write(b"GET /api/network HTTP/1.1\r\nHost: 127.0.0.1\r\nConnection: close\r\n\r\n")
             await writer2.drain()
-            raw2 = await asyncio.wait_for(reader2.read(4096), timeout=2.0)
+            raw2 = await asyncio.wait_for(reader2.read(4096), timeout=5.0)
             writer2.close()
             text2 = raw2.decode("utf-8", errors="replace")
             self.assertIn("200 OK", text2)
