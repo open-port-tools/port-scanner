@@ -1,0 +1,77 @@
+name: Build Standalone Binaries
+
+on:
+  push:
+    branches: ["main", "master"]
+    tags: ["v*"]
+  pull_request:
+    branches: ["main", "master"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            artifact_name: port-scanner-windows-x64
+            archive_ext: zip
+          - os: macos-latest
+            artifact_name: port-scanner-macos
+            archive_ext: tar.gz
+          - os: ubuntu-latest
+            artifact_name: port-scanner-linux-x64
+            archive_ext: tar.gz
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Linux Tk runtime (Ubuntu)
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3-tk
+
+      - name: Run unit tests
+        run: python -m unittest discover -s tests -v
+
+      - name: Install PyInstaller
+        run: python -m pip install --upgrade pip pyinstaller
+
+      - name: Build CLI and GUI executables
+        run: python build_executable.py --mode all --clean-build
+
+      - name: Package Windows binaries
+        if: matrix.os == 'windows-latest'
+        shell: pwsh
+        run: |
+          Compress-Archive -Path dist/* -DestinationPath "${{ matrix.artifact_name }}.zip"
+
+      - name: Package macOS / Linux binaries
+        if: matrix.os != 'windows-latest'
+        run: |
+          tar -czf "${{ matrix.artifact_name }}.tar.gz" -C dist .
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact_name }}
+          path: ${{ matrix.artifact_name }}.${{ matrix.archive_ext }}
+
+      - name: Attach binaries to GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ matrix.artifact_name }}.${{ matrix.archive_ext }}

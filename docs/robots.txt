@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://open-port-tools.github.io/port-scanner/sitemap.xml

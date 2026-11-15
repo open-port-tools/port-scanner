@@ -1,0 +1,24 @@
+# Open Port Scanner (open-port-tools/port-scanner)
+
+> Fast, cross-platform open port checker and asynchronous IP network scanner for Windows, macOS, and Linux with GUI and CLI.
+
+## Summary
+Open Port Scanner is a zero-dependency open-source utility for discovering open TCP ports, scanning whole local subnets (`--lan` / CIDR `/24`), inspecting TLS certificates, and grabbing service/HTTP banners on Windows, macOS, and Linux. It serves as a lightweight, standalone alternative to Angry IP Scanner, Nmap (Zenmap), and Advanced Port Scanner.
+
+## Key Capabilities
+- 1-click local network (`LAN /24`) detection and multi-host scanning.
+- Bounded asynchronous worker pool supporting full `1-65535` port sweeps without external drivers or Java.
+- Service identification for 120+ well-known ports plus HTTP (`Server`, `<title>`) and TLS certificate inspection.
+- Dual mode: desktop GUI (`--gui` / `--web`) and scriptable CLI (`--json`, `-o report.csv|json|md|txt`).
+- Pre-built standalone executables for Windows (`.exe`), macOS (`.app`), and Linux via GitHub Releases.
+
+## Quick Commands
+- Scan detected local network: `port-scanner --lan --profile quick`
+- Check specific ports: `port-scanner <target> -p 22,80,443,8080`
+- Full 1-65535 scan: `port-scanner <target> --profile full`
+- Launch GUI: `port-scanner --gui`
+
+## Links
+- Repository: https://github.com/open-port-tools/port-scanner
+- Website: https://open-port-tools.github.io/port-scanner/
+- Releases: https://github.com/open-port-tools/port-scanner/releases

@@ -1,0 +1,6 @@
+docs/* linguist-documentation
+examples/* linguist-documentation
+tests/* linguist-vendored
+assets/* linguist-vendored
+*.html linguist-detectable=false
+*.svg linguist-detectable=false
