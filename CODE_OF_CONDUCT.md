@@ -20,4 +20,4 @@ Examples of unacceptable behavior:
 
 ## Enforcement
 
-Instances of abusive, harassing, or otherwise unacceptable behavior may be reported to the project team at **contact@open-port-tools.github.io**. All complaints will be reviewed and investigated promptly and fairly.
+Instances of abusive, harassing, or otherwise unacceptable behavior may be reported to the maintainers via [GitHub Security Advisories](https://github.com/open-port-tools/port-scanner/security/advisories/new) or directly through GitHub. All complaints will be reviewed and investigated promptly and fairly.
