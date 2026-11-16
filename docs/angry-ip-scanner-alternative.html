@@ -123,108 +123,107 @@
     <article>
       <h1>Angry IP Scanner Alternative Without Java</h1>
       <p class="lead">
-        Why thousands of network engineers and developers are replacing Angry IP Scanner with <strong>Open Port Scanner</strong> — a fast, native Rust executable that runs everywhere without Java Runtime Environment (JRE).
+        Angry IP Scanner (ipscan) is a familiar network utility, but running it requires a Java Runtime Environment (JRE). Open Port Scanner is a native alternative compiled in Rust with zero runtime dependencies.
       </p>
 
       <div class="cta-box">
         <div>
           <div style="font-weight: 600; font-size: 16px;">Download Open Port Scanner v2.0</div>
-          <div style="font-size: 13px; color: var(--muted);">Native standalone binary (~2–4 MB) • Windows .exe • macOS • Linux</div>
+          <div style="font-size: 13px; color: var(--muted);">Standalone binary (~2–4 MB) • Windows .exe • macOS • Linux</div>
         </div>
         <div>
-          <a class="btn btn-primary" href="https://github.com/open-port-tools/port-scanner/releases/latest">Download Now</a>
-          <a class="btn btn-secondary" href="https://github.com/open-port-tools/port-scanner">GitHub ⭐</a>
+          <a class="btn btn-primary" href="https://github.com/open-port-tools/port-scanner/releases/latest">Download Release</a>
+          <a class="btn btn-secondary" href="https://github.com/open-port-tools/port-scanner">GitHub</a>
         </div>
       </div>
 
-      <h2>The Problem with Angry IP Scanner in 2026</h2>
+      <h2>Why Look for an Alternative to Angry IP Scanner?</h2>
       <p>
-        Angry IP Scanner (ipscan) has been a popular network tool for decades. However, modern corporate security policies, headless server environments, and lightweight developer laptops frequently encounter its primary limitation:
+        While Angry IP Scanner has served network administrators for years, its architecture introduces challenges in modern environments:
       </p>
       <ul>
-        <li><strong>Requires Java Runtime (JRE / JDK):</strong> To run Angry IP Scanner, you must install and maintain a 150+ MB Java runtime environment, creating unnecessary overhead and security update cycles.</li>
-        <li><strong>No Native GPU Rendering:</strong> The legacy UI can feel sluggish on high-DPI and Retina displays.</li>
-        <li><strong>Manual Subnet Configuration:</strong> You must look up your IP address and manually type start and end IP boundaries.</li>
-        <li><strong>Limited Banner Inspection:</strong> Checking HTTP titles, server headers, and SSH software versions requires external plug-ins.</li>
+        <li><strong>Java dependency:</strong> Running ipscan requires installing and updating a 150+ MB Java runtime, which many locked-down corporate systems or clean laptops do not have.</li>
+        <li><strong>Manual subnet configuration:</strong> Users need to look up their current IP address and type starting and ending IP addresses by hand.</li>
+        <li><strong>Plug-in requirements for banners:</strong> Inspecting HTTP page titles, web server banners, and SSH version strings requires additional configuration.</li>
       </ul>
 
-      <h2>Direct Comparison: Open Port Scanner vs. Angry IP Scanner</h2>
+      <h2>Comparison: Open Port Scanner vs. Angry IP Scanner</h2>
       <table>
         <thead>
           <tr>
             <th>Feature</th>
-            <th>Open Port Scanner (v2.0)</th>
+            <th>Open Port Scanner</th>
             <th>Angry IP Scanner</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><strong>Runtime Requirements</strong></td>
-            <td><strong>Zero (Native Rust Machine Code)</strong></td>
+            <td>Runtime Dependencies</td>
+            <td>None (native Rust binary)</td>
             <td>Requires Java (JRE 8+)</td>
           </tr>
           <tr>
-            <td><strong>Download Size</strong></td>
-            <td><strong>~2.1 MB (.exe) / ~4.4 MB (macOS)</strong></td>
-            <td>~20 MB + 150 MB Java runtime</td>
+            <td>Download Size</td>
+            <td>~2.1 MB (.exe) / ~4.4 MB (macOS)</td>
+            <td>~20 MB + 150 MB JRE</td>
           </tr>
           <tr>
-            <td><strong>1-Click Whole LAN Scan</strong></td>
-            <td><strong>Yes</strong> (auto-detects /24 subnet, ignores VPNs)</td>
-            <td>No (manual IP range entry)</td>
+            <td>Subnet Detection</td>
+            <td>Automatic /24 LAN detection</td>
+            <td>Manual IP range entry</td>
           </tr>
           <tr>
-            <td><strong>User Interface</strong></td>
-            <td><strong>Dark GPU GUI (`egui`) + CLI in 1 file</strong></td>
-            <td>Legacy Java desktop window</td>
+            <td>Interface</td>
+            <td>GPU desktop GUI (egui) + scriptable CLI</td>
+            <td>Java desktop window</td>
           </tr>
           <tr>
-            <td><strong>Banner &amp; HTTP Title Grabbing</strong></td>
-            <td><strong>Built-in</strong> (SSH, HTTP Status, Server, Title)</td>
-            <td>Limited fetchers</td>
+            <td>Banner Grabbing</td>
+            <td>Built-in (SSH, HTTP Status, Server, Title)</td>
+            <td>Requires separate fetchers</td>
           </tr>
           <tr>
-            <td><strong>Scripting &amp; Automation</strong></td>
-            <td><strong>CLI with `--json`, `--lan`, `-o` exports</strong></td>
-            <td>Command-line launcher via Java</td>
+            <td>Automation &amp; Export</td>
+            <td>CLI flags (--json, --lan, -o)</td>
+            <td>Command-line wrapper via Java</td>
           </tr>
           <tr>
-            <td><strong>License</strong></td>
-            <td><strong>100% Free &amp; Open Source (MIT)</strong></td>
+            <td>License</td>
+            <td>MIT</td>
             <td>GPL v2</td>
           </tr>
         </tbody>
       </table>
 
-      <h2>Key Advantages of Open Port Scanner</h2>
-      <h3>1. Portable Standalone Executable</h3>
+      <h2>Key Differences</h2>
+      <h3>1. Portable Standalone Binary</h3>
       <p>
-        Copy <code>port-scanner.exe</code> to a USB stick, drop it onto a remote server, or run it on a freshly installed Mac or Windows machine. There are no installers, no DLLs, and no runtime prerequisites.
+        Open Port Scanner ships as a single executable with no installer, no DLL dependencies, and no runtime framework. You can run <code>port-scanner.exe</code> from a USB drive or deploy it directly to a server.
       </p>
 
-      <h3>2. Intelligent 1-Click LAN Discovery</h3>
+      <h3>2. Automatic Subnet Detection</h3>
       <p>
-        Instead of running <code>ipconfig</code> or <code>ifconfig</code> to find your subnet, simply click <strong>«Вся сеть · 192.168.x.x/24»</strong>. The built-in network detector automatically finds your primary network interface while filtering out loopback addresses and virtual VPN tunnels (such as <code>198.18.0.0/15</code>).
+        Instead of finding your adapter IP and typing address ranges, selecting the LAN subnet target (or running <code>port-scanner --lan</code>) automatically identifies the primary network interface while filtering out loopback and virtual VPN ranges (such as <code>198.18.0.0/15</code>).
       </p>
 
-      <h3>3. High-Speed Asynchronous Engine</h3>
+      <h3>3. Asynchronous Tokio Architecture</h3>
       <p>
-        Powered by Tokio, Open Port Scanner utilizes bounded concurrent asynchronous sockets. It sweeps hundreds of hosts and thousands of ports in parallel without socket exhaustion or high CPU utilization.
+        Open Port Scanner uses asynchronous TCP sockets with bounded concurrency. It sweeps hosts and ports in parallel with configurable timeout and concurrency limits.
       </p>
 
-      <h2>Quick Start Examples</h2>
+      <h2>Usage Examples</h2>
       <pre><code># Scan your entire local subnet in one command:
 port-scanner --lan --profile quick
 
 # Scan a specific IP range and export results to JSON:
 port-scanner 192.168.1.0/24 -p 22,80,443,3389 -o network-audit.json
 
-# Launch the distraction-free desktop interface:
+# Launch the desktop interface:
 port-scanner --gui</code></pre>
 
-      <h2>Conclusion</h2>
+      <h2>Summary</h2>
       <p>
-        If you need a modern, lightning-fast replacement for Angry IP Scanner that starts instantly, uses negligible memory, and requires no Java installation, <strong>Open Port Scanner</strong> is the ideal open-source choice.
+        For administrators and developers who need a lightweight, self-contained port scanner without a Java runtime, Open Port Scanner offers fast local subnet discovery, service banner extraction, and structured JSON and CSV output.
       </p>
       <h2>Related Network Guides</h2>
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 16px;">

@@ -122,33 +122,33 @@
     <article>
       <h1>Advanced Port Scanner for macOS and Linux</h1>
       <p class="lead">
-        Famatech's popular <strong>Advanced Port Scanner</strong> is strictly limited to Microsoft Windows. If you are on macOS or Linux and need an easy, one-click subnet scanner with a clean desktop interface, <strong>Open Port Scanner</strong> is the recommended cross-platform alternative.
+        Famatech's Advanced Port Scanner is limited to Microsoft Windows. For users on macOS or Linux who need a subnet scanner with a desktop interface, Open Port Scanner provides a native cross-platform alternative.
       </p>
 
       <div class="cta-box">
         <div>
-          <div style="font-weight: 600; font-size: 16px;">Get Open Port Scanner for Mac / Linux / Windows</div>
-          <div style="font-size: 13px; color: var(--muted);">Native Universal binary for Apple Silicon (M1-M4) &amp; Intel • Linux x64 • Windows</div>
+          <div style="font-weight: 600; font-size: 16px;">Download Open Port Scanner v2.0</div>
+          <div style="font-size: 13px; color: var(--muted);">Universal binary for Apple Silicon &amp; Intel • Linux x64 • Windows .exe</div>
         </div>
         <div>
           <a class="btn btn-primary" href="https://github.com/open-port-tools/port-scanner/releases/latest">Download Release</a>
-          <a class="btn btn-secondary" href="https://github.com/open-port-tools/port-scanner">Source Code ⭐</a>
+          <a class="btn btn-secondary" href="https://github.com/open-port-tools/port-scanner">GitHub</a>
         </div>
       </div>
 
       <h2>Is There an Official Advanced Port Scanner for Mac or Linux?</h2>
       <p>
-        No. Famatech has never released a macOS or Linux edition of Advanced Port Scanner. System administrators working in mixed OS environments often struggle to find a tool that offers the same simplicity:
+        No. Famatech has never released a macOS or Linux edition of Advanced Port Scanner. Common workarounds on non-Windows systems each carry trade-offs:
       </p>
       <ul>
-        <li><strong>Nmap / Zenmap:</strong> Powerful, but requires root privileges, driver installation (Npcap), and complex command-line syntax.</li>
-        <li><strong>Angry IP Scanner:</strong> Works across platforms, but mandates installing a bloated Java runtime environment (JRE).</li>
-        <li><strong>Wine / Emulation:</strong> Running Windows port scanners via Wine often fails because low-level socket operations behave differently in emulated environments.</li>
+        <li><strong>Nmap / Zenmap:</strong> Capable, but requires root privileges, packet capture drivers, and detailed syntax knowledge for basic sweeps.</li>
+        <li><strong>Angry IP Scanner:</strong> Cross-platform, but requires an external Java runtime (JRE) installation.</li>
+        <li><strong>Wine / Emulation:</strong> Running Windows network utilities via Wine often produces incomplete results because low-level socket APIs behave differently in emulation.</li>
       </ul>
 
-      <h2>Why Open Port Scanner is the Best Alternative</h2>
+      <h2>Comparison: Open Port Scanner vs. Advanced Port Scanner</h2>
       <p>
-        Open Port Scanner v2.0 solves this gap by compiling directly to native machine code on macOS, Linux, and Windows:
+        Open Port Scanner compiles directly to native machine code on macOS, Linux, and Windows:
       </p>
 
       <table>
@@ -161,52 +161,52 @@
         </thead>
         <tbody>
           <tr>
-            <td><strong>Supported OS</strong></td>
-            <td><strong>macOS (Apple Silicon &amp; Intel), Linux, Windows</strong></td>
+            <td>Supported OS</td>
+            <td>macOS (Apple Silicon &amp; Intel), Linux, Windows</td>
             <td>Windows only</td>
           </tr>
           <tr>
-            <td><strong>Subnet Detection</strong></td>
-            <td><strong>1-Click «Вся сеть · /24»</strong> auto-detection</td>
-            <td>Auto C-class subnet detection</td>
+            <td>Subnet Detection</td>
+            <td>Automatic /24 subnet discovery</td>
+            <td>Class C subnet auto-detect</td>
           </tr>
           <tr>
-            <td><strong>Installer / Footprint</strong></td>
-            <td><strong>Portable ~2-4 MB binary (zero install)</strong></td>
+            <td>Footprint</td>
+            <td>Standalone ~2–4 MB binary (no install)</td>
             <td>Installer required</td>
           </tr>
           <tr>
-            <td><strong>Service Inspection</strong></td>
-            <td><strong>120+ ports, HTTP status, title, Server &amp; SSH</strong></td>
+            <td>Service Inspection</td>
+            <td>120+ ports, HTTP status, title, Server &amp; SSH</td>
             <td>HTTP, FTP, RDP, NetBIOS</td>
           </tr>
           <tr>
-            <td><strong>Automation / CLI</strong></td>
-            <td><strong>Yes (`--json`, `--lan`, `-o report.csv`)</strong></td>
+            <td>Automation &amp; CLI</td>
+            <td>Full CLI (--json, --lan, -o)</td>
             <td>GUI only</td>
           </tr>
           <tr>
-            <td><strong>License</strong></td>
-            <td><strong>Open Source (MIT)</strong></td>
+            <td>License</td>
+            <td>MIT (Open Source)</td>
             <td>Proprietary Freeware</td>
           </tr>
         </tbody>
       </table>
 
-      <h2>How to Scan Your LAN on macOS &amp; Linux</h2>
-      <h3>1. Desktop GUI Experience</h3>
+      <h2>How to Scan Your LAN on macOS and Linux</h2>
+      <h3>1. Desktop GUI</h3>
       <p>
-        Download the standalone release for your operating system, double-click to launch, and click the <strong>«Вся сеть»</strong> button. The tool immediately probes your entire local subnet for active web servers, SSH daemons, databases, and network equipment.
+        Download the standalone release for macOS or Linux, run the binary, and select the LAN subnet target (or run with <code>--gui</code>). The scanner probes your local subnet for active web servers, SSH daemons, databases, and network hardware.
       </p>
 
-      <h3>2. Command-Line Experience</h3>
+      <h3>2. Command-Line Interface</h3>
       <p>
-        For automation, system monitoring, or SSH sessions, run Open Port Scanner directly from the terminal:
+        For automation, headless servers, or quick terminal checks:
       </p>
-      <pre><code># 1-Click LAN scan:
+      <pre><code># Scan your active local subnet:
 ./port-scanner --lan --profile quick
 
-# Full sweep of specific host with CSV export:
+# Scan a gateway host and save results to CSV:
 ./port-scanner 192.168.0.1 --profile full -o gateway-ports.csv</code></pre>
       <h2>Related Network Guides</h2>
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 16px;">

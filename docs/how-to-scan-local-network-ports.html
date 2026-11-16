@@ -31,8 +31,8 @@
       },
       {
         "@type": "HowToStep",
-        "name": "Trigger 1-Click LAN Scan",
-        "text": "Click the 'Вся сеть' button or run 'port-scanner --lan' to scan all 254 subnet hosts automatically."
+        "name": "Trigger LAN Subnet Scan",
+        "text": "Select the LAN subnet target or run 'port-scanner --lan' to scan all 254 subnet hosts automatically."
       },
       {
         "@type": "HowToStep",
@@ -148,21 +148,21 @@
         <li><strong>Linux:</strong> Download <code>port-scanner-linux-x64.tar.gz</code> and execute in terminal or desktop window.</li>
       </ul>
 
-      <h2>Step 2: 1-Click Subnet Scan (GUI Method)</h2>
+      <h2>Step 2: Subnet Scan via Desktop Interface</h2>
       <p>
-        Upon launching the desktop window, the scanner inspects your active Wi-Fi or Ethernet adapter and calculates your <code>/24</code> subnet (e.g. <code>192.168.0.0/24</code> or <code>10.0.0.0/24</code>).
+        When you launch the desktop app, the scanner automatically identifies your active network interface and calculates the local <code>/24</code> subnet (such as <code>192.168.1.0/24</code> or <code>10.0.0.0/24</code>).
       </p>
       <ol>
-        <li>Click the segmented button <strong>«Вся сеть · 192.168.x.x/24»</strong>.</li>
-        <li>Select your desired port profile:
+        <li>Click the local network target button (showing your detected subnet range).</li>
+        <li>Select a port preset:
           <ul>
-            <li><strong>Быстрый (25):</strong> Essential web, SSH, RDP, VNC, and database ports.</li>
-            <li><strong>Стандартный (96):</strong> Top 96 common TCP services.</li>
-            <li><strong>Веб (19):</strong> Dev servers and web management interfaces (80, 443, 3000, 5173, 8080, 8443).</li>
-            <li><strong>Базы данных (17):</strong> PostgreSQL, MySQL, Redis, MongoDB, MSSQL.</li>
+            <li><strong>Quick (25 ports):</strong> Web (80, 443), SSH (22), RDP (3389), VNC, and common remote access ports.</li>
+            <li><strong>Standard (96 ports):</strong> Commonly exposed TCP services.</li>
+            <li><strong>Web (19 ports):</strong> Common development and web servers (80, 443, 3000, 5173, 8080, 8443).</li>
+            <li><strong>Databases (17 ports):</strong> PostgreSQL, MySQL, Redis, MongoDB, and MSSQL.</li>
           </ul>
         </li>
-        <li>Click <strong>«Сканировать»</strong>. In 2–5 seconds, all active devices and open ports appear with millisecond response latency and service banners.</li>
+        <li>Click <strong>Scan</strong>. Active devices and open ports appear with response latency and detected service banners.</li>
       </ol>
 
       <h2>Step 3: CLI Method (Terminal &amp; Automation)</h2>
@@ -189,27 +189,27 @@ port-scanner 127.0.0.1 --profile full</code></pre>
         </thead>
         <tbody>
           <tr>
-            <td><strong>22</strong></td>
+            <td>22</td>
             <td>SSH</td>
             <td>Ensure password authentication is disabled; use public keys.</td>
           </tr>
           <tr>
-            <td><strong>80 / 443 / 8080</strong></td>
+            <td>80 / 443 / 8080</td>
             <td>HTTP / Web</td>
             <td>Router admin portals, IP cameras, printers, and NAS panels.</td>
           </tr>
           <tr>
-            <td><strong>445</strong></td>
+            <td>445</td>
             <td>SMB</td>
             <td>Windows file sharing; should never be exposed externally.</td>
           </tr>
           <tr>
-            <td><strong>3389</strong></td>
+            <td>3389</td>
             <td>RDP</td>
             <td>Remote Desktop Protocol; vulnerable to brute-force attacks if unprotected.</td>
           </tr>
           <tr>
-            <td><strong>5432 / 3306 / 6379</strong></td>
+            <td>5432 / 3306 / 6379</td>
             <td>PostgreSQL / MySQL / Redis</td>
             <td>Databases should strictly require strong authentication and bind to localhost unless clustering.</td>
           </tr>
