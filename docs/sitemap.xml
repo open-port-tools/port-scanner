@@ -1,27 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://open-port-tools.github.io/port-scanner/</loc>
-    <lastmod>2026-11-15</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://open-port-tools.github.io/port-scanner/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://open-port-tools.github.io/port-scanner/ru/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://open-port-tools.github.io/port-scanner/" />
+    <lastmod>2026-11-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://open-port-tools.github.io/port-scanner/ru/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://open-port-tools.github.io/port-scanner/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://open-port-tools.github.io/port-scanner/ru/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://open-port-tools.github.io/port-scanner/" />
+    <lastmod>2026-11-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
     <loc>https://open-port-tools.github.io/port-scanner/angry-ip-scanner-alternative.html</loc>
-    <lastmod>2026-11-15</lastmod>
+    <lastmod>2026-11-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://open-port-tools.github.io/port-scanner/advanced-port-scanner-mac-linux.html</loc>
-    <lastmod>2026-11-15</lastmod>
+    <lastmod>2026-11-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://open-port-tools.github.io/port-scanner/how-to-scan-local-network-ports.html</loc>
-    <lastmod>2026-11-15</lastmod>
+    <lastmod>2026-11-16</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
   </url>
 </urlset>

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Сканер портов и локальной сети (LAN) — Open Port Scanner на Rust</title>
+  <meta name="description" content="Бесплатный быстрый сканер портов и локальной сети на Rust для Windows, macOS и Linux. Сканирование всей сети в 1 клик, проверка открытых TCP портов, баннеров и задержки без Java и Npcap." />
+  <link rel="canonical" href="https://open-port-tools.github.io/port-scanner/ru/" />
+  <link rel="alternate" hreflang="en" href="https://open-port-tools.github.io/port-scanner/" />
+  <link rel="alternate" hreflang="ru" href="https://open-port-tools.github.io/port-scanner/ru/" />
+  <link rel="alternate" hreflang="x-default" href="https://open-port-tools.github.io/port-scanner/" />
+
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
+  <link rel="manifest" href="../site.webmanifest" />
+  <meta name="theme-color" content="#111214" />
+
+  <meta property="og:title" content="Сканер портов и локальной сети — Open Port Scanner" />
+  <meta property="og:description" content="Сканирование всей подсети в 1 клик, проверка открытых TCP портов и сервисов на Rust (tokio + egui). Без Java и драйверов." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://open-port-tools.github.io/port-scanner/ru/" />
+  <meta property="og:image" content="https://open-port-tools.github.io/port-scanner/assets/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Сканер портов и локальной сети — Open Port Scanner" />
+  <meta name="twitter:description" content="Быстрый сканер портов и LAN в 1 клик на нативном Rust. Компактный бинарник ~2-4 МБ для Windows, Mac и Linux." />
+  <meta name="twitter:image" content="https://open-port-tools.github.io/port-scanner/assets/og-image.png" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Open Port Scanner",
+    "softwareVersion": "2.0.0",
+    "operatingSystem": "Windows, macOS, Linux",
+    "applicationCategory": "DeveloperApplication",
+    "programmingLanguage": "Rust",
+    "fileSize": "2.1MB",
+    "offers": {
+      "@type": "Offer",
+      "price": "0.00",
+      "priceCurrency": "RUB"
+    },
+    "description": "Быстрый асинхронный сканер открытых портов и локальной сети с определением подсети в 1 клик, графическим интерфейсом на GPU и CLI. Современная замена Angry IP Scanner и Nmap без зависимостей.",
+    "url": "https://open-port-tools.github.io/port-scanner/ru/",
+    "downloadUrl": "https://github.com/open-port-tools/port-scanner/releases/latest"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Как проверить открытые порты на своём ПК или во всей локальной сети?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Скачайте готовый бинарник для Windows (.exe), macOS или Linux, нажмите кнопку «Вся сеть» (или «Этот ПК») и нажмите «Сканировать». Программа за секунды найдёт все активные устройства, открытые порты, баннеры сервисов и время отклика в миллисекундах."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Нужно ли устанавливать Java, Python или драйверы Npcap/WinPcap?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Нет. Open Port Scanner v2.0 написан на нативном Rust и скомпилирован в единый исполняемый файл размером всего ~2–4 МБ без внешних зависимостей."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Существует ли версия Advanced Port Scanner для Mac или Linux?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Оригинальный Advanced Port Scanner работает только на Windows. Open Port Scanner — рекомендуемый кроссплатформенный аналог с автоматическим определением подсети и удобным тёмным интерфейсом для macOS и Linux."
+        }
+      }
+    ]
+  }
+  </script>
+  <style>
+    :root {
+      --bg: #111214;
+      --surface: #181a1f;
+      --surface-alt: #1e2127;
+      --border: #272a31;
+      --text: #eceef2;
+      --muted: #9aa1ad;
+      --accent: #3b82f6;
+      --accent-hover: #2563eb;
+      --green: #34d399;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0; padding: 0; background: var(--bg); color: var(--text);
+      font-family: var(--font-sans); line-height: 1.6; overflow-x: clip;
+    }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .container { max-width: 980px; margin: 0 auto; padding: 32px 24px 64px; }
+    nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-bottom: 24px; border-bottom: 1px solid var(--border); margin-bottom: 40px;
+    }
+    .brand { font-weight: 600; color: var(--text); text-decoration: none; font-size: 15px; }
+    .nav-links { display: flex; gap: 18px; font-size: 14px; align-items: center; }
+    .nav-links a { color: var(--muted); text-decoration: none; }
+    .nav-links a:hover { color: var(--text); }
+    .lang-badge {
+      background: var(--surface-alt); border: 1px solid var(--border);
+      padding: 3px 8px; border-radius: 4px; font-size: 12px; color: var(--text);
+    }
+    h1 { font-size: clamp(28px, 4vw, 38px); line-height: 1.2; margin: 0 0 14px; letter-spacing: -0.02em; }
+    .lead { font-size: 17px; color: var(--muted); max-width: 68ch; margin: 0 0 24px; }
+    .cta-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 32px; }
+    .btn {
+      display: inline-block; padding: 10px 18px; border-radius: 6px;
+      font-weight: 600; font-size: 14px; text-decoration: none;
+    }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: var(--accent-hover); }
+    .btn-secondary { background: var(--surface); color: var(--text); border: 1px solid var(--border); }
+    .btn-secondary:hover { background: var(--surface-alt); }
+    .preview { width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 40px; }
+    h2 { font-size: 22px; margin: 38px 0 16px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin: 20px 0; }
+    .box { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 20px; }
+    .box h3 { margin: 0 0 8px; font-size: 16px; }
+    .box p { margin: 0; font-size: 14px; color: var(--muted); line-height: 1.5; }
+    .guide-card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+      padding: 18px; text-decoration: none; color: inherit; display: block; transition: border-color 0.15s;
+    }
+    .guide-card:hover { border-color: var(--accent); }
+    .guide-card h3 { margin: 0 0 6px; font-size: 16px; color: #60a5fa; }
+    .guide-card p { margin: 0; font-size: 13.5px; color: var(--muted); }
+    pre {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+      padding: 14px 16px; overflow-x: auto; font-family: var(--font-mono); font-size: 13px;
+    }
+    code { font-family: var(--font-mono); font-size: 13px; color: #60a5fa; }
+    table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 14px; }
+    th, td { padding: 10px 12px; border-bottom: 1px solid var(--border); text-align: left; }
+    th { color: var(--muted); font-weight: 500; background: var(--surface); }
+    footer { margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--border); color: var(--muted); font-size: 13px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav>
+      <a class="brand" href="./">open-port-tools / port-scanner</a>
+      <div class="nav-links">
+        <a href="#downloads">Скачать</a>
+        <a href="#guides">Статьи</a>
+        <a href="https://github.com/open-port-tools/port-scanner">GitHub ⭐</a>
+        <a href="https://sourceforge.net/projects/port-scanner/">SourceForge</a>
+        <a class="lang-badge" href="../">English</a>
+      </div>
+    </nav>
+
+    <h1>Сканер открытых портов и локальной сети (LAN)</h1>
+    <p class="lead">
+      Сверхбыстрый, нативный сканер TCP-портов на <strong>Rust</strong> с определением всей сети в 1 клик.
+      Сканируйте локальный ПК или все 254 хоста домашней/офисной подсети за секунды в тёмном интерфейсе без установки Java и драйверов.
+    </p>
+
+    <div id="downloads" class="cta-row">
+      <a class="btn btn-primary" href="https://github.com/open-port-tools/port-scanner/releases/download/v2.0.0/port-scanner-windows-x64.zip">Скачать для Windows (.exe · 2.1 МБ)</a>
+      <a class="btn btn-secondary" href="https://github.com/open-port-tools/port-scanner/releases/download/v2.0.0/port-scanner-macos.tar.gz">Скачать для macOS (Universal · 4.4 МБ)</a>
+      <a class="btn btn-secondary" href="https://github.com/open-port-tools/port-scanner/releases/download/v2.0.0/port-scanner-linux-x64.tar.gz">Скачать для Linux (x64 · 2.8 МБ)</a>
+      <a class="btn btn-secondary" href="https://github.com/open-port-tools/port-scanner">Исходный код на GitHub ⭐</a>
+    </div>
+
+    <img class="preview" src="../assets/og-image.png" alt="Интерфейс Open Port Scanner" />
+
+    <h2>Почему системные администраторы и разработчики выбирают его</h2>
+    <div class="grid">
+      <div class="box">
+        <h3>⚡ Асинхронный движок на Rust</h3>
+        <p>На базе Tokio. Сканирует сотни хостов и тысячи портов параллельно без утечки сокетов и зависания системы.</p>
+      </div>
+      <div class="box">
+        <h3>🌐 1 Клик — вся сеть (LAN /24)</h3>
+        <p>Автоматически определяет активную подсеть Wi-Fi или Ethernet, фильтруя loopback и фейковые VPN-пулы (198.18.0.0/15).</p>
+      </div>
+      <div class="box">
+        <h3>🖥️ Ноль зависимостей (Без Java и Npcap)</h3>
+        <p>Работает сразу из коробки на Windows (.exe), macOS и Linux. Не требует установки JRE, Python или системных драйверов захвата пакетов.</p>
+      </div>
+      <div class="box">
+        <h3>🔍 Баннеры и заголовки HTTP</h3>
+        <p>Считывает приветствия SSH, HTTP-статусы, заголовки Server и title веб-страниц с замером точного пинга в миллисекундах.</p>
+      </div>
+      <div class="box">
+        <h3>📊 Экспорт в CSV и JSON</h3>
+        <p>Сохранение отчётов в 1 клик в Загрузки или Рабочий стол с автоматическим копированием в буфер обмена для документации.</p>
+      </div>
+      <div class="box">
+        <h3>🪶 Размер бинарника ~2–4 МБ</h3>
+        <p>Один компактный файл. Можно носить на флешке или запускать на удалённых серверах без пакетных менеджеров.</p>
+      </div>
+    </div>
+
+    <h2 id="guides">Полезные статьи и сравнения</h2>
+    <div class="grid">
+      <a class="guide-card" href="../angry-ip-scanner-alternative.html">
+        <h3>Аналог Angry IP Scanner без Java →</h3>
+        <p>Почему для аудита портов выбирают Open Port Scanner: мгновенный запуск, GPU интерфейс и отсутствие тяжеловесной Java.</p>
+      </a>
+      <a class="guide-card" href="../advanced-port-scanner-mac-linux.html">
+        <h3>Advanced Port Scanner для macOS и Linux →</h3>
+        <p>Оригинальный Advanced Port Scanner есть только под Windows. Вот современная нативная замена для Mac и Linux.</p>
+      </a>
+      <a class="guide-card" href="../how-to-scan-local-network-ports.html">
+        <h3>Как просканировать локальную сеть на открытые порты →</h3>
+        <p>Пошаговое руководство по сканированию подсети /24 на роутеры, камеры, принтеры и базы данных через GUI и консоль.</p>
+      </a>
+    </div>
+
+    <h2>Быстрая установка и консольное использование</h2>
+    <pre><code># Установка через Cargo (crates.io):
+cargo install open-port-scanner
+
+# Сканирование всей локальной сети за 2 секунды:
+port-scanner --lan --profile quick
+
+# Проверка конкретных портов с экспортом в JSON:
+port-scanner 192.168.1.0/24 -p 22,80,443,3389 -o report.json
+
+# Запуск графического интерфейса:
+port-scanner --gui</code></pre>
+
+    <h2>Сравнение сканеров портов</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Инструмент</th>
+          <th>Стек / Среда</th>
+          <th>Размер</th>
+          <th>Платформы</th>
+          <th>LAN в 1 клик</th>
+          <th>Лицензия</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Open Port Scanner v2.0</strong></td>
+          <td><strong>Rust (Tokio + egui)</strong></td>
+          <td><strong>~2–4 МБ</strong></td>
+          <td><strong>Windows, macOS, Linux</strong></td>
+          <td><strong>Да (Авто /24)</strong></td>
+          <td><strong>MIT (Бесплатно)</strong></td>
+        </tr>
+        <tr>
+          <td>Angry IP Scanner</td>
+          <td>Java (нужен JRE 8+)</td>
+          <td>~20 МБ + 150 МБ JRE</td>
+          <td>Windows, macOS, Linux</td>
+          <td>Ручной ввод диапазона</td>
+          <td>GPL v2</td>
+        </tr>
+        <tr>
+          <td>Nmap / Zenmap</td>
+          <td>C++ (нужен Npcap)</td>
+          <td>~80 МБ + Драйвер</td>
+          <td>Windows, macOS, Linux</td>
+          <td>Флаги консоли / XML</td>
+          <td>NPSL</td>
+        </tr>
+        <tr>
+          <td>Advanced Port Scanner</td>
+          <td>C++</td>
+          <td>~25 МБ инсталлятор</td>
+          <td>Только Windows</td>
+          <td>Да</td>
+          <td>Freeware</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <footer>
+      <p>
+        Лицензия MIT · 
+        <a href="https://github.com/open-port-tools/port-scanner" style="color: var(--muted);">GitHub</a> · 
+        <a href="https://sourceforge.net/projects/port-scanner/" style="color: var(--muted);">SourceForge</a> · 
+        <a href="https://crates.io/crates/open-port-scanner" style="color: var(--muted);">crates.io</a> · 
+        <a href="../llms.txt" style="color: var(--muted);">llms.txt</a>
+      </p>
+      <p>Open Port Tools — открытые сетевые утилиты безопасности.</p>
+    </footer>
+  </div>
+</body>
+</html>

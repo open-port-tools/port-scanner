@@ -1,0 +1,22 @@
+{
+  "name": "Open Port Scanner",
+  "short_name": "PortScanner",
+  "description": "Fast async TCP port scanner & 1-click local LAN subnet mapper in native Rust.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#111214",
+  "theme_color": "#111214",
+  "icons": [
+    {
+      "src": "assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

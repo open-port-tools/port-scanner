@@ -1,0 +1,44 @@
+name: Bug Report
+description: Report a defect, crash, or unexpected behavior in Open Port Scanner
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: Thank you for taking the time to report a bug!
+  - type: input
+    id: os
+    attributes:
+      label: Operating System & Architecture
+      placeholder: "e.g. Windows 11 x64 / macOS Sonoma M2 / Ubuntu 24.04 x64"
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Open Port Scanner Version
+      placeholder: "e.g. v2.0.0 or cargo install"
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the Bug
+      placeholder: A clear and concise description of what happened.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to Reproduce
+      placeholder: |
+        1. Run 'port-scanner --lan'
+        2. Click '...'
+        3. See error
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      placeholder: What did you expect to happen instead?
