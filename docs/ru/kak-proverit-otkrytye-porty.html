@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Как проверить открытые порты на Windows, macOS и Linux — Open Port Scanner</title>
+  <meta name="description" content="Подробная инструкция: как узнать, какие TCP-порты открыты на вашем компьютере или в локальной сети с помощью PowerShell, Terminal (lsof, ss) и сканера Open Port Scanner." />
+  <link rel="canonical" href="https://open-port-tools.github.io/port-scanner/ru/kak-proverit-otkrytye-porty.html" />
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
+  <link rel="manifest" href="../site.webmanifest" />
+  <meta name="theme-color" content="#111214" />
+  <meta property="og:title" content="Как проверить открытые порты на Windows, macOS и Linux" />
+  <meta property="og:description" content="Проверка слушающих портов на ПК и быстрое сканирование всей локальной подсети без установки Java и драйверов." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://open-port-tools.github.io/port-scanner/ru/kak-proverit-otkrytye-porty.html" />
+  <meta property="og:image" content="https://open-port-tools.github.io/port-scanner/assets/og-image.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://open-port-tools.github.io/port-scanner/assets/og-image.png" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "Как проверить открытые порты на компьютере и в сети",
+    "description": "Пошаговая инструкция по проверке открытых портов на Windows, macOS и Linux.",
+    "step": [
+      {
+        "@type": "HowToStep",
+        "name": "Скачать Open Port Scanner",
+        "text": "Скачайте готовый исполняемый файл для вашей ОС (Windows .exe, macOS или Linux)."
+      },
+      {
+        "@type": "HowToStep",
+        "name": "Выбрать цель сканирования",
+        "text": "Нажмите «Этот ПК» для проверки локальных сервисов или «Вся сеть» для аудита всех 254 хостов подсети."
+      },
+      {
+        "@type": "HowToStep",
+        "name": "Запустить проверку и проанализировать результат",
+        "text": "Нажмите «Сканировать». Программа выведет открытые порты, время отклика в миллисекундах и заголовки сервисов."
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Главная",
+        "item": "https://open-port-tools.github.io/port-scanner/ru/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Как проверить открытые порты"
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    :root {
+      --bg: #111214; --surface: #181a1f; --surface-alt: #1e2127; --border: #272a31;
+      --text: #eceef2; --muted: #9aa1ad; --accent: #3b82f6; --accent-hover: #2563eb;
+      --green: #34d399; --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; padding: 0; background: var(--bg); color: var(--text);
+      font-family: var(--font-sans); line-height: 1.65;
+    }
+    .container { max-width: 860px; margin: 0 auto; padding: 32px 20px 80px; }
+    nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-bottom: 20px; border-bottom: 1px solid var(--border); margin-bottom: 36px;
+    }
+    .brand { font-weight: 600; color: var(--text); text-decoration: none; }
+    .nav-links a { color: var(--muted); text-decoration: none; margin-left: 18px; font-size: 14px; }
+    .nav-links a:hover { color: var(--text); }
+    h1 { font-size: clamp(28px, 4.5vw, 38px); line-height: 1.25; margin: 0 0 16px; letter-spacing: -0.02em; }
+    .lead { font-size: 18px; color: var(--muted); margin-bottom: 28px; }
+    .cta-box {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+      padding: 24px; margin: 32px 0; display: flex; flex-wrap: wrap; gap: 14px; align-items: center;
+      justify-content: space-between;
+    }
+    .btn { display: inline-block; padding: 10px 18px; border-radius: 6px; font-weight: 600; font-size: 14px; text-decoration: none; }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: var(--accent-hover); }
+    .btn-secondary { background: var(--surface-alt); color: var(--text); border: 1px solid var(--border); }
+    h2 { font-size: 24px; margin: 40px 0 16px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+    h3 { font-size: 18px; margin: 24px 0 8px; }
+    pre {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+      padding: 16px; overflow-x: auto; font-family: var(--font-mono); font-size: 13.5px;
+    }
+    code { font-family: var(--font-mono); font-size: 13px; color: #60a5fa; }
+    ol, ul { padding-left: 22px; color: var(--text); }
+    li { margin-bottom: 10px; }
+    footer { margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--border); color: var(--muted); font-size: 13px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav>
+      <a class="brand" href="./">← Open Port Scanner</a>
+      <div class="nav-links">
+        <a href="./#downloads">Скачать</a>
+        <a href="https://github.com/open-port-tools/port-scanner">GitHub</a>
+        <a href="https://sourceforge.net/projects/port-scanner/">SourceForge</a>
+      </div>
+    </nav>
+
+    <article>
+      <h1>Как проверить открытые порты на Windows, macOS и Linux</h1>
+      <p class="lead">
+        Проверка открытых портов нужна при настройке веб-серверов, пробросе портов на роутере, отладке баз данных или аудите безопасности локальной сети. Рассмотрим штатные консольные утилиты и быстрый графический способ.
+      </p>
+
+      <div class="cta-box">
+        <div>
+          <div style="font-weight: 600; font-size: 16px;">Скачать Open Port Scanner v2.0</div>
+          <div style="font-size: 13px; color: var(--muted);">Единый файл (~2–4 МБ) без установки Java • Windows, Mac, Linux</div>
+        </div>
+        <div>
+          <a class="btn btn-primary" href="https://github.com/open-port-tools/port-scanner/releases/latest">Скачать релиз</a>
+        </div>
+      </div>
+
+      <img src="../assets/preview.svg" alt="Интерфейс Open Port Scanner с открытыми портами" style="width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--border); margin: 24px 0;" />
+
+      <h2>1. Быстрая проверка через Open Port Scanner (GUI и CLI)</h2>
+      <p>
+        Самый простой способ проверить локальный ПК или сразу все устройства в вашей сети — запустить портативный сканер:
+      </p>
+      <ol>
+        <li>Запустите программу и выберите кнопку <strong>«Этот ПК»</strong> (для проверки <code>127.0.0.1</code>) или <strong>«Вся сеть»</strong> (для поиска устройств во всей подсети <code>/24</code>).</li>
+        <li>Выберите профиль: «Быстрый (25)», «Стандартный (96)», «Веб (19)» или «Базы данных (17)».</li>
+        <li>Нажмите <strong>«Сканировать»</strong>. Результаты появятся с точным пингом и баннерами сервисов.</li>
+      </ol>
+      <pre><code># Проверка через терминал / командную строку:
+port-scanner 127.0.0.1 --profile web
+port-scanner --lan --profile quick -o report.json</code></pre>
+
+      <h2>2. Как проверить порты на Windows (CMD и PowerShell)</h2>
+      <pre><code># Список всех слушающих TCP-портов и PID процесса в CMD:
+netstat -ano -p tcp | findstr LISTENING
+
+# Проверка доступности конкретного порта удалённого сервера в PowerShell:
+Test-NetConnection -ComputerName 192.168.1.1 -Port 80</code></pre>
+
+      <h2>3. Проверка на macOS (Терминал)</h2>
+      <pre><code># Узнать, какие программы слушают порты на Mac:
+sudo lsof -iTCP -sTCP:LISTEN -n -P
+
+# Проверить удалённый порт через netcat:
+nc -zv 192.168.1.1 80</code></pre>
+
+      <h2>4. Проверка на Linux (Ubuntu, Debian, CentOS)</h2>
+      <pre><code># Современная замена netstat — утилита ss:
+sudo ss -tulpn | grep LISTEN</code></pre>
+
+      <h2>Полезные руководства</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 16px;">
+        <a style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; text-decoration: none; color: inherit;" href="analog-advanced-ip-scanner-mac-linux.html">
+          <h3 style="margin: 0 0 6px; font-size: 15px; color: #60a5fa;">Аналог Advanced IP Scanner для Mac и Linux →</h3>
+          <p style="margin: 0; font-size: 13px; color: var(--muted);">Нативный сканер локальной сети с графическим интерфейсом.</p>
+        </a>
+        <a style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; text-decoration: none; color: inherit;" href="../common-network-ports-cheat-sheet.html">
+          <h3 style="margin: 0 0 6px; font-size: 15px; color: #60a5fa;">Справочник популярных TCP-портов (EN) →</h3>
+          <p style="margin: 0; font-size: 13px; color: var(--muted);">Таблица портов для веб-серверов, баз данных и админок.</p>
+        </a>
+      </div>
+    </article>
+
+    <footer>
+      <p>
+        <a href="./">На главную</a> · 
+        <a href="https://github.com/open-port-tools/port-scanner/releases/latest">Скачать</a> · 
+        <a href="https://github.com/open-port-tools/port-scanner">GitHub</a>
+      </p>
+      <p>Open Port Tools — открытое ПО под лицензией MIT.</p>
+    </footer>
+  </div>
+</body>
+</html>

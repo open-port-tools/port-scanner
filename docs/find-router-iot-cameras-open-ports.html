@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>How to Audit Routers, IP Cameras &amp; IoT Devices for Open Ports</title>
+  <meta name="description" content="Learn how to scan home routers, smart TVs, and IP cameras for unencrypted HTTP panels, open Telnet (23), SSH (22), and RTSP video streams (554) on your local network." />
+  <link rel="canonical" href="https://open-port-tools.github.io/port-scanner/find-router-iot-cameras-open-ports.html" />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="manifest" href="site.webmanifest" />
+  <meta name="theme-color" content="#111214" />
+  <meta property="og:title" content="How to Audit Routers, IP Cameras &amp; IoT Devices for Open Ports" />
+  <meta property="og:description" content="Audit your smart home network for exposed camera streams, Telnet consoles, and unpatched router admin interfaces." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://open-port-tools.github.io/port-scanner/find-router-iot-cameras-open-ports.html" />
+  <meta property="og:image" content="https://open-port-tools.github.io/port-scanner/assets/og-image.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://open-port-tools.github.io/port-scanner/assets/og-image.png" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "How to Audit Routers, IP Cameras & IoT Devices for Open Ports",
+    "description": "Security audit guide for scanning smart home devices, Wi-Fi routers, and IP cameras on a local subnet.",
+    "author": {
+      "@type": "Organization",
+      "name": "Open Port Tools"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Open Port Tools",
+      "url": "https://open-port-tools.github.io/port-scanner/"
+    },
+    "mainEntityOfPage": "https://open-port-tools.github.io/port-scanner/find-router-iot-cameras-open-ports.html",
+    "datePublished": "2026-11-18",
+    "dateModified": "2026-11-18"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://open-port-tools.github.io/port-scanner/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Guides",
+        "item": "https://open-port-tools.github.io/port-scanner/#guides"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "IoT & Router Port Audit"
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    :root {
+      --bg: #111214; --surface: #181a1f; --surface-alt: #1e2127; --border: #272a31;
+      --text: #eceef2; --muted: #9aa1ad; --accent: #3b82f6; --accent-hover: #2563eb;
+      --green: #34d399; --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; padding: 0; background: var(--bg); color: var(--text);
+      font-family: var(--font-sans); line-height: 1.65;
+    }
+    .container { max-width: 860px; margin: 0 auto; padding: 32px 20px 80px; }
+    nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-bottom: 20px; border-bottom: 1px solid var(--border); margin-bottom: 36px;
+    }
+    .brand { font-weight: 600; color: var(--text); text-decoration: none; }
+    .nav-links a { color: var(--muted); text-decoration: none; margin-left: 18px; font-size: 14px; }
+    .nav-links a:hover { color: var(--text); }
+    h1 { font-size: clamp(28px, 4.5vw, 38px); line-height: 1.25; margin: 0 0 16px; letter-spacing: -0.02em; }
+    .lead { font-size: 18px; color: var(--muted); margin-bottom: 28px; }
+    .cta-box {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+      padding: 24px; margin: 32px 0; display: flex; flex-wrap: wrap; gap: 14px; align-items: center;
+      justify-content: space-between;
+    }
+    .btn { display: inline-block; padding: 10px 18px; border-radius: 6px; font-weight: 600; font-size: 14px; text-decoration: none; }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: var(--accent-hover); }
+    .btn-secondary { background: var(--surface-alt); color: var(--text); border: 1px solid var(--border); }
+    h2 { font-size: 24px; margin: 40px 0 16px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+    h3 { font-size: 18px; margin: 24px 0 8px; }
+    table { width: 100%; border-collapse: collapse; margin: 20px 0 32px; font-size: 14px; }
+    th, td { padding: 11px 14px; border-bottom: 1px solid var(--border); text-align: left; }
+    th { color: var(--muted); background: var(--surface); }
+    pre {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+      padding: 16px; overflow-x: auto; font-family: var(--font-mono); font-size: 13.5px;
+    }
+    code { font-family: var(--font-mono); font-size: 13px; color: #60a5fa; }
+    ul { padding-left: 22px; color: var(--text); }
+    li { margin-bottom: 8px; }
+    footer { margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--border); color: var(--muted); font-size: 13px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav>
+      <a class="brand" href="./">← Open Port Scanner</a>
+      <div class="nav-links">
+        <a href="./#downloads">Downloads</a>
+        <a href="https://github.com/open-port-tools/port-scanner">GitHub</a>
+        <a href="https://sourceforge.net/projects/port-scanner/">SourceForge</a>
+      </div>
+    </nav>
+
+    <article>
+      <h1>How to Audit Routers, IP Cameras &amp; IoT Devices for Open Ports</h1>
+      <p class="lead">
+        Consumer routers, security cameras, and smart home hubs often ship with legacy diagnostic ports enabled by default. Running a periodic subnet scan lets you spot exposed services before they become a liability.
+      </p>
+
+      <div class="cta-box">
+        <div>
+          <div style="font-weight: 600; font-size: 16px;">Download Open Port Scanner v2.0</div>
+          <div style="font-size: 13px; color: var(--muted);">Safe bounded-concurrency scanning that won't crash home routers</div>
+        </div>
+        <div>
+          <a class="btn btn-primary" href="https://github.com/open-port-tools/port-scanner/releases/latest">Download Tool</a>
+        </div>
+      </div>
+
+      <h2>Common Open Ports on IoT &amp; Network Hardware</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Port</th>
+            <th>Service / Purpose</th>
+            <th>Recommended Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>23</td>
+            <td>Telnet</td>
+            <td>High risk. Disable Telnet in device firmware settings; credentials are sent in plaintext.</td>
+          </tr>
+          <tr>
+            <td>80 / 8080</td>
+            <td>HTTP Admin Panel</td>
+            <td>Change default passwords and ensure UPnP / remote WAN management is disabled.</td>
+          </tr>
+          <tr>
+            <td>554</td>
+            <td>RTSP (Video Stream)</td>
+            <td>Used by IP cameras (Hikvision, Dahua, Reolink). Require authentication and isolate on a separate VLAN.</td>
+          </tr>
+          <tr>
+            <td>1883 / 8883</td>
+            <td>MQTT</td>
+            <td>Smart home message brokers (Home Assistant / Tasmota). Enforce username/password auth.</td>
+          </tr>
+          <tr>
+            <td>7547</td>
+            <td>TR-069</td>
+            <td>ISP remote router management port. Should never be accessible from the public WAN.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Running an IoT Port Audit</h2>
+      <pre><code># Scan your entire local subnet across standard + IoT ports:
+port-scanner --lan -p 21,22,23,80,443,554,1883,5000,7547,8000,8080,8443
+
+# Deep audit of your main router (e.g. 192.168.1.1):
+port-scanner 192.168.1.1 --profile common</code></pre>
+
+      <h2>Related Guides</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 16px;">
+        <a style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; text-decoration: none; color: inherit;" href="find-ip-address-devices-local-network.html">
+          <h3 style="margin: 0 0 6px; font-size: 15px; color: #60a5fa;">Find All Devices on Local Network →</h3>
+          <p style="margin: 0; font-size: 13px; color: var(--muted);">Discover every IP address and web portal on your Wi-Fi.</p>
+        </a>
+        <a style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; text-decoration: none; color: inherit;" href="common-network-ports-cheat-sheet.html">
+          <h3 style="margin: 0 0 6px; font-size: 15px; color: #60a5fa;">Common Network Ports Cheat Sheet →</h3>
+          <p style="margin: 0; font-size: 13px; color: var(--muted);">Quick TCP port reference for sysadmins.</p>
+        </a>
+      </div>
+    </article>
+
+    <footer>
+      <p>
+        <a href="./">Home</a> · 
+        <a href="https://github.com/open-port-tools/port-scanner/releases/latest">Download Release</a> · 
+        <a href="https://github.com/open-port-tools/port-scanner">GitHub</a>
+      </p>
+      <p>Open Port Tools — MIT Licensed Open Source Software.</p>
+    </footer>
+  </div>
+</body>
+</html>

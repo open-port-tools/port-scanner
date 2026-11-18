@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>How to Check Open Ports on Linux (ss, netstat &amp; Open Port Scanner)</title>
+  <meta name="description" content="Complete guide to checking open and listening TCP ports on Linux (Ubuntu, Debian, CentOS, RHEL, Arch) using ss, netstat, lsof, and Open Port Scanner." />
+  <link rel="canonical" href="https://open-port-tools.github.io/port-scanner/check-open-ports-linux-cli.html" />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="manifest" href="site.webmanifest" />
+  <meta name="theme-color" content="#111214" />
+  <meta property="og:title" content="How to Check Open Ports on Linux (ss, netstat &amp; Open Port Scanner)" />
+  <meta property="og:description" content="Inspect listening sockets and audit remote Linux servers with fast native tools and modern CLI commands." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://open-port-tools.github.io/port-scanner/check-open-ports-linux-cli.html" />
+  <meta property="og:image" content="https://open-port-tools.github.io/port-scanner/assets/og-image.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://open-port-tools.github.io/port-scanner/assets/og-image.png" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to Check Open Ports on Linux",
+    "description": "Step-by-step instructions for identifying listening ports and auditing remote Linux hosts.",
+    "step": [
+      {
+        "@type": "HowToStep",
+        "name": "View listening ports with ss",
+        "text": "Run 'ss -tulpn' to list all TCP and UDP sockets currently listening on your Linux server with process details."
+      },
+      {
+        "@type": "HowToStep",
+        "name": "Check listening sockets with lsof",
+        "text": "Run 'sudo lsof -i -P -n | grep LISTEN' to view listening daemons and PIDs."
+      },
+      {
+        "@type": "HowToStep",
+        "name": "Audit local subnet or multi-port ranges with Open Port Scanner",
+        "text": "Run 'port-scanner --lan --profile quick' to scan all 254 subnet hosts in 2-4 seconds with structured exports."
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://open-port-tools.github.io/port-scanner/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Guides",
+        "item": "https://open-port-tools.github.io/port-scanner/#guides"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Check Open Ports on Linux"
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    :root {
+      --bg: #111214; --surface: #181a1f; --surface-alt: #1e2127; --border: #272a31;
+      --text: #eceef2; --muted: #9aa1ad; --accent: #3b82f6; --accent-hover: #2563eb;
+      --green: #34d399; --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; padding: 0; background: var(--bg); color: var(--text);
+      font-family: var(--font-sans); line-height: 1.65;
+    }
+    .container { max-width: 860px; margin: 0 auto; padding: 32px 20px 80px; }
+    nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-bottom: 20px; border-bottom: 1px solid var(--border); margin-bottom: 36px;
+    }
+    .brand { font-weight: 600; color: var(--text); text-decoration: none; }
+    .nav-links a { color: var(--muted); text-decoration: none; margin-left: 18px; font-size: 14px; }
+    .nav-links a:hover { color: var(--text); }
+    h1 { font-size: clamp(28px, 4.5vw, 38px); line-height: 1.25; margin: 0 0 16px; letter-spacing: -0.02em; }
+    .lead { font-size: 18px; color: var(--muted); margin-bottom: 28px; }
+    .cta-box {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+      padding: 24px; margin: 32px 0; display: flex; flex-wrap: wrap; gap: 14px; align-items: center;
+      justify-content: space-between;
+    }
+    .btn { display: inline-block; padding: 10px 18px; border-radius: 6px; font-weight: 600; font-size: 14px; text-decoration: none; }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: var(--accent-hover); }
+    .btn-secondary { background: var(--surface-alt); color: var(--text); border: 1px solid var(--border); }
+    h2 { font-size: 24px; margin: 40px 0 16px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+    h3 { font-size: 18px; margin: 24px 0 8px; }
+    pre {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+      padding: 16px; overflow-x: auto; font-family: var(--font-mono); font-size: 13.5px;
+    }
+    code { font-family: var(--font-mono); font-size: 13px; color: #60a5fa; }
+    ol, ul { padding-left: 22px; color: var(--text); }
+    li { margin-bottom: 10px; }
+    footer { margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--border); color: var(--muted); font-size: 13px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav>
+      <a class="brand" href="./">← Open Port Scanner</a>
+      <div class="nav-links">
+        <a href="./#downloads">Downloads</a>
+        <a href="https://github.com/open-port-tools/port-scanner">GitHub</a>
+        <a href="https://sourceforge.net/projects/port-scanner/">SourceForge</a>
+      </div>
+    </nav>
+
+    <article>
+      <h1>How to Check Open Ports on Linux (ss, netstat &amp; Open Port Scanner)</h1>
+      <p class="lead">
+        Linux provides built-in socket inspection tools for local processes, but auditing remote network nodes or finding all active ports across a local subnet requires a different toolkit. Here is how to handle both.
+      </p>
+
+      <div class="cta-box">
+        <div>
+          <div style="font-weight: 600; font-size: 16px;">Download Open Port Scanner for Linux</div>
+          <div style="font-size: 13px; color: var(--muted);">Standalone x64 binary (~2.8 MB) • No dependencies • CLI &amp; GUI</div>
+        </div>
+        <div>
+          <a class="btn btn-primary" href="https://github.com/open-port-tools/port-scanner/releases/download/v2.0.0/port-scanner-linux-x64.tar.gz">Download Linux Binary</a>
+        </div>
+      </div>
+
+      <h2>Method 1: Modern Socket Statistics with ss</h2>
+      <p>
+        On modern Linux systems (Ubuntu 20.04+, Debian 11+, RHEL/CentOS 8+), <code>ss</code> replaces the deprecated <code>netstat</code> utility. It queries socket information directly from kernel space:
+      </p>
+      <pre><code># Show all TCP ports in LISTEN state with PID/Process name:
+sudo ss -tulpn | grep LISTEN
+
+# Filter for a specific port number (e.g. 5432):
+ss -tlpn '( sport = :5432 )'
+
+# Display numeric addresses and ports without slow DNS lookups:
+ss -tln</code></pre>
+
+      <h2>Method 2: Check Process Ownership with lsof</h2>
+      <pre><code># Find which process has bound to port 80 or 443:
+sudo lsof -i :80
+sudo lsof -i :443</code></pre>
+
+      <h2>Method 3: Multi-Host Subnet Auditing with Open Port Scanner</h2>
+      <p>
+        While <code>ss</code> tells you what is happening on your local server, <strong>Open Port Scanner</strong> sweeps remote hosts, other VMs, Docker containers, and entire subnets without requiring root privileges:
+      </p>
+      <pre><code># Install via Cargo or download standalone binary:
+cargo install open-port-scanner
+
+# Scan entire local subnet automatically:
+port-scanner --lan --profile quick
+
+# Audit a database server across common ports and export JSON:
+port-scanner 10.0.0.15 -p 3306,5432,6379,27017 -o db-audit.json
+
+# Launch the desktop UI (X11 / Wayland):
+port-scanner --gui</code></pre>
+
+      <h2>Comparison Summary</h2>
+      <ul>
+        <li><strong>ss / lsof:</strong> Essential for checking local server sockets and troubleshooting port conflict errors (e.g. <code>address already in use</code>).</li>
+        <li><strong>Open Port Scanner:</strong> Ideal for cross-network verification, firewall validation, subnet mapping, and automated JSON auditing.</li>
+      </ul>
+
+      <h2>Related Guides</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 16px;">
+        <a style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; text-decoration: none; color: inherit;" href="check-open-ports-windows-cmd-powershell.html">
+          <h3 style="margin: 0 0 6px; font-size: 15px; color: #60a5fa;">How to Check Open Ports on Windows →</h3>
+          <p style="margin: 0; font-size: 13px; color: var(--muted);">CMD and PowerShell tutorial for Windows administrators.</p>
+        </a>
+        <a style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; text-decoration: none; color: inherit;" href="check-open-ports-mac-terminal.html">
+          <h3 style="margin: 0 0 6px; font-size: 15px; color: #60a5fa;">How to Check Open Ports on Mac →</h3>
+          <p style="margin: 0; font-size: 13px; color: var(--muted);">lsof and Netcat guide for macOS.</p>
+        </a>
+      </div>
+    </article>
+
+    <footer>
+      <p>
+        <a href="./">Home</a> · 
+        <a href="https://github.com/open-port-tools/port-scanner/releases/latest">Download Release</a> · 
+        <a href="https://github.com/open-port-tools/port-scanner">GitHub</a>
+      </p>
+      <p>Open Port Tools — MIT Licensed Open Source Software.</p>
+    </footer>
+  </div>
+</body>
+</html>

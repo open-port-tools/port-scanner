@@ -23,7 +23,19 @@ Open Port Scanner is a modern, ultra-lightweight open-source utility for discove
 ## Comparisons & Guides
 - Angry IP Scanner Alternative: https://open-port-tools.github.io/port-scanner/angry-ip-scanner-alternative.html
 - Advanced Port Scanner for Mac/Linux: https://open-port-tools.github.io/port-scanner/advanced-port-scanner-mac-linux.html
+- Advanced IP Scanner for Mac/Linux: https://open-port-tools.github.io/port-scanner/advanced-ip-scanner-mac-linux.html
+- Lightweight Nmap Alternative: https://open-port-tools.github.io/port-scanner/nmap-alternative-lightweight.html
+- Fast Port Scanner vs Masscan & Nmap: https://open-port-tools.github.io/port-scanner/masscan-alternative-desktop-gui.html
 - Local Network Scan Tutorial: https://open-port-tools.github.io/port-scanner/how-to-scan-local-network-ports.html
+- Check Open Ports on Windows: https://open-port-tools.github.io/port-scanner/check-open-ports-windows-cmd-powershell.html
+- Check Open Ports on Mac: https://open-port-tools.github.io/port-scanner/check-open-ports-mac-terminal.html
+- Check Open Ports on Linux: https://open-port-tools.github.io/port-scanner/check-open-ports-linux-cli.html
+- Common Network Ports Cheat Sheet: https://open-port-tools.github.io/port-scanner/common-network-ports-cheat-sheet.html
+- Find Devices on Local Network: https://open-port-tools.github.io/port-scanner/find-ip-address-devices-local-network.html
+- Scan Docker & Kubernetes Ports: https://open-port-tools.github.io/port-scanner/scan-docker-kubernetes-container-ports.html
+- Audit Routers, IP Cameras & IoT: https://open-port-tools.github.io/port-scanner/find-router-iot-cameras-open-ports.html
+- Russian Guide — Check Open Ports: https://open-port-tools.github.io/port-scanner/ru/kak-proverit-otkrytye-porty.html
+- Russian Guide — Advanced IP Scanner Alternative: https://open-port-tools.github.io/port-scanner/ru/analog-advanced-ip-scanner-mac-linux.html
 
 ## Official Distribution Links
 - GitHub Repository: https://github.com/open-port-tools/port-scanner

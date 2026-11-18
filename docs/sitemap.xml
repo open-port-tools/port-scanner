@@ -32,7 +32,79 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://open-port-tools.github.io/port-scanner/advanced-ip-scanner-mac-linux.html</loc>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://open-port-tools.github.io/port-scanner/nmap-alternative-lightweight.html</loc>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://open-port-tools.github.io/port-scanner/masscan-alternative-desktop-gui.html</loc>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
     <loc>https://open-port-tools.github.io/port-scanner/how-to-scan-local-network-ports.html</loc>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://open-port-tools.github.io/port-scanner/check-open-ports-windows-cmd-powershell.html</loc>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://open-port-tools.github.io/port-scanner/check-open-ports-mac-terminal.html</loc>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://open-port-tools.github.io/port-scanner/check-open-ports-linux-cli.html</loc>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://open-port-tools.github.io/port-scanner/common-network-ports-cheat-sheet.html</loc>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://open-port-tools.github.io/port-scanner/find-ip-address-devices-local-network.html</loc>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://open-port-tools.github.io/port-scanner/scan-docker-kubernetes-container-ports.html</loc>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://open-port-tools.github.io/port-scanner/find-router-iot-cameras-open-ports.html</loc>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://open-port-tools.github.io/port-scanner/ru/kak-proverit-otkrytye-porty.html</loc>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://open-port-tools.github.io/port-scanner/ru/analog-advanced-ip-scanner-mac-linux.html</loc>
     <lastmod>2026-11-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>

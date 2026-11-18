@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>How to Check Open Ports on Mac (Terminal &amp; GUI Guide) — Open Port Scanner</title>
+  <meta name="description" content="Learn how to find open and listening ports on macOS Sonoma, Sequoia, and earlier versions using Terminal commands (lsof, nc) and the Open Port Scanner GUI." />
+  <link rel="canonical" href="https://open-port-tools.github.io/port-scanner/check-open-ports-mac-terminal.html" />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="manifest" href="site.webmanifest" />
+  <meta name="theme-color" content="#111214" />
+  <meta property="og:title" content="How to Check Open Ports on Mac (Terminal &amp; GUI Guide)" />
+  <meta property="og:description" content="Find active listening ports and test remote services on macOS using lsof, nc, and native Apple Silicon port scanner." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://open-port-tools.github.io/port-scanner/check-open-ports-mac-terminal.html" />
+  <meta property="og:image" content="https://open-port-tools.github.io/port-scanner/assets/og-image.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://open-port-tools.github.io/port-scanner/assets/og-image.png" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to Check Open Ports on Mac",
+    "description": "Step-by-step tutorial on inspecting listening ports and auditing network services on macOS.",
+    "step": [
+      {
+        "@type": "HowToStep",
+        "name": "List listening ports with lsof in Terminal",
+        "text": "Run 'sudo lsof -iTCP -sTCP:LISTEN -n -P' to view every application listening for incoming network connections."
+      },
+      {
+        "@type": "HowToStep",
+        "name": "Test a remote port with netcat",
+        "text": "Run 'nc -zv <host> <port>' to test if a remote TCP service is accepting connections."
+      },
+      {
+        "@type": "HowToStep",
+        "name": "Audit local LAN with Open Port Scanner GUI",
+        "text": "Launch Open Port Scanner on Apple Silicon or Intel Mac and click the LAN target to scan all active hosts in seconds."
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://open-port-tools.github.io/port-scanner/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Guides",
+        "item": "https://open-port-tools.github.io/port-scanner/#guides"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Check Open Ports on Mac"
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    :root {
+      --bg: #111214; --surface: #181a1f; --surface-alt: #1e2127; --border: #272a31;
+      --text: #eceef2; --muted: #9aa1ad; --accent: #3b82f6; --accent-hover: #2563eb;
+      --green: #34d399; --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; padding: 0; background: var(--bg); color: var(--text);
+      font-family: var(--font-sans); line-height: 1.65;
+    }
+    .container { max-width: 860px; margin: 0 auto; padding: 32px 20px 80px; }
+    nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-bottom: 20px; border-bottom: 1px solid var(--border); margin-bottom: 36px;
+    }
+    .brand { font-weight: 600; color: var(--text); text-decoration: none; }
+    .nav-links a { color: var(--muted); text-decoration: none; margin-left: 18px; font-size: 14px; }
+    .nav-links a:hover { color: var(--text); }
+    h1 { font-size: clamp(28px, 4.5vw, 38px); line-height: 1.25; margin: 0 0 16px; letter-spacing: -0.02em; }
+    .lead { font-size: 18px; color: var(--muted); margin-bottom: 28px; }
+    .cta-box {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+      padding: 24px; margin: 32px 0; display: flex; flex-wrap: wrap; gap: 14px; align-items: center;
+      justify-content: space-between;
+    }
+    .btn { display: inline-block; padding: 10px 18px; border-radius: 6px; font-weight: 600; font-size: 14px; text-decoration: none; }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: var(--accent-hover); }
+    .btn-secondary { background: var(--surface-alt); color: var(--text); border: 1px solid var(--border); }
+    h2 { font-size: 24px; margin: 40px 0 16px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+    h3 { font-size: 18px; margin: 24px 0 8px; }
+    pre {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+      padding: 16px; overflow-x: auto; font-family: var(--font-mono); font-size: 13.5px;
+    }
+    code { font-family: var(--font-mono); font-size: 13px; color: #60a5fa; }
+    ol, ul { padding-left: 22px; color: var(--text); }
+    li { margin-bottom: 10px; }
+    footer { margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--border); color: var(--muted); font-size: 13px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav>
+      <a class="brand" href="./">← Open Port Scanner</a>
+      <div class="nav-links">
+        <a href="./#downloads">Downloads</a>
+        <a href="https://github.com/open-port-tools/port-scanner">GitHub</a>
+        <a href="https://sourceforge.net/projects/port-scanner/">SourceForge</a>
+      </div>
+    </nav>
+
+    <article>
+      <h1>How to Check Open Ports on Mac (Terminal &amp; GUI Guide)</h1>
+      <p class="lead">
+        Ever since Apple removed the classic "Network Utility" app from macOS, Mac users have relied on terminal utilities or third-party tools to inspect open ports and check network services. Here is how to audit ports on macOS.
+      </p>
+
+      <div class="cta-box">
+        <div>
+          <div style="font-weight: 600; font-size: 16px;">Download Open Port Scanner for macOS</div>
+          <div style="font-size: 13px; color: var(--muted);">Universal binary for Apple Silicon (M1–M4) &amp; Intel • Fast GPU UI</div>
+        </div>
+        <div>
+          <a class="btn btn-primary" href="https://github.com/open-port-tools/port-scanner/releases/download/v2.0.0/port-scanner-macos.tar.gz">Download for Mac</a>
+        </div>
+      </div>
+
+      <h2>Method 1: List Local Listening Ports with lsof</h2>
+      <p>
+        The <code>lsof</code> (list open files) command is the most reliable way to identify which processes have opened listening network sockets on your Mac:
+      </p>
+      <pre><code># Show all TCP ports currently listening:
+sudo lsof -iTCP -sTCP:LISTEN -n -P
+
+# Check if a specific port (e.g. 3000) is in use:
+lsof -i :3000
+
+# Kill a process occupying a port (using the PID from lsof):
+kill -9 &lt;PID&gt;</code></pre>
+      <p>
+        The <code>-n</code> and <code>-P</code> flags prevent DNS and service name lookups, producing immediate output without hanging.
+      </p>
+
+      <h2>Method 2: Check Remote Host Ports with Netcat (nc)</h2>
+      <p>
+        macOS includes a BSD version of <code>nc</code> (netcat), useful for quick checks on remote servers:
+      </p>
+      <pre><code># Test a single port with a 2-second timeout:
+nc -zv -G 2 192.168.1.1 80
+
+# Test multiple ports on a server:
+nc -zv -G 1 192.168.1.50 22 80 443 8080</code></pre>
+      <p>
+        <em>Limitation:</em> <code>nc</code> on macOS scans sequentially and has no native subnet discovery or formatted output export.
+      </p>
+
+      <h2>Method 3: Native GPU Desktop Scanner for Mac</h2>
+      <p>
+        For developers who miss Apple's classic Network Utility Port Scan tab, <strong>Open Port Scanner</strong> offers a modern replacement:
+      </p>
+      <ol>
+        <li>Download <code>port-scanner-macos.tar.gz</code> and extract the universal binary.</li>
+        <li>Double-click <code>port-scanner</code> to open the dark-mode GUI.</li>
+        <li>Select <strong>LAN</strong> to scan your Wi-Fi/Ethernet subnet, or enter a custom target.</li>
+        <li>Click <strong>Scan</strong>. Open ports, connection latency, and HTTP/SSH banners appear in seconds.</li>
+      </ol>
+      <pre><code># Or run from Terminal (Homebrew-friendly):
+./port-scanner --lan --profile quick
+./port-scanner 127.0.0.1 -p 3000,5173,8080,5432 -o dev-ports.json</code></pre>
+
+      <h2>Related Guides</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 16px;">
+        <a style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; text-decoration: none; color: inherit;" href="advanced-port-scanner-mac-linux.html">
+          <h3 style="margin: 0 0 6px; font-size: 15px; color: #60a5fa;">Advanced Port Scanner for Mac &amp; Linux →</h3>
+          <p style="margin: 0; font-size: 13px; color: var(--muted);">Native alternative for Apple Silicon &amp; Intel.</p>
+        </a>
+        <a style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; text-decoration: none; color: inherit;" href="check-open-ports-windows-cmd-powershell.html">
+          <h3 style="margin: 0 0 6px; font-size: 15px; color: #60a5fa;">How to Check Open Ports on Windows →</h3>
+          <p style="margin: 0; font-size: 13px; color: var(--muted);">PowerShell and CMD tutorial for Windows users.</p>
+        </a>
+      </div>
+    </article>
+
+    <footer>
+      <p>
+        <a href="./">Home</a> · 
+        <a href="https://github.com/open-port-tools/port-scanner/releases/latest">Download Release</a> · 
+        <a href="https://github.com/open-port-tools/port-scanner">GitHub</a>
+      </p>
+      <p>Open Port Tools — MIT Licensed Open Source Software.</p>
+    </footer>
+  </div>
+</body>
+</html>

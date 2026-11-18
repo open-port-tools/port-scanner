@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>How to Find All Connected Devices &amp; IP Addresses on Local Network</title>
+  <meta name="description" content="Find every IP address, server, NAS, printer, and router connected to your local Wi-Fi or Ethernet network without router admin login. Works on Windows, macOS, and Linux." />
+  <link rel="canonical" href="https://open-port-tools.github.io/port-scanner/find-ip-address-devices-local-network.html" />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="manifest" href="site.webmanifest" />
+  <meta name="theme-color" content="#111214" />
+  <meta property="og:title" content="How to Find All Connected Devices &amp; IP Addresses on Local Network" />
+  <meta property="og:description" content="Discover active hosts, Raspberry Pis, printers, and web portals across your /24 subnet in seconds." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://open-port-tools.github.io/port-scanner/find-ip-address-devices-local-network.html" />
+  <meta property="og:image" content="https://open-port-tools.github.io/port-scanner/assets/og-image.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://open-port-tools.github.io/port-scanner/assets/og-image.png" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to Find All Connected Devices & IP Addresses on Local Network",
+    "description": "Discover active IP addresses and services on a Wi-Fi or Ethernet subnet.",
+    "step": [
+      {
+        "@type": "HowToStep",
+        "name": "Download Open Port Scanner",
+        "text": "Download the portable executable for Windows, macOS, or Linux."
+      },
+      {
+        "@type": "HowToStep",
+        "name": "Run automatic LAN discovery",
+        "text": "Select the detected /24 subnet in the desktop GUI or run 'port-scanner --lan --profile quick' in Terminal."
+      },
+      {
+        "@type": "HowToStep",
+        "name": "Identify devices by port and banner",
+        "text": "Review the table showing each IP address, open ports (22 for SSH/Raspberry Pi, 80/443 for routers/printers), and HTTP page titles."
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://open-port-tools.github.io/port-scanner/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Guides",
+        "item": "https://open-port-tools.github.io/port-scanner/#guides"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Find Devices on Local Network"
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    :root {
+      --bg: #111214; --surface: #181a1f; --surface-alt: #1e2127; --border: #272a31;
+      --text: #eceef2; --muted: #9aa1ad; --accent: #3b82f6; --accent-hover: #2563eb;
+      --green: #34d399; --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; padding: 0; background: var(--bg); color: var(--text);
+      font-family: var(--font-sans); line-height: 1.65;
+    }
+    .container { max-width: 860px; margin: 0 auto; padding: 32px 20px 80px; }
+    nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-bottom: 20px; border-bottom: 1px solid var(--border); margin-bottom: 36px;
+    }
+    .brand { font-weight: 600; color: var(--text); text-decoration: none; }
+    .nav-links a { color: var(--muted); text-decoration: none; margin-left: 18px; font-size: 14px; }
+    .nav-links a:hover { color: var(--text); }
+    h1 { font-size: clamp(28px, 4.5vw, 38px); line-height: 1.25; margin: 0 0 16px; letter-spacing: -0.02em; }
+    .lead { font-size: 18px; color: var(--muted); margin-bottom: 28px; }
+    .cta-box {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+      padding: 24px; margin: 32px 0; display: flex; flex-wrap: wrap; gap: 14px; align-items: center;
+      justify-content: space-between;
+    }
+    .btn { display: inline-block; padding: 10px 18px; border-radius: 6px; font-weight: 600; font-size: 14px; text-decoration: none; }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: var(--accent-hover); }
+    .btn-secondary { background: var(--surface-alt); color: var(--text); border: 1px solid var(--border); }
+    h2 { font-size: 24px; margin: 40px 0 16px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+    h3 { font-size: 18px; margin: 24px 0 8px; }
+    pre {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+      padding: 16px; overflow-x: auto; font-family: var(--font-mono); font-size: 13.5px;
+    }
+    code { font-family: var(--font-mono); font-size: 13px; color: #60a5fa; }
+    ol, ul { padding-left: 22px; color: var(--text); }
+    li { margin-bottom: 10px; }
+    footer { margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--border); color: var(--muted); font-size: 13px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav>
+      <a class="brand" href="./">← Open Port Scanner</a>
+      <div class="nav-links">
+        <a href="./#downloads">Downloads</a>
+        <a href="https://github.com/open-port-tools/port-scanner">GitHub</a>
+        <a href="https://sourceforge.net/projects/port-scanner/">SourceForge</a>
+      </div>
+    </nav>
+
+    <article>
+      <h1>How to Find All Connected Devices &amp; IP Addresses on Local Network</h1>
+      <p class="lead">
+        Whether you plugged in a headless Raspberry Pi, installed a network printer, or want to check for unknown devices on your Wi-Fi, scanning your local subnet reveals active IP addresses without needing to log into your router.
+      </p>
+
+      <div class="cta-box">
+        <div>
+          <div style="font-weight: 600; font-size: 16px;">Download Open Port Scanner v2.0</div>
+          <div style="font-size: 13px; color: var(--muted);">Auto-detects your Wi-Fi / Ethernet subnet • Windows, macOS &amp; Linux</div>
+        </div>
+        <div>
+          <a class="btn btn-primary" href="https://github.com/open-port-tools/port-scanner/releases/latest">Download Tool</a>
+        </div>
+      </div>
+
+      <img src="assets/preview.svg" alt="Open Port Scanner showing discovered IP addresses and HTTP titles on local network" style="width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--border); margin: 24px 0;" />
+
+      <h2>Why ARP &amp; Ping Alone Often Miss Devices</h2>
+      <p>
+        Standard tools like <code>arp -a</code> only display devices your computer has recently communicated with, and Windows/macOS firewalls frequently block ICMP ping requests by default. Checking common TCP ports (like 22, 80, 443, 445, and 8080) across the entire <code>/24</code> subnet reliably discovers active hardware.
+      </p>
+
+      <h2>Step-by-Step: Discover Network Devices in Seconds</h2>
+      <ol>
+        <li>Download and open <strong>Open Port Scanner</strong>.</li>
+        <li>Click the LAN subnet button (the tool automatically ignores loopback and VPN tunnels to locate your physical adapter's subnet).</li>
+        <li>Keep the <strong>Quick (25 ports)</strong> preset selected and click <strong>Scan</strong>.</li>
+        <li>Review the results table:
+          <ul>
+            <li><strong>SSH banners (Port 22):</strong> Usually indicate Linux servers, Raspberry Pis, or NAS devices.</li>
+            <li><strong>HTTP titles (Port 80 / 443 / 8080):</strong> Immediately name routers, printers (e.g., HP LaserJet), Proxmox nodes, and Home Assistant panels.</li>
+            <li><strong>SMB (Port 445) or RDP (Port 3389):</strong> Identify Windows workstations and shared file servers.</li>
+          </ul>
+        </li>
+      </ol>
+
+      <h2>Command-Line Discovery</h2>
+      <pre><code># Discover all active hosts on your current network:
+port-scanner --lan --profile quick
+
+# Export the inventory to CSV for record-keeping:
+port-scanner --lan --profile quick -o office-devices.csv</code></pre>
+
+      <h2>Related Guides</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 16px;">
+        <a style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; text-decoration: none; color: inherit;" href="find-router-iot-cameras-open-ports.html">
+          <h3 style="margin: 0 0 6px; font-size: 15px; color: #60a5fa;">Audit Routers, IP Cameras &amp; IoT Devices →</h3>
+          <p style="margin: 0; font-size: 13px; color: var(--muted);">Identify exposed RTSP streams and default web admin panels.</p>
+        </a>
+        <a style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; text-decoration: none; color: inherit;" href="advanced-ip-scanner-mac-linux.html">
+          <h3 style="margin: 0 0 6px; font-size: 15px; color: #60a5fa;">Advanced IP Scanner for Mac &amp; Linux →</h3>
+          <p style="margin: 0; font-size: 13px; color: var(--muted);">Cross-platform LAN scanner with zero dependencies.</p>
+        </a>
+      </div>
+    </article>
+
+    <footer>
+      <p>
+        <a href="./">Home</a> · 
+        <a href="https://github.com/open-port-tools/port-scanner/releases/latest">Download Release</a> · 
+        <a href="https://github.com/open-port-tools/port-scanner">GitHub</a>
+      </p>
+      <p>Open Port Tools — MIT Licensed Open Source Software.</p>
+    </footer>
+  </div>
+</body>
+</html>

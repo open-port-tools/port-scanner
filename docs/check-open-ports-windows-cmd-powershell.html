@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>How to Check Open Ports on Windows (PowerShell, CMD &amp; GUI Guide)</title>
+  <meta name="description" content="Step-by-step guide to checking open and listening TCP ports on Windows 10 & 11 using PowerShell (Test-NetConnection), CMD (netstat), and Open Port Scanner." />
+  <link rel="canonical" href="https://open-port-tools.github.io/port-scanner/check-open-ports-windows-cmd-powershell.html" />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="manifest" href="site.webmanifest" />
+  <meta name="theme-color" content="#111214" />
+  <meta property="og:title" content="How to Check Open Ports on Windows (PowerShell, CMD &amp; GUI Guide)" />
+  <meta property="og:description" content="Find active TCP listening ports and test remote server connections on Windows using built-in commands and fast portable tools." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://open-port-tools.github.io/port-scanner/check-open-ports-windows-cmd-powershell.html" />
+  <meta property="og:image" content="https://open-port-tools.github.io/port-scanner/assets/og-image.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://open-port-tools.github.io/port-scanner/assets/og-image.png" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to Check Open Ports on Windows",
+    "description": "Step-by-step tutorial for checking local listening ports and remote host ports on Windows 10 and 11.",
+    "step": [
+      {
+        "@type": "HowToStep",
+        "name": "Check listening ports with netstat",
+        "text": "Run 'netstat -ano -p tcp' in Command Prompt to view listening ports and associated Process IDs (PID)."
+      },
+      {
+        "@type": "HowToStep",
+        "name": "Test remote port connectivity with PowerShell",
+        "text": "Run 'Test-NetConnection -ComputerName <target> -Port <port>' in PowerShell to check if a specific port is accessible."
+      },
+      {
+        "@type": "HowToStep",
+        "name": "Scan entire subnet or multi-port ranges with Open Port Scanner",
+        "text": "Launch Open Port Scanner (.exe) or run 'port-scanner 192.168.1.1 -p 1-1000' to audit multiple ports in seconds."
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://open-port-tools.github.io/port-scanner/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Guides",
+        "item": "https://open-port-tools.github.io/port-scanner/#guides"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Check Open Ports on Windows"
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    :root {
+      --bg: #111214; --surface: #181a1f; --surface-alt: #1e2127; --border: #272a31;
+      --text: #eceef2; --muted: #9aa1ad; --accent: #3b82f6; --accent-hover: #2563eb;
+      --green: #34d399; --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; padding: 0; background: var(--bg); color: var(--text);
+      font-family: var(--font-sans); line-height: 1.65;
+    }
+    .container { max-width: 860px; margin: 0 auto; padding: 32px 20px 80px; }
+    nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-bottom: 20px; border-bottom: 1px solid var(--border); margin-bottom: 36px;
+    }
+    .brand { font-weight: 600; color: var(--text); text-decoration: none; }
+    .nav-links a { color: var(--muted); text-decoration: none; margin-left: 18px; font-size: 14px; }
+    .nav-links a:hover { color: var(--text); }
+    h1 { font-size: clamp(28px, 4.5vw, 38px); line-height: 1.25; margin: 0 0 16px; letter-spacing: -0.02em; }
+    .lead { font-size: 18px; color: var(--muted); margin-bottom: 28px; }
+    .cta-box {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+      padding: 24px; margin: 32px 0; display: flex; flex-wrap: wrap; gap: 14px; align-items: center;
+      justify-content: space-between;
+    }
+    .btn { display: inline-block; padding: 10px 18px; border-radius: 6px; font-weight: 600; font-size: 14px; text-decoration: none; }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: var(--accent-hover); }
+    .btn-secondary { background: var(--surface-alt); color: var(--text); border: 1px solid var(--border); }
+    h2 { font-size: 24px; margin: 40px 0 16px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+    h3 { font-size: 18px; margin: 24px 0 8px; }
+    pre {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+      padding: 16px; overflow-x: auto; font-family: var(--font-mono); font-size: 13.5px;
+    }
+    code { font-family: var(--font-mono); font-size: 13px; color: #60a5fa; }
+    ol, ul { padding-left: 22px; color: var(--text); }
+    li { margin-bottom: 10px; }
+    footer { margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--border); color: var(--muted); font-size: 13px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav>
+      <a class="brand" href="./">← Open Port Scanner</a>
+      <div class="nav-links">
+        <a href="./#downloads">Downloads</a>
+        <a href="https://github.com/open-port-tools/port-scanner">GitHub</a>
+        <a href="https://sourceforge.net/projects/port-scanner/">SourceForge</a>
+      </div>
+    </nav>
+
+    <article>
+      <h1>How to Check Open Ports on Windows (PowerShell, CMD &amp; GUI)</h1>
+      <p class="lead">
+        Whether you are diagnosing a blocked web service, investigating local firewall rules, or troubleshooting database connections, here are the most effective ways to check open ports on Windows 10 and 11.
+      </p>
+
+      <div class="cta-box">
+        <div>
+          <div style="font-weight: 600; font-size: 16px;">Download Open Port Scanner for Windows</div>
+          <div style="font-size: 13px; color: var(--muted);">Standalone port-scanner.exe (~2.1 MB) • Native GPU GUI + CLI</div>
+        </div>
+        <div>
+          <a class="btn btn-primary" href="https://github.com/open-port-tools/port-scanner/releases/download/v2.0.0/port-scanner-windows-x64.zip">Download .exe</a>
+        </div>
+      </div>
+
+      <h2>Method 1: Check Listening Ports via CMD (netstat)</h2>
+      <p>
+        The built-in <code>netstat</code> command displays active TCP connections and listening sockets on your local Windows PC:
+      </p>
+      <pre><code># Open CMD as Administrator and run:
+netstat -ano -p tcp | findstr LISTENING
+
+# Match a specific listening port (e.g. port 8080):
+netstat -ano | findstr :8080
+
+# Find which application owns the PID from netstat:
+tasklist /fi "PID eq 1234"</code></pre>
+      <p>
+        <em>Limitation:</em> <code>netstat</code> only shows what is listening on your local machine; it cannot test ports across your network or check remote servers.
+      </p>
+
+      <h2>Method 2: Test Remote Ports with PowerShell (Test-NetConnection)</h2>
+      <p>
+        PowerShell includes <code>Test-NetConnection</code> (alias <code>tnc</code>), which functions like a basic TCP ping:
+      </p>
+      <pre><code># Test if port 443 is open on a remote host:
+Test-NetConnection -ComputerName example.com -Port 443
+
+# Quick one-liner checking only the boolean result:
+(Test-NetConnection 192.168.1.1 -Port 80).TcpTestSucceeded</code></pre>
+      <p>
+        <em>Limitation:</em> <code>Test-NetConnection</code> tests only one port at a time and takes 2–4 seconds per check, making multi-port or subnet sweeps painfully slow.
+      </p>
+
+      <h2>Method 3: Fast Multi-Port &amp; Subnet Scan with Open Port Scanner</h2>
+      <p>
+        For auditing dozens of ports or checking all hosts on your subnet, use <strong>Open Port Scanner</strong>:
+      </p>
+      <ol>
+        <li>Download <code>port-scanner-windows-x64.zip</code> and launch <code>port-scanner.exe</code>.</li>
+        <li>To scan your local PC, click the local host button or enter <code>127.0.0.1</code>.</li>
+        <li>To scan your local Wi-Fi or office network, click the LAN target button (e.g. <code>192.168.1.0/24</code>).</li>
+        <li>Select a port preset (Quick, Standard, Web, or Databases) and click <strong>Scan</strong>. Open ports appear with latency and HTTP titles in seconds.</li>
+      </ol>
+      <pre><code># Or run directly from Windows Terminal / PowerShell:
+.\port-scanner.exe 127.0.0.1 --profile web
+.\port-scanner.exe --lan --profile quick -o scan-results.csv</code></pre>
+
+      <h2>Summary Comparison</h2>
+      <ul>
+        <li><strong>netstat:</strong> Best for checking which local process PID has bound to a specific port on your own PC.</li>
+        <li><strong>PowerShell Test-NetConnection:</strong> Good for a single quick check against one remote IP and port without downloading tools.</li>
+        <li><strong>Open Port Scanner:</strong> Best for checking multiple ports, entire subnets, capturing HTTP/SSH banners, and exporting CSV/JSON reports.</li>
+      </ul>
+
+      <h2>Related Guides</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 16px;">
+        <a style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; text-decoration: none; color: inherit;" href="how-to-scan-local-network-ports.html">
+          <h3 style="margin: 0 0 6px; font-size: 15px; color: #60a5fa;">How to Scan Local Network for Open Ports →</h3>
+          <p style="margin: 0; font-size: 13px; color: var(--muted);">Step-by-step tutorial on discovering all devices and services.</p>
+        </a>
+        <a style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; text-decoration: none; color: inherit;" href="angry-ip-scanner-alternative.html">
+          <h3 style="margin: 0 0 6px; font-size: 15px; color: #60a5fa;">Angry IP Scanner Alternative Without Java →</h3>
+          <p style="margin: 0; font-size: 13px; color: var(--muted);">Lightweight alternative running without Java Runtime Environment.</p>
+        </a>
+      </div>
+    </article>
+
+    <footer>
+      <p>
+        <a href="./">Home</a> · 
+        <a href="https://github.com/open-port-tools/port-scanner/releases/latest">Download Release</a> · 
+        <a href="https://github.com/open-port-tools/port-scanner">GitHub</a>
+      </p>
+      <p>Open Port Tools — MIT Licensed Open Source Software.</p>
+    </footer>
+  </div>
+</body>
+</html>
