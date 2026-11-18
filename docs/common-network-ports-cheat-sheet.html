@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Common Network Ports Cheat Sheet (TCP Port Reference) — Open Port Scanner</title>
+  <title>Common Network Ports Cheat Sheet (TCP Port Reference) | Open Port Scanner</title>
   <meta name="description" content="Quick reference table of well-known TCP network ports (21, 22, 53, 80, 443, 445, 3306, 3389, 5432, 6379, 8080) for system administrators, developers, and security audits." />
   <link rel="canonical" href="https://open-port-tools.github.io/port-scanner/common-network-ports-cheat-sheet.html" />
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
@@ -124,7 +124,7 @@
     </nav>
 
     <article>
-      <h1>Common Network Ports Cheat Sheet</h1>
+      <h1>Common network ports cheat sheet</h1>
       <p class="lead">
         When auditing a server or scanning a local subnet, recognizing port numbers quickly helps distinguish expected services from misconfigured databases or exposed admin panels.
       </p>
@@ -139,7 +139,7 @@
         </div>
       </div>
 
-      <h2>Core Infrastructure &amp; Remote Access Ports</h2>
+      <h2>Core infrastructure and remote access ports</h2>
       <table>
         <thead>
           <tr>
@@ -192,7 +192,7 @@
         </tbody>
       </table>
 
-      <h2>Web Servers &amp; Local Development Ports</h2>
+      <h2>Web servers and local development ports</h2>
       <table>
         <thead>
           <tr>
@@ -240,7 +240,7 @@
         </tbody>
       </table>
 
-      <h2>Database &amp; Cache Ports</h2>
+      <h2>Database and cache ports</h2>
       <table>
         <thead>
           <tr>
@@ -283,7 +283,7 @@
         </tbody>
       </table>
 
-      <h2>Scan by Category Using Presets</h2>
+      <h2>Scan by category using presets</h2>
       <pre><code># Scan top 25 essential infrastructure ports across your LAN:
 port-scanner --lan --profile quick
 
@@ -293,14 +293,14 @@ port-scanner 127.0.0.1 --profile web
 # Audit database ports on a staging server:
 port-scanner 10.0.1.25 --profile database</code></pre>
 
-      <h2>Related Guides</h2>
+      <h2>Related guides</h2>
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 16px;">
         <a style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; text-decoration: none; color: inherit;" href="how-to-scan-local-network-ports.html">
-          <h3 style="margin: 0 0 6px; font-size: 15px; color: #60a5fa;">How to Scan Local Network for Open Ports →</h3>
+          <h3 style="margin: 0 0 6px; font-size: 15px; color: #60a5fa;">How to scan a local network for open ports</h3>
           <p style="margin: 0; font-size: 13px; color: var(--muted);">Step-by-step guide to auditing your /24 subnet.</p>
         </a>
         <a style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; text-decoration: none; color: inherit;" href="scan-docker-kubernetes-container-ports.html">
-          <h3 style="margin: 0 0 6px; font-size: 15px; color: #60a5fa;">Scan Docker &amp; Kubernetes Ports →</h3>
+          <h3 style="margin: 0 0 6px; font-size: 15px; color: #60a5fa;">Scan Docker and Kubernetes ports</h3>
           <p style="margin: 0; font-size: 13px; color: var(--muted);">Verify container port bindings and exposed services.</p>
         </a>
       </div>
@@ -312,7 +312,7 @@ port-scanner 10.0.1.25 --profile database</code></pre>
         <a href="https://github.com/open-port-tools/port-scanner/releases/latest">Download Release</a> · 
         <a href="https://github.com/open-port-tools/port-scanner">GitHub</a>
       </p>
-      <p>Open Port Tools — MIT Licensed Open Source Software.</p>
+      <p>Open Port Tools. MIT Licensed Open Source Software.</p>
     </footer>
   </div>
 </body>

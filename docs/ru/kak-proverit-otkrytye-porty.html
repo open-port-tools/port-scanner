@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Как проверить открытые порты на Windows, macOS и Linux — Open Port Scanner</title>
+  <title>Как проверить открытые порты на Windows, macOS и Linux | Open Port Scanner</title>
   <meta name="description" content="Подробная инструкция: как узнать, какие TCP-порты открыты на вашем компьютере или в локальной сети с помощью PowerShell, Terminal (lsof, ss) и сканера Open Port Scanner." />
   <link rel="canonical" href="https://open-port-tools.github.io/port-scanner/ru/kak-proverit-otkrytye-porty.html" />
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
@@ -128,7 +128,7 @@
       <div class="cta-box">
         <div>
           <div style="font-weight: 600; font-size: 16px;">Скачать Open Port Scanner v2.0</div>
-          <div style="font-size: 13px; color: var(--muted);">Единый файл (~2–4 МБ) без установки Java • Windows, Mac, Linux</div>
+          <div style="font-size: 13px; color: var(--muted);">Единый файл (~2-4 МБ) без установки Java • Windows, Mac, Linux</div>
         </div>
         <div>
           <a class="btn btn-primary" href="https://github.com/open-port-tools/port-scanner/releases/latest">Скачать релиз</a>
@@ -139,7 +139,7 @@
 
       <h2>1. Быстрая проверка через Open Port Scanner (GUI и CLI)</h2>
       <p>
-        Самый простой способ проверить локальный ПК или сразу все устройства в вашей сети — запустить портативный сканер:
+        Самый простой способ проверить локальный ПК или сразу все устройства в вашей сети, запустить портативный сканер:
       </p>
       <ol>
         <li>Запустите программу и выберите кнопку <strong>«Этот ПК»</strong> (для проверки <code>127.0.0.1</code>) или <strong>«Вся сеть»</strong> (для поиска устройств во всей подсети <code>/24</code>).</li>
@@ -165,17 +165,17 @@ sudo lsof -iTCP -sTCP:LISTEN -n -P
 nc -zv 192.168.1.1 80</code></pre>
 
       <h2>4. Проверка на Linux (Ubuntu, Debian, CentOS)</h2>
-      <pre><code># Современная замена netstat — утилита ss:
+      <pre><code># Современная замена netstat, утилита ss:
 sudo ss -tulpn | grep LISTEN</code></pre>
 
       <h2>Полезные руководства</h2>
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 16px;">
         <a style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; text-decoration: none; color: inherit;" href="analog-advanced-ip-scanner-mac-linux.html">
-          <h3 style="margin: 0 0 6px; font-size: 15px; color: #60a5fa;">Аналог Advanced IP Scanner для Mac и Linux →</h3>
+          <h3 style="margin: 0 0 6px; font-size: 15px; color: #60a5fa;">Аналог Advanced IP Scanner для Mac и Linux</h3>
           <p style="margin: 0; font-size: 13px; color: var(--muted);">Нативный сканер локальной сети с графическим интерфейсом.</p>
         </a>
         <a style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; text-decoration: none; color: inherit;" href="../common-network-ports-cheat-sheet.html">
-          <h3 style="margin: 0 0 6px; font-size: 15px; color: #60a5fa;">Справочник популярных TCP-портов (EN) →</h3>
+          <h3 style="margin: 0 0 6px; font-size: 15px; color: #60a5fa;">Справочник популярных TCP-портов (EN)</h3>
           <p style="margin: 0; font-size: 13px; color: var(--muted);">Таблица портов для веб-серверов, баз данных и админок.</p>
         </a>
       </div>
@@ -187,7 +187,7 @@ sudo ss -tulpn | grep LISTEN</code></pre>
         <a href="https://github.com/open-port-tools/port-scanner/releases/latest">Скачать</a> · 
         <a href="https://github.com/open-port-tools/port-scanner">GitHub</a>
       </p>
-      <p>Open Port Tools — открытое ПО под лицензией MIT.</p>
+      <p>Open Port Tools: открытое ПО под лицензией MIT.</p>
     </footer>
   </div>
 </body>

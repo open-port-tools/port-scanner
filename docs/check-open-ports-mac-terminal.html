@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>How to Check Open Ports on Mac (Terminal &amp; GUI Guide) — Open Port Scanner</title>
+  <title>How to Check Open Ports on Mac (Terminal &amp; GUI Guide) | Open Port Scanner</title>
   <meta name="description" content="Learn how to find open and listening ports on macOS Sonoma, Sequoia, and earlier versions using Terminal commands (lsof, nc) and the Open Port Scanner GUI." />
   <link rel="canonical" href="https://open-port-tools.github.io/port-scanner/check-open-ports-mac-terminal.html" />
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
@@ -126,7 +126,7 @@
     </nav>
 
     <article>
-      <h1>How to Check Open Ports on Mac (Terminal &amp; GUI Guide)</h1>
+      <h1>How to check open ports on Mac from Terminal and GUI</h1>
       <p class="lead">
         Ever since Apple removed the classic "Network Utility" app from macOS, Mac users have relied on terminal utilities or third-party tools to inspect open ports and check network services. Here is how to audit ports on macOS.
       </p>
@@ -134,14 +134,14 @@
       <div class="cta-box">
         <div>
           <div style="font-weight: 600; font-size: 16px;">Download Open Port Scanner for macOS</div>
-          <div style="font-size: 13px; color: var(--muted);">Universal binary for Apple Silicon (M1–M4) &amp; Intel • Fast GPU UI</div>
+          <div style="font-size: 13px; color: var(--muted);">Universal binary for Apple Silicon (M1-M4) &amp; Intel • Fast GPU UI</div>
         </div>
         <div>
           <a class="btn btn-primary" href="https://github.com/open-port-tools/port-scanner/releases/download/v2.0.0/port-scanner-macos.tar.gz">Download for Mac</a>
         </div>
       </div>
 
-      <h2>Method 1: List Local Listening Ports with lsof</h2>
+      <h2>Method 1: List local listening ports with lsof</h2>
       <p>
         The <code>lsof</code> (list open files) command is the most reliable way to identify which processes have opened listening network sockets on your Mac:
       </p>
@@ -157,7 +157,7 @@ kill -9 &lt;PID&gt;</code></pre>
         The <code>-n</code> and <code>-P</code> flags prevent DNS and service name lookups, producing immediate output without hanging.
       </p>
 
-      <h2>Method 2: Check Remote Host Ports with Netcat (nc)</h2>
+      <h2>Method 2: Check remote host ports with netcat (nc)</h2>
       <p>
         macOS includes a BSD version of <code>nc</code> (netcat), useful for quick checks on remote servers:
       </p>
@@ -170,7 +170,7 @@ nc -zv -G 1 192.168.1.50 22 80 443 8080</code></pre>
         <em>Limitation:</em> <code>nc</code> on macOS scans sequentially and has no native subnet discovery or formatted output export.
       </p>
 
-      <h2>Method 3: Native GPU Desktop Scanner for Mac</h2>
+      <h2>Method 3: Desktop scanner for Mac</h2>
       <p>
         For developers who miss Apple's classic Network Utility Port Scan tab, <strong>Open Port Scanner</strong> offers a modern replacement:
       </p>
@@ -184,14 +184,14 @@ nc -zv -G 1 192.168.1.50 22 80 443 8080</code></pre>
 ./port-scanner --lan --profile quick
 ./port-scanner 127.0.0.1 -p 3000,5173,8080,5432 -o dev-ports.json</code></pre>
 
-      <h2>Related Guides</h2>
+      <h2>Related guides</h2>
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 16px;">
         <a style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; text-decoration: none; color: inherit;" href="advanced-port-scanner-mac-linux.html">
-          <h3 style="margin: 0 0 6px; font-size: 15px; color: #60a5fa;">Advanced Port Scanner for Mac &amp; Linux →</h3>
+          <h3 style="margin: 0 0 6px; font-size: 15px; color: #60a5fa;">Advanced Port Scanner for Mac and Linux</h3>
           <p style="margin: 0; font-size: 13px; color: var(--muted);">Native alternative for Apple Silicon &amp; Intel.</p>
         </a>
         <a style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; text-decoration: none; color: inherit;" href="check-open-ports-windows-cmd-powershell.html">
-          <h3 style="margin: 0 0 6px; font-size: 15px; color: #60a5fa;">How to Check Open Ports on Windows →</h3>
+          <h3 style="margin: 0 0 6px; font-size: 15px; color: #60a5fa;">How to check open ports on Windows</h3>
           <p style="margin: 0; font-size: 13px; color: var(--muted);">PowerShell and CMD tutorial for Windows users.</p>
         </a>
       </div>
@@ -203,7 +203,7 @@ nc -zv -G 1 192.168.1.50 22 80 443 8080</code></pre>
         <a href="https://github.com/open-port-tools/port-scanner/releases/latest">Download Release</a> · 
         <a href="https://github.com/open-port-tools/port-scanner">GitHub</a>
       </p>
-      <p>Open Port Tools — MIT Licensed Open Source Software.</p>
+      <p>Open Port Tools. MIT Licensed Open Source Software.</p>
     </footer>
   </div>
 </body>

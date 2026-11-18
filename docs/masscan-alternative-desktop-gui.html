@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Fast Port Scanner with Desktop GUI vs Masscan &amp; Nmap — Open Port Scanner</title>
+  <title>Fast Port Scanner with Desktop GUI vs Masscan &amp; Nmap | Open Port Scanner</title>
   <meta name="description" content="Comparing Open Port Scanner with Masscan and Nmap. Why bounded concurrency, safe OS sockets, and a native GPU desktop GUI provide the ideal balance for local and remote network checks." />
   <link rel="canonical" href="https://open-port-tools.github.io/port-scanner/masscan-alternative-desktop-gui.html" />
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
@@ -124,7 +124,7 @@
     </nav>
 
     <article>
-      <h1>Fast Port Scanner with Desktop GUI vs Masscan &amp; Nmap</h1>
+      <h1>Fast port scanner with desktop GUI vs Masscan and Nmap</h1>
       <p class="lead">
         Masscan can transmit millions of packets per second across the Internet, but running it on a local Wi-Fi or office network often saturates home routers and causes packet drops. Here is how modern async scanning balances speed, reliability, and safety.
       </p>
@@ -141,17 +141,17 @@
 
       <img src="assets/preview.svg" alt="Open Port Scanner desktop interface" style="width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--border); margin: 24px 0;" />
 
-      <h2>The Risk of Raw Packet Flooding on Local Subnets</h2>
+      <h2>The risk of raw packet flooding on local subnets</h2>
       <p>
         Masscan operates by generating raw asynchronous TCP SYN frames using its own custom TCP/IP stack. While unmatched for Internet-scale reconnaissance, this approach causes notable drawbacks for internal office and homelab scans:
       </p>
       <ul>
-        <li><strong>Router state exhaustion:</strong> Consumer and small business routers maintain NAT state tables. Blasting thousands of raw packets per second can overwhelm the state table, knocking other devices offline.</li>
-        <li><strong>Firewall triggering:</strong> Managed switches and endpoint protection software (EDR) detect raw SYN floods as port scanning attacks and block the source IP immediately.</li>
-        <li><strong>No banner grabbing in default modes:</strong> Raw SYN scans only report whether a port is open, without reading the initial server greeting (such as HTTP status or SSH banner).</li>
+        <li>Router state exhaustion: Consumer and small business routers maintain NAT state tables. Blasting thousands of raw packets per second can overwhelm the state table, knocking other devices offline.</li>
+        <li>Firewall triggering: Managed switches and endpoint protection software (EDR) detect raw SYN floods as port scanning attacks and block the source IP immediately.</li>
+        <li>No banner grabbing in default modes: Raw SYN scans only report whether a port is open, without reading the initial server greeting (such as HTTP status or SSH banner).</li>
       </ul>
 
-      <h2>Architecture Comparison</h2>
+      <h2>Architecture comparison</h2>
       <table>
         <thead>
           <tr>
@@ -182,7 +182,7 @@
           </tr>
           <tr>
             <td>Safe on Local Routers</td>
-            <td>Yes (bounded 50–500 concurrency)</td>
+            <td>Yes (bounded 50-500 concurrency)</td>
             <td>Can saturate state tables</td>
             <td>Yes with standard timing (-T3/-T4)</td>
           </tr>
@@ -195,7 +195,7 @@
         </tbody>
       </table>
 
-      <h2>How Bounded Concurrency Works in Rust</h2>
+      <h2>How bounded concurrency works in Rust</h2>
       <p>
         Open Port Scanner uses a bounded worker pool in Rust. Rather than firing unlimited socket descriptors at once, it throttles simultaneous connections between <code>50</code> and <code>2000</code> workers:
       </p>
@@ -207,17 +207,17 @@ port-scanner 10.0.0.0/20 -c 800 -t 0.5 -p 80,443,22</code></pre>
 
       <h2>Summary</h2>
       <p>
-        For internet-wide research on 10 Gbps uplinks, Masscan remains unbeatable. But for local network audits, office inventories, and developer testing where stability, banner grabbing, and a graphical interface matter, Open Port Scanner delivers the right balance of speed and safety.
+        For internet-wide research on 10 Gbps uplinks, Masscan remains unbeatable. But for local network audits, office inventories, and developer testing where stability, banner grabbing, and a graphical interface matter, Open Port Scanner balances speed and safety.
       </p>
 
-      <h2>Related Guides</h2>
+      <h2>Related guides</h2>
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 16px;">
         <a style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; text-decoration: none; color: inherit;" href="nmap-alternative-lightweight.html">
-          <h3 style="margin: 0 0 6px; font-size: 15px; color: #60a5fa;">Lightweight Nmap Alternative →</h3>
+          <h3 style="margin: 0 0 6px; font-size: 15px; color: #60a5fa;">Lightweight Nmap alternative</h3>
           <p style="margin: 0; font-size: 13px; color: var(--muted);">Driverless network auditor for locked-down systems.</p>
         </a>
         <a style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; text-decoration: none; color: inherit;" href="angry-ip-scanner-alternative.html">
-          <h3 style="margin: 0 0 6px; font-size: 15px; color: #60a5fa;">Angry IP Scanner Alternative Without Java →</h3>
+          <h3 style="margin: 0 0 6px; font-size: 15px; color: #60a5fa;">Angry IP Scanner alternative without Java</h3>
           <p style="margin: 0; font-size: 13px; color: var(--muted);">Lightweight single-binary executable for all systems.</p>
         </a>
       </div>
@@ -229,7 +229,7 @@ port-scanner 10.0.0.0/20 -c 800 -t 0.5 -p 80,443,22</code></pre>
         <a href="https://github.com/open-port-tools/port-scanner/releases/latest">Download Release</a> · 
         <a href="https://github.com/open-port-tools/port-scanner">GitHub</a>
       </p>
-      <p>Open Port Tools — MIT Licensed Open Source Software.</p>
+      <p>Open Port Tools. MIT Licensed Open Source Software.</p>
     </footer>
   </div>
 </body>

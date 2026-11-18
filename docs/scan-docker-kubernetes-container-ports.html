@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>How to Scan Docker Containers &amp; Local Kubernetes Ports — Open Port Scanner</title>
+  <title>How to Scan Docker Containers &amp; Local Kubernetes Ports | Open Port Scanner</title>
   <meta name="description" content="Audit accidentally exposed Docker container ports, check local Kubernetes NodePorts, and inspect microservice web/database bindings on localhost or LAN." />
   <link rel="canonical" href="https://open-port-tools.github.io/port-scanner/scan-docker-kubernetes-container-ports.html" />
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
@@ -121,7 +121,7 @@
     </nav>
 
     <article>
-      <h1>How to Scan Docker Containers &amp; Local Kubernetes Ports</h1>
+      <h1>How to scan Docker containers and local Kubernetes ports</h1>
       <p class="lead">
         When running Docker Compose or local Kubernetes clusters, publishing a port with <code>-p 5432:5432</code> binds it to <code>0.0.0.0</code>, exposing databases directly to the network and bypassing UFW firewall rules on Linux. Auditing these bindings takes only seconds.
       </p>
@@ -136,12 +136,12 @@
         </div>
       </div>
 
-      <h2>Why Docker Bypasses Standard Host Firewalls</h2>
+      <h2>Why Docker bypasses standard host firewalls</h2>
       <p>
         On Linux servers, Docker inserts its own <code>DOCKER</code> chain into <code>iptables</code> before the <code>UFW</code> or <code>INPUT</code> rules. As a result, a Redis or PostgreSQL container started with standard port mapping becomes reachable from the external network even if your host firewall blocks that port.
       </p>
 
-      <h2>Auditing Exposed Container Ports</h2>
+      <h2>Auditing exposed container ports</h2>
       <p>
         To verify whether your containers are only bound to <code>127.0.0.1</code> or exposed across your LAN/public IP, scan your machine's network IP from another host or run a local sweep:
       </p>
@@ -154,7 +154,7 @@ port-scanner 192.168.1.50 --profile database
 # Scan full Kubernetes NodePort range (30000-32767) and export JSON:
 port-scanner 10.0.0.10 -p 30000-32767 --json -o k8s-nodeports.json</code></pre>
 
-      <h2>Securing Docker Compose Port Bindings</h2>
+      <h2>Securing Docker Compose port bindings</h2>
       <p>
         If your scan detects an open database or admin port on your LAN/WAN IP that should remain private, bind it explicitly to localhost in <code>docker-compose.yml</code>:
       </p>
@@ -166,14 +166,14 @@ ports:
 ports:
   - "127.0.0.1:5432:5432"</code></pre>
 
-      <h2>Related Guides</h2>
+      <h2>Related guides</h2>
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 16px;">
         <a style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; text-decoration: none; color: inherit;" href="common-network-ports-cheat-sheet.html">
-          <h3 style="margin: 0 0 6px; font-size: 15px; color: #60a5fa;">Common Network Ports Cheat Sheet →</h3>
+          <h3 style="margin: 0 0 6px; font-size: 15px; color: #60a5fa;">Common network ports cheat sheet</h3>
           <p style="margin: 0; font-size: 13px; color: var(--muted);">Reference guide to web, database, and infrastructure ports.</p>
         </a>
         <a style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; text-decoration: none; color: inherit;" href="check-open-ports-linux-cli.html">
-          <h3 style="margin: 0 0 6px; font-size: 15px; color: #60a5fa;">How to Check Open Ports on Linux →</h3>
+          <h3 style="margin: 0 0 6px; font-size: 15px; color: #60a5fa;">How to check open ports on Linux</h3>
           <p style="margin: 0; font-size: 13px; color: var(--muted);">Using ss, lsof, and Open Port Scanner on Linux servers.</p>
         </a>
       </div>
@@ -185,7 +185,7 @@ ports:
         <a href="https://github.com/open-port-tools/port-scanner/releases/latest">Download Release</a> · 
         <a href="https://github.com/open-port-tools/port-scanner">GitHub</a>
       </p>
-      <p>Open Port Tools — MIT Licensed Open Source Software.</p>
+      <p>Open Port Tools. MIT Licensed Open Source Software.</p>
     </footer>
   </div>
 </body>

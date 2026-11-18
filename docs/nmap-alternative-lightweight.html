@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Lightweight Nmap Alternative for Fast Port Audits — Open Port Scanner</title>
+  <title>Lightweight Nmap Alternative for Fast Port Audits | Open Port Scanner</title>
   <meta name="description" content="Looking for a lightweight Nmap alternative with a modern GUI and zero driver dependencies? Open Port Scanner runs without root privileges or Npcap on Windows, macOS, and Linux." />
   <link rel="canonical" href="https://open-port-tools.github.io/port-scanner/nmap-alternative-lightweight.html" />
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
   <link rel="manifest" href="site.webmanifest" />
   <meta name="theme-color" content="#111214" />
-  <meta property="og:title" content="Lightweight Nmap Alternative for Fast Port Audits — Open Port Scanner" />
+  <meta property="og:title" content="Lightweight Nmap Alternative for Fast Port Audits | Open Port Scanner" />
   <meta property="og:description" content="Fast, driverless port scanner with native GPU GUI and CLI. 1-click subnet discovery without root or Npcap." />
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://open-port-tools.github.io/port-scanner/nmap-alternative-lightweight.html" />
@@ -124,7 +124,7 @@
     </nav>
 
     <article>
-      <h1>Lightweight Nmap Alternative for Fast Port Audits</h1>
+      <h1>Lightweight Nmap alternative for fast port audits</h1>
       <p class="lead">
         Nmap is the undisputed industry standard for deep security assessments. However, for everyday port checks, quick LAN discovery, and environments without root permissions, a smaller, self-contained tool is often a better fit.
       </p>
@@ -132,7 +132,7 @@
       <div class="cta-box">
         <div>
           <div style="font-weight: 600; font-size: 16px;">Download Open Port Scanner v2.0</div>
-          <div style="font-size: 13px; color: var(--muted);">Standalone binary (~2–4 MB) • Windows .exe • macOS • Linux</div>
+          <div style="font-size: 13px; color: var(--muted);">Standalone binary (~2-4 MB) • Windows .exe • macOS • Linux</div>
         </div>
         <div>
           <a class="btn btn-primary" href="https://github.com/open-port-tools/port-scanner/releases/latest">Download Release</a>
@@ -142,18 +142,18 @@
 
       <img src="assets/preview.svg" alt="Open Port Scanner GUI preview showing active hosts and services" style="width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--border); margin: 24px 0;" />
 
-      <h2>When Nmap is More Than You Need</h2>
+      <h2>When Nmap is more than you need</h2>
       <p>
         Nmap is powerful because it constructs raw IP packets and operates at Layer 3/4. That depth comes with constraints:
       </p>
       <ul>
-        <li><strong>Kernel driver requirements:</strong> On Windows, Nmap requires installing Npcap or WinPcap, which requires administrative privileges and system reboots.</li>
-        <li><strong>Root privileges:</strong> SYN stealth scans (<code>-sS</code>), OS fingerprinting (<code>-O</code>), and custom packets require <code>sudo</code> or root access on Linux and macOS.</li>
-        <li><strong>Dated graphical interface:</strong> Zenmap relies on legacy Python 2/3 GTK bindings that are cumbersome to install on modern macOS and Linux distributions.</li>
-        <li><strong>Large installation footprint:</strong> Nmap with its script databases and runtimes occupies 50–100+ MB on disk.</li>
+        <li>Kernel driver requirements: On Windows, Nmap requires installing Npcap or WinPcap, which requires administrative privileges and system reboots.</li>
+        <li>Root privileges: SYN stealth scans (<code>-sS</code>), OS fingerprinting (<code>-O</code>), and custom packets require <code>sudo</code> or root access on Linux and macOS.</li>
+        <li>Dated graphical interface: Zenmap relies on legacy Python 2/3 GTK bindings that are cumbersome to install on modern macOS and Linux distributions.</li>
+        <li>Large installation footprint: Nmap with its script databases and runtimes occupies 50-100+ MB on disk.</li>
       </ul>
 
-      <h2>Direct Comparison</h2>
+      <h2>Direct comparison</h2>
       <table>
         <thead>
           <tr>
@@ -201,10 +201,10 @@
         </tbody>
       </table>
 
-      <h2>Best Use Cases for Each Tool</h2>
+      <h2>Best use cases for each tool</h2>
       <h3>Use Open Port Scanner when:</h3>
       <ul>
-        <li>You want to see which devices and services are active on your home or office Wi-Fi in 2–5 seconds.</li>
+        <li>You want to see which devices and services are active on your home or office Wi-Fi in 2-5 seconds.</li>
         <li>You are working on a locked-down workstation where installing kernel drivers is prohibited.</li>
         <li>You want to pipe clean JSON directly into modern automation scripts or export CSV for an audit log.</li>
         <li>You need a desktop interface on macOS (Apple Silicon or Intel) without configuring Python/GTK dependencies.</li>
@@ -217,7 +217,7 @@
         <li>You need low-level OS kernel fingerprinting.</li>
       </ul>
 
-      <h2>Quick Command Reference</h2>
+      <h2>Quick command reference</h2>
       <pre><code># Equivalent of a fast top-ports LAN sweep:
 # Nmap:
 nmap -F --open 192.168.1.0/24
@@ -228,14 +228,14 @@ port-scanner --lan --profile quick
 # Check common database and web ports on a target server:
 port-scanner db.local -p 80,443,3306,5432,6379 -o report.json</code></pre>
 
-      <h2>Related Network Guides</h2>
+      <h2>Related network guides</h2>
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 16px;">
         <a style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; text-decoration: none; color: inherit;" href="angry-ip-scanner-alternative.html">
-          <h3 style="margin: 0 0 6px; font-size: 15px; color: #60a5fa;">Angry IP Scanner Alternative Without Java →</h3>
+          <h3 style="margin: 0 0 6px; font-size: 15px; color: #60a5fa;">Angry IP Scanner alternative without Java</h3>
           <p style="margin: 0; font-size: 13px; color: var(--muted);">Zero-dependency port scanner with native GPU GUI and instant startup.</p>
         </a>
         <a style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; text-decoration: none; color: inherit;" href="advanced-port-scanner-mac-linux.html">
-          <h3 style="margin: 0 0 6px; font-size: 15px; color: #60a5fa;">Advanced Port Scanner for Mac &amp; Linux →</h3>
+          <h3 style="margin: 0 0 6px; font-size: 15px; color: #60a5fa;">Advanced Port Scanner for Mac and Linux</h3>
           <p style="margin: 0; font-size: 13px; color: var(--muted);">Cross-platform alternative to Famatech Advanced Port Scanner with 1-click LAN mapping.</p>
         </a>
       </div>
@@ -248,7 +248,7 @@ port-scanner db.local -p 80,443,3306,5432,6379 -o report.json</code></pre>
         <a href="https://github.com/open-port-tools/port-scanner">GitHub Source Code</a> · 
         <a href="https://sourceforge.net/projects/port-scanner/">SourceForge</a>
       </p>
-      <p>Open Port Tools — MIT Licensed Open Source Software.</p>
+      <p>Open Port Tools. MIT Licensed Open Source Software.</p>
     </footer>
   </div>
 </body>

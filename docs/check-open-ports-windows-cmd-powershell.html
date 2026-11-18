@@ -126,7 +126,7 @@
     </nav>
 
     <article>
-      <h1>How to Check Open Ports on Windows (PowerShell, CMD &amp; GUI)</h1>
+      <h1>How to check open ports on Windows with PowerShell, CMD, and GUI</h1>
       <p class="lead">
         Whether you are diagnosing a blocked web service, investigating local firewall rules, or troubleshooting database connections, here are the most effective ways to check open ports on Windows 10 and 11.
       </p>
@@ -141,7 +141,7 @@
         </div>
       </div>
 
-      <h2>Method 1: Check Listening Ports via CMD (netstat)</h2>
+      <h2>Method 1: Check listening ports via CMD (netstat)</h2>
       <p>
         The built-in <code>netstat</code> command displays active TCP connections and listening sockets on your local Windows PC:
       </p>
@@ -157,7 +157,7 @@ tasklist /fi "PID eq 1234"</code></pre>
         <em>Limitation:</em> <code>netstat</code> only shows what is listening on your local machine; it cannot test ports across your network or check remote servers.
       </p>
 
-      <h2>Method 2: Test Remote Ports with PowerShell (Test-NetConnection)</h2>
+      <h2>Method 2: Test remote ports with PowerShell (Test-NetConnection)</h2>
       <p>
         PowerShell includes <code>Test-NetConnection</code> (alias <code>tnc</code>), which functions like a basic TCP ping:
       </p>
@@ -167,10 +167,10 @@ Test-NetConnection -ComputerName example.com -Port 443
 # Quick one-liner checking only the boolean result:
 (Test-NetConnection 192.168.1.1 -Port 80).TcpTestSucceeded</code></pre>
       <p>
-        <em>Limitation:</em> <code>Test-NetConnection</code> tests only one port at a time and takes 2–4 seconds per check, making multi-port or subnet sweeps painfully slow.
+        <em>Limitation:</em> <code>Test-NetConnection</code> tests only one port at a time and takes 2-4 seconds per check, making multi-port or subnet sweeps painfully slow.
       </p>
 
-      <h2>Method 3: Fast Multi-Port &amp; Subnet Scan with Open Port Scanner</h2>
+      <h2>Method 3: Multi-port and subnet scan with Open Port Scanner</h2>
       <p>
         For auditing dozens of ports or checking all hosts on your subnet, use <strong>Open Port Scanner</strong>:
       </p>
@@ -184,21 +184,21 @@ Test-NetConnection -ComputerName example.com -Port 443
 .\port-scanner.exe 127.0.0.1 --profile web
 .\port-scanner.exe --lan --profile quick -o scan-results.csv</code></pre>
 
-      <h2>Summary Comparison</h2>
+      <h2>Summary comparison</h2>
       <ul>
-        <li><strong>netstat:</strong> Best for checking which local process PID has bound to a specific port on your own PC.</li>
-        <li><strong>PowerShell Test-NetConnection:</strong> Good for a single quick check against one remote IP and port without downloading tools.</li>
-        <li><strong>Open Port Scanner:</strong> Best for checking multiple ports, entire subnets, capturing HTTP/SSH banners, and exporting CSV/JSON reports.</li>
+        <li>netstat: Best for checking which local process PID has bound to a specific port on your own PC.</li>
+        <li>PowerShell Test-NetConnection: Good for a single quick check against one remote IP and port without downloading tools.</li>
+        <li>Open Port Scanner: Best for checking multiple ports, entire subnets, capturing HTTP/SSH banners, and exporting CSV/JSON reports.</li>
       </ul>
 
-      <h2>Related Guides</h2>
+      <h2>Related guides</h2>
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 16px;">
         <a style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; text-decoration: none; color: inherit;" href="how-to-scan-local-network-ports.html">
-          <h3 style="margin: 0 0 6px; font-size: 15px; color: #60a5fa;">How to Scan Local Network for Open Ports →</h3>
+          <h3 style="margin: 0 0 6px; font-size: 15px; color: #60a5fa;">How to scan a local network for open ports</h3>
           <p style="margin: 0; font-size: 13px; color: var(--muted);">Step-by-step tutorial on discovering all devices and services.</p>
         </a>
         <a style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; text-decoration: none; color: inherit;" href="angry-ip-scanner-alternative.html">
-          <h3 style="margin: 0 0 6px; font-size: 15px; color: #60a5fa;">Angry IP Scanner Alternative Without Java →</h3>
+          <h3 style="margin: 0 0 6px; font-size: 15px; color: #60a5fa;">Angry IP Scanner alternative without Java</h3>
           <p style="margin: 0; font-size: 13px; color: var(--muted);">Lightweight alternative running without Java Runtime Environment.</p>
         </a>
       </div>
@@ -210,7 +210,7 @@ Test-NetConnection -ComputerName example.com -Port 443
         <a href="https://github.com/open-port-tools/port-scanner/releases/latest">Download Release</a> · 
         <a href="https://github.com/open-port-tools/port-scanner">GitHub</a>
       </p>
-      <p>Open Port Tools — MIT Licensed Open Source Software.</p>
+      <p>Open Port Tools. MIT Licensed Open Source Software.</p>
     </footer>
   </div>
 </body>

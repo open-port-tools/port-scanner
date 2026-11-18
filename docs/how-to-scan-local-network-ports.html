@@ -126,7 +126,7 @@
     </nav>
 
     <article>
-      <h1>How to Scan Local Network for Open Ports (Step-by-Step Guide)</h1>
+      <h1>How to scan a local network for open ports</h1>
       <p class="lead">
         Scanning your home or office local area network (LAN) helps identify connected devices, unauthenticated admin dashboards, misconfigured database ports, and rogue services. Here is how to map all active network hosts in seconds.
       </p>
@@ -143,17 +143,17 @@
 
       <img src="assets/preview.svg" alt="Local network scan results showing hosts and open ports" style="width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--border); margin: 24px 0;" />
 
-      <h2>Step 1: Download &amp; Launch</h2>
+      <h2>Step 1: Download and launch</h2>
       <p>
-        Unlike tools that require Python or Java installation, Open Port Scanner ships as a single portable machine-code binary (~2–4 MB).
+        Unlike tools that require Python or Java installation, Open Port Scanner ships as a single portable machine-code binary (~2-4 MB).
       </p>
       <ul>
-        <li><strong>Windows:</strong> Download <code>port-scanner-windows-x64.zip</code>, extract, and double-click <code>port-scanner.exe</code>.</li>
-        <li><strong>macOS:</strong> Download <code>port-scanner-macos.tar.gz</code> and launch the universal binary.</li>
-        <li><strong>Linux:</strong> Download <code>port-scanner-linux-x64.tar.gz</code> and execute in terminal or desktop window.</li>
+        <li>Windows: Download <code>port-scanner-windows-x64.zip</code>, extract, and double-click <code>port-scanner.exe</code>.</li>
+        <li>macOS: Download <code>port-scanner-macos.tar.gz</code> and launch the universal binary.</li>
+        <li>Linux: Download <code>port-scanner-linux-x64.tar.gz</code> and execute in terminal or desktop window.</li>
       </ul>
 
-      <h2>Step 2: Subnet Scan via Desktop Interface</h2>
+      <h2>Step 2: Subnet scan via desktop interface</h2>
       <p>
         When you launch the desktop app, the scanner automatically identifies your active network interface and calculates the local <code>/24</code> subnet (such as <code>192.168.1.0/24</code> or <code>10.0.0.0/24</code>).
       </p>
@@ -161,16 +161,16 @@
         <li>Click the local network target button (showing your detected subnet range).</li>
         <li>Select a port preset:
           <ul>
-            <li><strong>Quick (25 ports):</strong> Web (80, 443), SSH (22), RDP (3389), VNC, and common remote access ports.</li>
-            <li><strong>Standard (96 ports):</strong> Commonly exposed TCP services.</li>
-            <li><strong>Web (19 ports):</strong> Common development and web servers (80, 443, 3000, 5173, 8080, 8443).</li>
-            <li><strong>Databases (17 ports):</strong> PostgreSQL, MySQL, Redis, MongoDB, and MSSQL.</li>
+            <li>Quick (25 ports): Web (80, 443), SSH (22), RDP (3389), VNC, and common remote access ports.</li>
+            <li>Standard (96 ports): Commonly exposed TCP services.</li>
+            <li>Web (19 ports): Common development and web servers (80, 443, 3000, 5173, 8080, 8443).</li>
+            <li>Databases (17 ports): PostgreSQL, MySQL, Redis, MongoDB, and MSSQL.</li>
           </ul>
         </li>
         <li>Click <strong>Scan</strong>. Active devices and open ports appear with response latency and detected service banners.</li>
       </ol>
 
-      <h2>Step 3: CLI Method (Terminal &amp; Automation)</h2>
+      <h2>Step 3: CLI method (Terminal and automation)</h2>
       <p>
         If you are working over SSH or automating daily security audits, run the scanner with command-line flags:
       </p>
@@ -183,7 +183,7 @@ port-scanner 192.168.1.0/24 -p 22,80,443,3389 -o lan-report.json
 # Scan only your local machine:
 port-scanner 127.0.0.1 --profile full</code></pre>
 
-      <h2>Common Open Ports to Watch For</h2>
+      <h2>Common open ports to check</h2>
       <table>
         <thead>
           <tr>
@@ -221,18 +221,18 @@ port-scanner 127.0.0.1 --profile full</code></pre>
         </tbody>
       </table>
 
-      <h2>Exporting and Reporting</h2>
+      <h2>Exporting and reporting</h2>
       <p>
         After the scan completes, click <strong>CSV</strong> or <strong>JSON</strong> in the top-right toolbar. The report automatically saves to your <code>Downloads</code> or <code>Desktop</code> folder and copies the text to your system clipboard for instant pasting into documentation.
       </p>
-      <h2>Related Network Guides</h2>
+      <h2>Related network guides</h2>
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 16px;">
         <a style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; text-decoration: none; color: inherit;" href="angry-ip-scanner-alternative.html">
-          <h3 style="margin: 0 0 6px; font-size: 15px; color: #60a5fa;">Angry IP Scanner Alternative Without Java →</h3>
+          <h3 style="margin: 0 0 6px; font-size: 15px; color: #60a5fa;">Angry IP Scanner alternative without Java</h3>
           <p style="margin: 0; font-size: 13px; color: var(--muted);">Zero-dependency port scanner with native GPU GUI and instant startup.</p>
         </a>
         <a style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; text-decoration: none; color: inherit;" href="advanced-port-scanner-mac-linux.html">
-          <h3 style="margin: 0 0 6px; font-size: 15px; color: #60a5fa;">Advanced Port Scanner for Mac &amp; Linux →</h3>
+          <h3 style="margin: 0 0 6px; font-size: 15px; color: #60a5fa;">Advanced Port Scanner for Mac and Linux</h3>
           <p style="margin: 0; font-size: 13px; color: var(--muted);">Cross-platform alternative to Famatech Advanced Port Scanner with 1-click LAN mapping.</p>
         </a>
       </div>
@@ -244,7 +244,7 @@ port-scanner 127.0.0.1 --profile full</code></pre>
         <a href="https://github.com/open-port-tools/port-scanner/releases/latest">Download Tool</a> · 
         <a href="https://github.com/open-port-tools/port-scanner">GitHub Repository</a>
       </p>
-      <p>Open Port Tools — MIT Licensed Open Source Software.</p>
+      <p>Open Port Tools. MIT Licensed Open Source Software.</p>
     </footer>
   </div>
 </body>

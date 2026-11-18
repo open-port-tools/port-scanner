@@ -126,7 +126,7 @@
     </nav>
 
     <article>
-      <h1>How to Check Open Ports on Linux (ss, netstat &amp; Open Port Scanner)</h1>
+      <h1>How to check open ports on Linux with ss, netstat, and Open Port Scanner</h1>
       <p class="lead">
         Linux provides built-in socket inspection tools for local processes, but auditing remote network nodes or finding all active ports across a local subnet requires a different toolkit. Here is how to handle both.
       </p>
@@ -141,7 +141,7 @@
         </div>
       </div>
 
-      <h2>Method 1: Modern Socket Statistics with ss</h2>
+      <h2>Method 1: Modern socket statistics with ss</h2>
       <p>
         On modern Linux systems (Ubuntu 20.04+, Debian 11+, RHEL/CentOS 8+), <code>ss</code> replaces the deprecated <code>netstat</code> utility. It queries socket information directly from kernel space:
       </p>
@@ -154,12 +154,12 @@ ss -tlpn '( sport = :5432 )'
 # Display numeric addresses and ports without slow DNS lookups:
 ss -tln</code></pre>
 
-      <h2>Method 2: Check Process Ownership with lsof</h2>
+      <h2>Method 2: Check process ownership with lsof</h2>
       <pre><code># Find which process has bound to port 80 or 443:
 sudo lsof -i :80
 sudo lsof -i :443</code></pre>
 
-      <h2>Method 3: Multi-Host Subnet Auditing with Open Port Scanner</h2>
+      <h2>Method 3: Multi-host subnet auditing with Open Port Scanner</h2>
       <p>
         While <code>ss</code> tells you what is happening on your local server, <strong>Open Port Scanner</strong> sweeps remote hosts, other VMs, Docker containers, and entire subnets without requiring root privileges:
       </p>
@@ -175,20 +175,20 @@ port-scanner 10.0.0.15 -p 3306,5432,6379,27017 -o db-audit.json
 # Launch the desktop UI (X11 / Wayland):
 port-scanner --gui</code></pre>
 
-      <h2>Comparison Summary</h2>
+      <h2>Comparison summary</h2>
       <ul>
-        <li><strong>ss / lsof:</strong> Essential for checking local server sockets and troubleshooting port conflict errors (e.g. <code>address already in use</code>).</li>
-        <li><strong>Open Port Scanner:</strong> Ideal for cross-network verification, firewall validation, subnet mapping, and automated JSON auditing.</li>
+        <li>ss / lsof: Essential for checking local server sockets and troubleshooting port conflict errors (e.g. <code>address already in use</code>).</li>
+        <li>Open Port Scanner: Ideal for cross-network verification, firewall validation, subnet mapping, and automated JSON auditing.</li>
       </ul>
 
-      <h2>Related Guides</h2>
+      <h2>Related guides</h2>
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 16px;">
         <a style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; text-decoration: none; color: inherit;" href="check-open-ports-windows-cmd-powershell.html">
-          <h3 style="margin: 0 0 6px; font-size: 15px; color: #60a5fa;">How to Check Open Ports on Windows →</h3>
+          <h3 style="margin: 0 0 6px; font-size: 15px; color: #60a5fa;">How to check open ports on Windows</h3>
           <p style="margin: 0; font-size: 13px; color: var(--muted);">CMD and PowerShell tutorial for Windows administrators.</p>
         </a>
         <a style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; text-decoration: none; color: inherit;" href="check-open-ports-mac-terminal.html">
-          <h3 style="margin: 0 0 6px; font-size: 15px; color: #60a5fa;">How to Check Open Ports on Mac →</h3>
+          <h3 style="margin: 0 0 6px; font-size: 15px; color: #60a5fa;">How to check open ports on Mac</h3>
           <p style="margin: 0; font-size: 13px; color: var(--muted);">lsof and Netcat guide for macOS.</p>
         </a>
       </div>
@@ -200,7 +200,7 @@ port-scanner --gui</code></pre>
         <a href="https://github.com/open-port-tools/port-scanner/releases/latest">Download Release</a> · 
         <a href="https://github.com/open-port-tools/port-scanner">GitHub</a>
       </p>
-      <p>Open Port Tools — MIT Licensed Open Source Software.</p>
+      <p>Open Port Tools. MIT Licensed Open Source Software.</p>
     </footer>
   </div>
 </body>

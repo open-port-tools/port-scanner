@@ -124,7 +124,7 @@
     </nav>
 
     <article>
-      <h1>How to Audit Routers, IP Cameras &amp; IoT Devices for Open Ports</h1>
+      <h1>How to audit routers, IP cameras, and IoT devices for open ports</h1>
       <p class="lead">
         Consumer routers, security cameras, and smart home hubs often ship with legacy diagnostic ports enabled by default. Running a periodic subnet scan lets you spot exposed services before they become a liability.
       </p>
@@ -139,7 +139,7 @@
         </div>
       </div>
 
-      <h2>Common Open Ports on IoT &amp; Network Hardware</h2>
+      <h2>Common open ports on IoT and network hardware</h2>
       <table>
         <thead>
           <tr>
@@ -177,21 +177,21 @@
         </tbody>
       </table>
 
-      <h2>Running an IoT Port Audit</h2>
+      <h2>Running an IoT port audit</h2>
       <pre><code># Scan your entire local subnet across standard + IoT ports:
 port-scanner --lan -p 21,22,23,80,443,554,1883,5000,7547,8000,8080,8443
 
 # Deep audit of your main router (e.g. 192.168.1.1):
 port-scanner 192.168.1.1 --profile common</code></pre>
 
-      <h2>Related Guides</h2>
+      <h2>Related guides</h2>
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 16px;">
         <a style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; text-decoration: none; color: inherit;" href="find-ip-address-devices-local-network.html">
-          <h3 style="margin: 0 0 6px; font-size: 15px; color: #60a5fa;">Find All Devices on Local Network →</h3>
+          <h3 style="margin: 0 0 6px; font-size: 15px; color: #60a5fa;">Find all devices on a local network</h3>
           <p style="margin: 0; font-size: 13px; color: var(--muted);">Discover every IP address and web portal on your Wi-Fi.</p>
         </a>
         <a style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; text-decoration: none; color: inherit;" href="common-network-ports-cheat-sheet.html">
-          <h3 style="margin: 0 0 6px; font-size: 15px; color: #60a5fa;">Common Network Ports Cheat Sheet →</h3>
+          <h3 style="margin: 0 0 6px; font-size: 15px; color: #60a5fa;">Common network ports cheat sheet</h3>
           <p style="margin: 0; font-size: 13px; color: var(--muted);">Quick TCP port reference for sysadmins.</p>
         </a>
       </div>
@@ -203,7 +203,7 @@ port-scanner 192.168.1.1 --profile common</code></pre>
         <a href="https://github.com/open-port-tools/port-scanner/releases/latest">Download Release</a> · 
         <a href="https://github.com/open-port-tools/port-scanner">GitHub</a>
       </p>
-      <p>Open Port Tools — MIT Licensed Open Source Software.</p>
+      <p>Open Port Tools. MIT Licensed Open Source Software.</p>
     </footer>
   </div>
 </body>

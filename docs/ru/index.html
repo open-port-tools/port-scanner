@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Сканер портов и локальной сети (LAN) — Open Port Scanner на Rust</title>
+  <title>Сканер портов и локальной сети (LAN) | Open Port Scanner на Rust</title>
   <meta name="description" content="Бесплатный быстрый сканер портов и локальной сети на Rust для Windows, macOS и Linux. Сканирование всей сети в 1 клик, проверка открытых TCP портов, баннеров и задержки без Java и Npcap." />
   <meta name="google-site-verification" content="HqgfQrEQATXaycciOAu8GzuJP8BSRHtaR1JrgBtnApU" />
   <link rel="canonical" href="https://open-port-tools.github.io/port-scanner/ru/" />
@@ -15,7 +15,7 @@
   <link rel="manifest" href="../site.webmanifest" />
   <meta name="theme-color" content="#111214" />
 
-  <meta property="og:title" content="Сканер портов и локальной сети — Open Port Scanner" />
+  <meta property="og:title" content="Сканер портов и локальной сети | Open Port Scanner" />
   <meta property="og:description" content="Сканирование всей подсети в 1 клик, проверка открытых TCP портов и сервисов на Rust (tokio + egui). Без Java и драйверов." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://open-port-tools.github.io/port-scanner/ru/" />
@@ -24,7 +24,7 @@
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Сканер портов и локальной сети — Open Port Scanner" />
+  <meta name="twitter:title" content="Сканер портов и локальной сети | Open Port Scanner" />
   <meta name="twitter:description" content="Быстрый сканер портов и LAN в 1 клик на нативном Rust. Компактный бинарник ~2-4 МБ для Windows, Mac и Linux." />
   <meta name="twitter:image" content="https://open-port-tools.github.io/port-scanner/assets/og-image.png" />
 
@@ -66,7 +66,7 @@
         "name": "Нужно ли устанавливать Java, Python или драйверы Npcap/WinPcap?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Нет. Open Port Scanner v2.0 написан на нативном Rust и скомпилирован в единый исполняемый файл размером всего ~2–4 МБ без внешних зависимостей."
+          "text": "Нет. Open Port Scanner v2.0 написан на нативном Rust и скомпилирован в единый исполняемый файл размером 2-4 МБ без внешних зависимостей."
         }
       },
       {
@@ -74,7 +74,7 @@
         "name": "Существует ли версия Advanced Port Scanner для Mac или Linux?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Оригинальный Advanced Port Scanner работает только на Windows. Open Port Scanner — рекомендуемый кроссплатформенный аналог с автоматическим определением подсети и удобным тёмным интерфейсом для macOS и Linux."
+          "text": "Оригинальный Advanced Port Scanner работает только на Windows. Open Port Scanner является кроссплатформенным аналогом с автоматическим определением подсети и тёмным интерфейсом для macOS и Linux."
         }
       }
     ]
@@ -155,7 +155,7 @@
       <div class="nav-links">
         <a href="#downloads">Скачать</a>
         <a href="#guides">Статьи</a>
-        <a href="https://github.com/open-port-tools/port-scanner">GitHub ⭐</a>
+        <a href="https://github.com/open-port-tools/port-scanner">GitHub</a>
         <a href="https://sourceforge.net/projects/port-scanner/">SourceForge</a>
         <a class="lang-badge" href="../">English</a>
       </div>
@@ -163,71 +163,70 @@
 
     <h1>Сканер открытых портов и локальной сети (LAN)</h1>
     <p class="lead">
-      Сверхбыстрый, нативный сканер TCP-портов на <strong>Rust</strong> с определением всей сети в 1 клик.
-      Сканируйте локальный ПК или все 254 хоста домашней/офисной подсети за секунды в тёмном интерфейсе без установки Java и драйверов.
+      Нативный сканер TCP-портов на Rust с определением всей подсети в один клик. Проверяет локальный ПК или все 254 хоста домашней или офисной сети за секунды из графического интерфейса или терминала, без установки Java и драйверов.
     </p>
 
     <div id="downloads" class="cta-row">
-      <a class="btn btn-primary" href="https://github.com/open-port-tools/port-scanner/releases/download/v2.0.0/port-scanner-windows-x64.zip">Скачать для Windows (.exe · 2.1 МБ)</a>
-      <a class="btn btn-secondary" href="https://github.com/open-port-tools/port-scanner/releases/download/v2.0.0/port-scanner-macos.tar.gz">Скачать для macOS (Universal · 4.4 МБ)</a>
-      <a class="btn btn-secondary" href="https://github.com/open-port-tools/port-scanner/releases/download/v2.0.0/port-scanner-linux-x64.tar.gz">Скачать для Linux (x64 · 2.8 МБ)</a>
-      <a class="btn btn-secondary" href="https://github.com/open-port-tools/port-scanner">Исходный код на GitHub ⭐</a>
+      <a class="btn btn-primary" href="https://github.com/open-port-tools/port-scanner/releases/download/v2.0.0/port-scanner-windows-x64.zip">Скачать для Windows (.exe, 2.1 МБ)</a>
+      <a class="btn btn-secondary" href="https://github.com/open-port-tools/port-scanner/releases/download/v2.0.0/port-scanner-macos.tar.gz">Скачать для macOS (Universal, 4.4 МБ)</a>
+      <a class="btn btn-secondary" href="https://github.com/open-port-tools/port-scanner/releases/download/v2.0.0/port-scanner-linux-x64.tar.gz">Скачать для Linux (x64, 2.8 МБ)</a>
+      <a class="btn btn-secondary" href="https://github.com/open-port-tools/port-scanner">Исходный код на GitHub</a>
     </div>
 
     <img class="preview" src="../assets/preview.svg" alt="Интерфейс Open Port Scanner" />
 
-    <h2>Почему системные администраторы и разработчики выбирают его</h2>
+    <h2>Основные возможности</h2>
     <div class="grid">
       <div class="box">
-        <h3>⚡ Асинхронный движок на Rust</h3>
-        <p>На базе Tokio. Сканирует сотни хостов и тысячи портов параллельно без утечки сокетов и зависания системы.</p>
+        <h3>Асинхронный движок на Rust</h3>
+        <p>Построен на Tokio. Сканирует сотни хостов и тысячи портов параллельно без перегрузки системы.</p>
       </div>
       <div class="box">
-        <h3>🌐 1 Клик — вся сеть (LAN /24)</h3>
-        <p>Автоматически определяет активную подсеть Wi-Fi или Ethernet, фильтруя loopback и фейковые VPN-пулы (198.18.0.0/15).</p>
+        <h3>Определение всей сети (LAN /24)</h3>
+        <p>Автоматически находит активную подсеть Wi-Fi или Ethernet, фильтруя loopback и виртуальные VPN-туннели (198.18.0.0/15).</p>
       </div>
       <div class="box">
-        <h3>🖥️ Ноль зависимостей (Без Java и Npcap)</h3>
-        <p>Работает сразу из коробки на Windows (.exe), macOS и Linux. Не требует установки JRE, Python или системных драйверов захвата пакетов.</p>
+        <h3>Без Java и драйверов Npcap</h3>
+        <p>Работает сразу на Windows (.exe), macOS и Linux. Не требует JRE, Python или драйверов захвата пакетов.</p>
       </div>
       <div class="box">
-        <h3>🔍 Баннеры и заголовки HTTP</h3>
-        <p>Считывает приветствия SSH, HTTP-статусы, заголовки Server и title веб-страниц с замером точного пинга в миллисекундах.</p>
+        <h3>Баннеры и заголовки HTTP</h3>
+        <p>Считывает приветствия SSH, HTTP-статусы, заголовки Server и title веб-страниц с замером пинга в миллисекундах.</p>
       </div>
       <div class="box">
-        <h3>📊 Экспорт в CSV и JSON</h3>
-        <p>Сохранение отчётов в 1 клик в Загрузки или Рабочий стол с автоматическим копированием в буфер обмена для документации.</p>
+        <h3>Экспорт в CSV и JSON</h3>
+        <p>Сохранение отчётов в Загрузки или Рабочий стол с копированием в буфер обмена для документации.</p>
       </div>
       <div class="box">
-        <h3>🪶 Размер бинарника ~2–4 МБ</h3>
-        <p>Один компактный файл. Можно носить на флешке или запускать на удалённых серверах без пакетных менеджеров.</p>
+        <h3>Размер бинарника 2-4 МБ</h3>
+        <p>Один автономный файл. Можно носить на флешке или запускать на серверах без пакетных менеджеров.</p>
       </div>
     </div>
 
     <h2 id="guides">Полезные статьи и руководства</h2>
     <div class="grid">
       <a class="guide-card" href="kak-proverit-otkrytye-porty.html">
-        <h3>Как проверить открытые порты (Windows, Mac, Linux) →</h3>
+        <h3>Как проверить открытые порты (Windows, Mac, Linux)</h3>
         <p>Инструкция по проверке портов через PowerShell, Терминал (lsof, ss) и Open Port Scanner.</p>
       </a>
       <a class="guide-card" href="analog-advanced-ip-scanner-mac-linux.html">
-        <h3>Аналог Advanced IP Scanner для Mac и Linux →</h3>
-        <p>Нативный кроссплатформенный сканер локальной сети с графическим интерфейсом без эмуляции.</p>
+        <h3>Аналог Advanced IP Scanner для Mac и Linux</h3>
+        <p>Кроссплатформенный сканер локальной сети с графическим интерфейсом без эмуляции.</p>
       </a>
       <a class="guide-card" href="../angry-ip-scanner-alternative.html">
-        <h3>Аналог Angry IP Scanner без Java (EN) →</h3>
+        <h3>Аналог Angry IP Scanner без Java (EN)</h3>
         <p>Почему Open Port Scanner заменяет ipscan: запуск без JRE и нативный рендеринг на Rust.</p>
       </a>
       <a class="guide-card" href="../nmap-alternative-lightweight.html">
-        <h3>Лёгкая альтернатива Nmap без драйверов (EN) →</h3>
+        <h3>Лёгкая альтернатива Nmap без драйверов (EN)</h3>
         <p>Быстрый аудит подсети без установки Npcap и прав администратора.</p>
       </a>
       <a class="guide-card" href="../common-network-ports-cheat-sheet.html">
-        <h3>Справочник популярных TCP-портов (EN) →</h3>
+        <h3>Справочник популярных TCP-портов (EN)</h3>
         <p>Шпаргалка по сетевым портам серверов, баз данных и веб-интерфейсов.</p>
       </a>
       <a class="guide-card" href="../how-to-scan-local-network-ports.html">
-        <h3>Как просканировать локальную сеть на порты (EN) →</h3>
+        <h3>Как просканировать локальную сеть на порты (EN)</h3>
         <p>Пошаговое руководство по сканированию подсети /24 через GUI и консоль.</p>
       </a>
     </div>
@@ -261,7 +260,7 @@ port-scanner --gui</code></pre>
         <tr>
           <td>Open Port Scanner v2.0</td>
           <td>Rust (Tokio + egui)</td>
-          <td>~2–4 МБ</td>
+          <td>2-4 МБ</td>
           <td>Windows, macOS, Linux</td>
           <td>Да (Авто /24)</td>
           <td>MIT (Бесплатно)</td>
@@ -301,7 +300,7 @@ port-scanner --gui</code></pre>
         <a href="https://crates.io/crates/open-port-scanner" style="color: var(--muted);">crates.io</a> · 
         <a href="../llms.txt" style="color: var(--muted);">llms.txt</a>
       </p>
-      <p>Open Port Tools — открытые сетевые утилиты безопасности.</p>
+      <p>Open Port Tools: открытые сетевые утилиты безопасности.</p>
     </footer>
   </div>
 </body>
